@@ -74,18 +74,110 @@ The body of the file is the study note itself, written in normal Markdown
 - The `sermon*` fields are optional; leave them out if there's no sermon yet, or add just the fields you have.
 - A chapter only becomes bold/clickable in the sidebar once a file like this exists for it &mdash; see [`lib/study-notes.ts`](lib/study-notes.ts).
 
-**Recommended workflow with Obsidian:**
+### Bridging the EveryVerseOBS vault
 
-1. In your Obsidian vault, keep a dedicated folder for content you're okay publishing publicly (not your whole vault).
-2. Install the community plugin **Obsidian Git**.
-3. Point that plugin at this repository (or set it up to auto-commit/push a linked folder), so saving a note in Obsidian pushes the corresponding `.md` file into `content/study-notes/`.
-4. Push to `main` as usual (auto or manual) &mdash; Vercel rebuilds the site with the new note.
+Notes are written in a dedicated Obsidian vault (**EveryVerseOBS**), which is
+its own git repo &mdash; separate from this site's repo. A small GitHub
+Action in the vault repo mirrors its notes into this repo's
+`content/study-notes/` folder on every push, which then triggers Vercel's
+normal rebuild. This is deliberately git-based rather than live/real-time: it
+fits how the site already deploys (push &rarr; rebuild), and doesn't require
+Obsidian to stay running or reachable from the internet.
 
-This is deliberately git-based rather than live/real-time: it fits how the
-site already deploys (push &rarr; rebuild), and doesn't require Obsidian to
-stay running or reachable from the internet. Once a real database exists,
-this can be swapped for something closer to real-time without changing the
-file format.
+```
+EveryVerseOBS vault (Obsidian, own git repo)
+  study-notes/*.md  ──push──▶  GitHub Action  ──push──▶  everyverse repo
+                                                          content/study-notes/*.md
+                                                          └─▶ Vercel rebuild
+```
+
+**One-time setup (all manual &mdash; none of this can be scripted from this
+repo, since it lives in a different repo and your GitHub account):**
+
+1. **Create the vault folder structure.** Inside the EveryVerseOBS vault,
+   make a top-level folder named `study-notes/`. Notes that should be public
+   go here, using the same frontmatter format documented above. Anything
+   else in the vault stays private to you &mdash; the sync only ever touches
+   this one folder.
+2. **Turn the vault into a git repo.** In a terminal, `cd` into the vault
+   folder, then:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial vault commit"
+   ```
+   Create a new **EveryVerseOBS** repository on GitHub (public or private,
+   your call &mdash; only the `study-notes/` folder ever leaves it), then:
+   ```bash
+   git remote add origin https://github.com/trentcornwell/EveryVerseOBS.git
+   git push -u origin main
+   ```
+3. **Install Obsidian Git.** In Obsidian: Settings &rarr; Community plugins
+   &rarr; Browse &rarr; search "Obsidian Git" &rarr; Install &rarr; Enable.
+   It will detect the vault is already a git repo. Configure auto-commit /
+   auto-push on an interval (or trigger it manually from the command
+   palette) so saving a note eventually pushes it.
+4. **Create a fine-grained GitHub token** so the Action can push to
+   `everyverse`: GitHub &rarr; Settings &rarr; Developer settings &rarr;
+   Personal access tokens &rarr; Fine-grained tokens &rarr; New token,
+   scoped to only the `everyverse` repository, with **Contents: Read and
+   write** permission.
+5. **Add that token as a secret** in the **EveryVerseOBS** repo: Settings
+   &rarr; Secrets and variables &rarr; Actions &rarr; New repository secret,
+   named `EVERYVERSE_PUSH_TOKEN`.
+6. **Add the sync workflow** to the EveryVerseOBS repo at
+   `.github/workflows/sync-to-everyverse.yml`:
+
+   ```yaml
+   name: Sync study notes to EveryVerse site
+
+   on:
+     push:
+       branches: [main]
+       paths:
+         - "study-notes/**"
+
+   jobs:
+     sync:
+       runs-on: ubuntu-latest
+       steps:
+         - name: Checkout EveryVerseOBS
+           uses: actions/checkout@v4
+           with:
+             path: vault
+
+         - name: Checkout everyverse site
+           uses: actions/checkout@v4
+           with:
+             repository: trentcornwell/everyverse
+             token: ${{ secrets.EVERYVERSE_PUSH_TOKEN }}
+             path: site
+
+         - name: Copy study notes
+           run: |
+             rm -rf site/content/study-notes
+             mkdir -p site/content/study-notes
+             cp -r vault/study-notes/* site/content/study-notes/
+
+         - name: Commit and push if changed
+           run: |
+             cd site
+             git config user.name "EveryVerseOBS sync"
+             git config user.email "actions@users.noreply.github.com"
+             git add content/study-notes
+             if git diff --cached --quiet; then
+               echo "No changes to sync."
+               exit 0
+             fi
+             git commit -m "Sync study notes from EveryVerseOBS"
+             git push
+   ```
+
+Once this is in place, the flow is just: write a note in Obsidian &rarr; it
+gets committed/pushed by Obsidian Git &rarr; the Action mirrors it here
+&rarr; Vercel rebuilds. Once a real database exists, this whole bridge can
+be replaced with something closer to real-time without changing the note
+format itself.
 
 ## Getting started
 
