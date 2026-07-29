@@ -3,6 +3,8 @@
 // something real to render. It will be replaced by a full KJV dataset backed
 // by a database once that's wired up.
 
+import type { Sermon, VerseComment } from "./types";
+
 export const BOOKS: string[] = [
   "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy",
   "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel",
@@ -136,6 +138,25 @@ const KJV_SAMPLE: Record<string, ChapterMap> = {
   },
 };
 
+// Standard KJV chapter counts, in the same order as BOOKS. Used to list every
+// chapter of every book, regardless of whether we have content for it yet.
+const CHAPTER_COUNTS: number[] = [
+  50, 40, 27, 36, 34,
+  24, 21, 4, 31, 24,
+  22, 25, 29, 36, 10,
+  13, 10, 42, 150, 31,
+  12, 8, 66, 52, 5,
+  48, 12, 14, 3, 9,
+  1, 4, 7, 3, 3,
+  3, 2, 14, 4,
+  28, 16, 24, 21, 28,
+  16, 16, 13, 6, 6,
+  4, 4, 5, 3, 6,
+  4, 3, 1, 13, 5,
+  5, 3, 5, 1, 1,
+  1, 22,
+];
+
 export function slugifyBook(book: string): string {
   return book
     .trim()
@@ -185,9 +206,55 @@ export const FEATURED_VERSES = [
 // The first 39 books of BOOKS are the Old Testament, the remaining 27 the New.
 const OLD_TESTAMENT_COUNT = 39;
 
+const CHAPTER_COUNT_BY_SLUG: Record<string, number> = Object.fromEntries(
+  BOOKS.map((name, i) => [slugifyBook(name), CHAPTER_COUNTS[i]])
+);
+
+export interface ChapterContent {
+  studyNotes: VerseComment[];
+  sermon?: Sermon;
+}
+
+// Chapters that have real study notes and/or a sermon attached. As Vision
+// Baptist Church teaches through more of the Bible, more chapters get added
+// here. Everything else is listed in the sidebar but not yet clickable.
+const CHAPTER_CONTENT: Record<string, Record<number, ChapterContent>> = {
+  genesis: {
+    6: {
+      studyNotes: [
+        {
+          id: "seed-gen6-1",
+          author: "Trent Cornwell",
+          text: "Genesis 6 shows us both how seriously God takes sin and how far His grace reaches — Noah found grace in the eyes of the LORD in the middle of a world that had completely given itself over to evil.",
+          createdAt: "2026-07-14T13:00:00.000Z",
+        },
+      ],
+      sermon: {
+        title: "When Wickedness Filled the Earth",
+        description:
+          "A look at the state of the world before the flood, and why God chose to start over with one faithful family.",
+      },
+    },
+  },
+};
+
+export function hasChapterContent(bookSlug: string, chapter: number): boolean {
+  return Boolean(CHAPTER_CONTENT[bookSlug.toLowerCase()]?.[chapter]);
+}
+
+export function getChapterContent(
+  bookSlug: string,
+  chapter: number
+): ChapterContent | undefined {
+  return CHAPTER_CONTENT[bookSlug.toLowerCase()]?.[chapter];
+}
+
+// The chapter currently being taught/discussed, featured on the homepage.
+export const THIS_WEEKS_STUDY = { book: "Genesis", chapter: 6 };
+
 export interface BibleTreeChapter {
-  chapter: number;
-  verses: number[];
+  number: number;
+  hasContent: boolean;
 }
 
 export interface BibleTreeBook {
@@ -201,22 +268,21 @@ export interface BibleTreeTestament {
   books: BibleTreeBook[];
 }
 
-// Builds the sidebar's Bible tree. Books/chapters/verses only appear as
-// navigable when they exist in KJV_SAMPLE; every other book still shows up
-// (muted, non-clickable) so the tree reflects the full 66-book structure.
+// Builds the sidebar's Bible tree: every book, every chapter. A chapter only
+// links anywhere once it has real content (see CHAPTER_CONTENT); until then
+// it's listed but plain, so the tree reflects the whole 20-year plan up
+// front without pretending unwritten chapters are ready to read.
 export function getBibleTree(): BibleTreeTestament[] {
   const books: BibleTreeBook[] = BOOKS.map((name) => {
     const slug = slugifyBook(name);
-    const chapterMap = KJV_SAMPLE[slug] ?? {};
-    const chapters: BibleTreeChapter[] = Object.keys(chapterMap)
-      .map(Number)
-      .sort((a, b) => a - b)
-      .map((chapter) => ({
-        chapter,
-        verses: Object.keys(chapterMap[chapter])
-          .map(Number)
-          .sort((a, b) => a - b),
-      }));
+    const chapterCount = CHAPTER_COUNT_BY_SLUG[slug] ?? 0;
+    const chapters: BibleTreeChapter[] = Array.from(
+      { length: chapterCount },
+      (_, i) => ({
+        number: i + 1,
+        hasContent: hasChapterContent(slug, i + 1),
+      })
+    );
 
     return { name, slug, chapters };
   });

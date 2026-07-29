@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
-import { FEATURED_VERSES, slugifyBook } from "@/lib/bible-data";
+import { FEATURED_VERSES, THIS_WEEKS_STUDY, slugifyBook } from "@/lib/bible-data";
+import SubmitInfoForm from "@/components/SubmitInfoForm";
 
 export default function HomePage() {
   return (
@@ -14,10 +16,10 @@ export default function HomePage() {
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
           On June 7, 2026, Vision Baptist Church started teaching through the
-          Bible, book by book, beginning in Genesis. Pastor Trent Cornwell and
-          the pastoral staff are giving their lives to this work over the
-          next twenty years, Lord willing. Everything taught here will be
-          public and free for anyone to read. Join us in the journey.
+          Bible, book by book, beginning in Genesis. Trent Cornwell and
+          friends are giving their lives to this work over the next twenty
+          years, Lord willing. Everything taught here will be public and
+          free for anyone to read. Join us in the journey.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
@@ -36,6 +38,35 @@ export default function HomePage() {
       </section>
 
       <section className="border-t border-canvas-border bg-canvas-panel">
+        <div className="mx-auto max-w-2xl px-6 py-14 text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">
+            This Week&rsquo;s Study
+          </p>
+          <h2 className="mt-2 text-3xl font-semibold text-slate-900">
+            {THIS_WEEKS_STUDY.book} {THIS_WEEKS_STUDY.chapter}
+          </h2>
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link
+              href={`/chapter/${slugifyBook(THIS_WEEKS_STUDY.book)}/${THIS_WEEKS_STUDY.chapter}`}
+              className="rounded-md bg-accent px-6 py-3 text-sm font-medium text-white transition hover:bg-accent-hover"
+            >
+              Read the Study Notes
+            </Link>
+            <Link
+              href={`/chapter/${slugifyBook(THIS_WEEKS_STUDY.book)}/${THIS_WEEKS_STUDY.chapter}?tab=sermons`}
+              className="rounded-md border border-canvas-border px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-400"
+            >
+              Watch the Sermon
+            </Link>
+          </div>
+
+          <div className="mx-auto mt-10 max-w-md">
+            <SubmitInfoForm />
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-canvas-border">
         <div className="mx-auto max-w-5xl px-6 py-14">
           <h2 className="text-2xl font-semibold text-slate-900">
             Jump into a passage
@@ -91,6 +122,27 @@ export default function HomePage() {
               Share your own thoughts under any verse.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-canvas-border py-10">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-2 px-6 text-center">
+          <Image
+            src="/trent.png"
+            alt=""
+            width={36}
+            height={36}
+            className="rounded-full opacity-70 grayscale"
+          />
+          <p className="text-xs text-slate-500">
+            Questions or thoughts? Reach out at{" "}
+            <a
+              href="mailto:Trent@VisionBaptist.com"
+              className="text-slate-600 underline hover:text-accent"
+            >
+              Trent@VisionBaptist.com
+            </a>
+          </p>
         </div>
       </section>
     </>

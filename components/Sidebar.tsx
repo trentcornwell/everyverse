@@ -34,18 +34,7 @@ function BookNode({
   book: ReturnType<typeof getBibleTree>[number]["books"][number];
   pathname: string;
 }) {
-  const hasContent = book.chapters.length > 0;
   const [expanded, setExpanded] = useState(false);
-
-  if (!hasContent) {
-    return (
-      <li>
-        <span className="flex cursor-default items-center gap-1.5 rounded px-2 py-1 text-sm text-slate-500">
-          {book.name}
-        </span>
-      </li>
-    );
-  }
 
   return (
     <li>
@@ -58,61 +47,35 @@ function BookNode({
         {book.name}
       </button>
       {expanded && (
-        <ul className="ml-4 mt-0.5 flex flex-col gap-0.5 border-l border-canvas-border pl-3">
-          {book.chapters.map((chapter) => (
-            <ChapterNode
-              key={chapter.chapter}
-              slug={book.slug}
-              chapter={chapter.chapter}
-              verses={chapter.verses}
-              pathname={pathname}
-            />
-          ))}
-        </ul>
-      )}
-    </li>
-  );
-}
-
-function ChapterNode({
-  slug,
-  chapter,
-  verses,
-  pathname,
-}: {
-  slug: string;
-  chapter: number;
-  verses: number[];
-  pathname: string;
-}) {
-  const [expanded, setExpanded] = useState(false);
-
-  return (
-    <li>
-      <button
-        type="button"
-        onClick={() => setExpanded((v) => !v)}
-        className="flex w-full items-center gap-1.5 rounded px-2 py-1 text-left text-sm text-slate-700 hover:bg-canvas-elevated"
-      >
-        <ChevronIcon expanded={expanded} />
-        Chapter {chapter}
-      </button>
-      {expanded && (
         <ul className="ml-4 mt-0.5 flex flex-wrap gap-1 border-l border-canvas-border py-1 pl-3">
-          {verses.map((verse) => {
-            const href = `/verse/${slug}/${chapter}/${verse}`;
+          {book.chapters.map((chapter) => {
+            const href = `/chapter/${book.slug}/${chapter.number}`;
             const active = pathname === href;
+
+            // Only chapters with real content are bold and clickable; the
+            // rest are listed (so the full 20-year plan is visible) but
+            // plain, since there's nothing to read there yet.
+            if (!chapter.hasContent) {
+              return (
+                <li key={chapter.number}>
+                  <span className="inline-block cursor-default rounded px-2 py-0.5 text-xs font-normal text-slate-400">
+                    {chapter.number}
+                  </span>
+                </li>
+              );
+            }
+
             return (
-              <li key={verse}>
+              <li key={chapter.number}>
                 <Link
                   href={href}
-                  className={`inline-block rounded px-2 py-0.5 text-xs ${
+                  className={`inline-block rounded px-2 py-0.5 text-xs font-bold ${
                     active
                       ? "bg-accent/20 text-accent"
-                      : "text-slate-600 hover:bg-canvas-elevated hover:text-slate-900"
+                      : "text-slate-900 hover:bg-canvas-elevated hover:text-accent"
                   }`}
                 >
-                  v{verse}
+                  {chapter.number}
                 </Link>
               </li>
             );

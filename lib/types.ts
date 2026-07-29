@@ -4,3 +4,9 @@ export interface VerseComment {
   text: string;
   createdAt: string;
 }
+
+export interface Sermon {
+  title: string;
+  description: string;
+  url?: string;
+}

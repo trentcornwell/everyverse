@@ -7,11 +7,15 @@ import type { VerseComment } from "@/lib/types";
 interface CommentSectionProps {
   reference: string;
   seedComments: VerseComment[];
+  title?: string;
+  formPlaceholder?: string;
 }
 
 export default function CommentSection({
   reference,
   seedComments,
+  title = "Commentary",
+  formPlaceholder,
 }: CommentSectionProps) {
   const [comments, setComments] = useState<VerseComment[]>(seedComments);
 
@@ -28,12 +32,12 @@ export default function CommentSection({
   return (
     <section>
       <h2 className="text-xl font-semibold text-slate-900">
-        Commentary on {reference}{" "}
+        {title} on {reference}{" "}
         <span className="text-slate-500">({comments.length})</span>
       </h2>
 
       <div className="mt-4">
-        <CommentForm onSubmit={addComment} />
+        <CommentForm onSubmit={addComment} placeholder={formPlaceholder} />
       </div>
 
       <ul className="mt-6 flex flex-col gap-3">
