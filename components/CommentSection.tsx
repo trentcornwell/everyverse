@@ -26,37 +26,39 @@ export default function CommentSection({
   }
 
   return (
-    <section className="mt-10">
-      <h2 className="font-serif text-xl font-semibold">
+    <section>
+      <h2 className="text-xl font-semibold text-slate-100">
         Commentary on {reference}{" "}
-        <span className="text-ink-900/40">({comments.length})</span>
+        <span className="text-slate-500">({comments.length})</span>
       </h2>
 
       <div className="mt-4">
         <CommentForm onSubmit={addComment} />
       </div>
 
-      <ul className="mt-6 flex flex-col gap-4">
+      <ul className="mt-6 flex flex-col gap-3">
         {comments.length === 0 && (
-          <li className="text-sm text-ink-900/50">
+          <li className="text-sm text-slate-500">
             No comments yet &mdash; be the first to share your thoughts.
           </li>
         )}
         {comments.map((comment) => (
           <li
             key={comment.id}
-            className="rounded-xl border border-ink-900/10 bg-white/70 p-4"
+            className="rounded-lg border border-canvas-border bg-canvas-elevated p-4"
           >
             <div className="flex items-center justify-between">
-              <span className="font-medium">{comment.author}</span>
+              <span className="font-medium text-slate-200">
+                {comment.author}
+              </span>
               <time
-                className="text-xs text-ink-900/40"
+                className="text-xs text-slate-500"
                 dateTime={comment.createdAt}
               >
                 {new Date(comment.createdAt).toLocaleString()}
               </time>
             </div>
-            <p className="mt-2 text-sm text-ink-900/80">{comment.text}</p>
+            <p className="mt-2 text-sm text-slate-400">{comment.text}</p>
           </li>
         ))}
       </ul>

@@ -28,7 +28,7 @@ export default function SearchBar() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-md">
+    <form onSubmit={handleSubmit} className="w-full">
       <label htmlFor="verse-search" className="sr-only">
         Search verses
       </label>
@@ -38,13 +38,13 @@ export default function SearchBar() {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search e.g. &quot;John 3:16&quot;"
-          className="w-full rounded-full border border-ink-900/15 bg-white/80 px-4 py-2 pr-10 text-sm text-ink-900 placeholder:text-ink-900/40 focus:border-ink-900/40 focus:outline-none"
+          placeholder="Jump to e.g. &quot;John 3:16&quot;"
+          className="w-full rounded-md border border-canvas-border bg-canvas px-3 py-2 pr-9 text-sm text-slate-100 placeholder:text-slate-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
         />
         <button
           type="submit"
           aria-label="Search"
-          className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-ink-900/50 hover:text-ink-900"
+          className="absolute right-1 top-1/2 -translate-y-1/2 rounded p-1.5 text-slate-500 hover:text-slate-200"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

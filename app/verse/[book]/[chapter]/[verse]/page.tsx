@@ -53,25 +53,29 @@ export default async function VersePage({ params }: VersePageProps) {
   const reference = `${result.book} ${chapter}:${verse}`;
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12">
-      <Link
-        href="/"
-        className="text-sm text-ink-900/50 hover:text-ink-900"
-      >
+    <div className="mx-auto max-w-6xl px-6 py-8">
+      <Link href="/" className="text-sm text-slate-500 hover:text-slate-300">
         &larr; Back to home
       </Link>
 
-      <div className="mt-4">
-        <VerseDisplay
-          book={result.book}
-          chapter={chapter}
-          verse={verse}
-          text={result.text}
-          found={result.found}
-        />
-      </div>
+      <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="lg:sticky lg:top-20 lg:self-start">
+          <VerseDisplay
+            book={result.book}
+            chapter={chapter}
+            verse={verse}
+            text={result.text}
+            found={result.found}
+          />
+        </div>
 
-      <CommentSection reference={reference} seedComments={seedComments(reference)} />
+        <div className="lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
+          <CommentSection
+            reference={reference}
+            seedComments={seedComments(reference)}
+          />
+        </div>
+      </div>
     </div>
   );
 }

@@ -8,13 +8,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        parchment: {
-          50: "#fdfbf5",
-          100: "#f9f4e6",
-          200: "#f0e6c8",
+        canvas: {
+          DEFAULT: "#0f172a", // base app background
+          panel: "#161f36", // sidebar / top bar
+          elevated: "#1c273f", // cards
+          border: "#28324a",
         },
-        ink: {
-          900: "#1c1a17",
+        accent: {
+          DEFAULT: "#8b5cf6",
+          hover: "#7c3aed",
+          soft: "rgba(139, 92, 246, 0.14)",
         },
       },
       fontFamily: {

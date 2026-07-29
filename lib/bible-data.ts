@@ -181,3 +181,48 @@ export const FEATURED_VERSES = [
   { book: "Philippians", chapter: 4, verse: 13 },
   { book: "Romans", chapter: 8, verse: 28 },
 ];
+
+// The first 39 books of BOOKS are the Old Testament, the remaining 27 the New.
+const OLD_TESTAMENT_COUNT = 39;
+
+export interface BibleTreeChapter {
+  chapter: number;
+  verses: number[];
+}
+
+export interface BibleTreeBook {
+  name: string;
+  slug: string;
+  chapters: BibleTreeChapter[];
+}
+
+export interface BibleTreeTestament {
+  name: string;
+  books: BibleTreeBook[];
+}
+
+// Builds the sidebar's Bible tree. Books/chapters/verses only appear as
+// navigable when they exist in KJV_SAMPLE; every other book still shows up
+// (muted, non-clickable) so the tree reflects the full 66-book structure.
+export function getBibleTree(): BibleTreeTestament[] {
+  const books: BibleTreeBook[] = BOOKS.map((name) => {
+    const slug = slugifyBook(name);
+    const chapterMap = KJV_SAMPLE[slug] ?? {};
+    const chapters: BibleTreeChapter[] = Object.keys(chapterMap)
+      .map(Number)
+      .sort((a, b) => a - b)
+      .map((chapter) => ({
+        chapter,
+        verses: Object.keys(chapterMap[chapter])
+          .map(Number)
+          .sort((a, b) => a - b),
+      }));
+
+    return { name, slug, chapters };
+  });
+
+  return [
+    { name: "Old Testament", books: books.slice(0, OLD_TESTAMENT_COUNT) },
+    { name: "New Testament", books: books.slice(OLD_TESTAMENT_COUNT) },
+  ];
+}
