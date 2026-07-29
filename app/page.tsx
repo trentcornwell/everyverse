@@ -6,19 +6,18 @@ export default function HomePage() {
     <>
       <section className="mx-auto max-w-3xl px-6 py-16 text-center sm:py-24">
         <p className="font-serif text-sm uppercase tracking-[0.2em] text-accent">
-          Every Verse, Every Nation
+          Practical Bible Commentary
         </p>
         <h1 className="mt-4 text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">
-          One collaborative commentary,
-          <br className="hidden sm:block" /> written verse by verse, by
-          everyone.
+          Free for everyone.
+          <br className="hidden sm:block" /> For the next 20 years.
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
-          On June 7, 2026, Vision Baptist Church began a journey through the
-          Bible, starting in the book of Genesis. Pastor Trent Cornwell and
-          the pastoral staff desire to provide practical commentary and
-          sermons on every chapter of Scripture here over the next twenty
-          years, Lord willing.
+          On June 7, 2026, Vision Baptist Church started teaching through the
+          Bible, book by book, beginning in Genesis. Pastor Trent Cornwell and
+          the pastoral staff are giving their lives to this work over the
+          next twenty years, Lord willing. Everything taught here will be
+          public and free for anyone to read. Join us in the journey.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
@@ -71,8 +70,7 @@ export default function HomePage() {
               Find a verse
             </h3>
             <p className="mt-1 text-sm text-slate-600">
-              Browse the Bible tree in the sidebar or search for any passage
-              to see the King James text laid out clearly, on its own page.
+              Look up any verse using the sidebar or the search bar.
             </p>
           </div>
           <div>
@@ -81,8 +79,7 @@ export default function HomePage() {
               Read the commentary
             </h3>
             <p className="mt-1 text-sm text-slate-600">
-              See what others &mdash; from every background and nation &mdash;
-              have written beneath the verse.
+              See what the pastors have taught, and what others have added.
             </p>
           </div>
           <div>
@@ -91,8 +88,7 @@ export default function HomePage() {
               Add your voice
             </h3>
             <p className="mt-1 text-sm text-slate-600">
-              Leave your own reflection or insight so the next reader &mdash;
-              wherever they are in the world &mdash; benefits from it too.
+              Share your own thoughts under any verse.
             </p>
           </div>
         </div>
