@@ -4,11 +4,11 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  @apply bg-canvas text-slate-100;
+  @apply bg-canvas text-slate-900;
 }
 
 ::selection {

@@ -27,7 +27,7 @@ export default function CommentSection({
 
   return (
     <section>
-      <h2 className="text-xl font-semibold text-slate-100">
+      <h2 className="text-xl font-semibold text-slate-900">
         Commentary on {reference}{" "}
         <span className="text-slate-500">({comments.length})</span>
       </h2>
@@ -48,7 +48,7 @@ export default function CommentSection({
             className="rounded-lg border border-canvas-border bg-canvas-elevated p-4"
           >
             <div className="flex items-center justify-between">
-              <span className="font-medium text-slate-200">
+              <span className="font-medium text-slate-800">
                 {comment.author}
               </span>
               <time
@@ -58,7 +58,7 @@ export default function CommentSection({
                 {new Date(comment.createdAt).toLocaleString()}
               </time>
             </div>
-            <p className="mt-2 text-sm text-slate-400">{comment.text}</p>
+            <p className="mt-2 text-sm text-slate-600">{comment.text}</p>
           </li>
         ))}
       </ul>

@@ -21,16 +21,16 @@ export default function VerseDisplay({
       <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
         King James Version
       </p>
-      <h1 className="mt-2 font-serif text-2xl font-semibold text-slate-100 sm:text-3xl">
+      <h1 className="mt-2 font-serif text-2xl font-semibold text-slate-900 sm:text-3xl">
         {book} {chapter}:{verse}
       </h1>
 
       {found && text ? (
-        <p className="mt-6 font-serif text-xl leading-relaxed text-slate-200 sm:text-2xl">
+        <p className="mt-6 font-serif text-xl leading-relaxed text-slate-800 sm:text-2xl">
           {text}
         </p>
       ) : (
-        <div className="mt-6 rounded-lg bg-canvas p-5 text-slate-400">
+        <div className="mt-6 rounded-lg bg-canvas-panel p-5 text-slate-600">
           <p>
             This verse isn&rsquo;t in our sample dataset yet &mdash; the full
             KJV text will be connected once the database is wired up.
@@ -41,7 +41,7 @@ export default function VerseDisplay({
               <li key={`${v.book}-${v.chapter}-${v.verse}`}>
                 <Link
                   href={`/verse/${slugifyBook(v.book)}/${v.chapter}/${v.verse}`}
-                  className="rounded-full border border-canvas-border px-3 py-1 text-slate-300 hover:border-accent/50 hover:text-slate-100"
+                  className="rounded-full border border-canvas-border bg-canvas px-3 py-1 text-slate-700 hover:border-accent/50 hover:text-slate-900"
                 >
                   {v.book} {v.chapter}:{v.verse}
                 </Link>

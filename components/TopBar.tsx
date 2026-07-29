@@ -26,7 +26,7 @@ export default function TopBar({ onMenuClick }: TopBarProps) {
         type="button"
         onClick={onMenuClick}
         aria-label="Toggle sidebar"
-        className="rounded p-1.5 text-slate-400 hover:bg-canvas-elevated hover:text-slate-200 lg:hidden"
+        className="rounded p-1.5 text-slate-600 hover:bg-canvas-elevated hover:text-slate-900 lg:hidden"
       >
         <svg
           viewBox="0 0 24 24"
@@ -41,12 +41,12 @@ export default function TopBar({ onMenuClick }: TopBarProps) {
         </svg>
       </button>
 
-      <p className="min-w-0 flex-1 truncate text-sm font-medium text-slate-300">
+      <p className="min-w-0 flex-1 truncate text-sm font-medium text-slate-700">
         {reference ?? "Every Verse, Every Nation"}
       </p>
 
       <span
-        className="shrink-0 rounded-full border border-canvas-border px-3 py-1 text-xs font-medium text-slate-400"
+        className="shrink-0 rounded-full border border-canvas-border px-3 py-1 text-xs font-medium text-slate-600"
         title="Only the King James Version is available for now"
       >
         KJV

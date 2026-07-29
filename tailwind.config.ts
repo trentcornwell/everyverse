@@ -9,15 +9,15 @@ const config: Config = {
     extend: {
       colors: {
         canvas: {
-          DEFAULT: "#0f172a", // base app background
-          panel: "#161f36", // sidebar / top bar
-          elevated: "#1c273f", // cards
-          border: "#28324a",
+          DEFAULT: "#ffffff", // base app background
+          panel: "#f2f3f5", // sidebar / top bar
+          elevated: "#ffffff", // cards (distinguished by border, not fill)
+          border: "#e3e4e8",
         },
         accent: {
-          DEFAULT: "#8b5cf6",
-          hover: "#7c3aed",
-          soft: "rgba(139, 92, 246, 0.14)",
+          DEFAULT: "#7c3aed",
+          hover: "#6d28d9",
+          soft: "rgba(124, 58, 237, 0.12)",
         },
       },
       fontFamily: {

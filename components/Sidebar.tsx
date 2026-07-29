@@ -52,7 +52,7 @@ function BookNode({
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
-        className="flex w-full items-center gap-1.5 rounded px-2 py-1 text-left text-sm text-slate-200 hover:bg-canvas-elevated"
+        className="flex w-full items-center gap-1.5 rounded px-2 py-1 text-left text-sm text-slate-800 hover:bg-canvas-elevated"
       >
         <ChevronIcon expanded={expanded} />
         {book.name}
@@ -92,7 +92,7 @@ function ChapterNode({
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
-        className="flex w-full items-center gap-1.5 rounded px-2 py-1 text-left text-sm text-slate-300 hover:bg-canvas-elevated"
+        className="flex w-full items-center gap-1.5 rounded px-2 py-1 text-left text-sm text-slate-700 hover:bg-canvas-elevated"
       >
         <ChevronIcon expanded={expanded} />
         Chapter {chapter}
@@ -109,7 +109,7 @@ function ChapterNode({
                   className={`inline-block rounded px-2 py-0.5 text-xs ${
                     active
                       ? "bg-accent/20 text-accent"
-                      : "text-slate-400 hover:bg-canvas-elevated hover:text-slate-200"
+                      : "text-slate-600 hover:bg-canvas-elevated hover:text-slate-900"
                   }`}
                 >
                   v{verse}
@@ -143,7 +143,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
       >
         <div className="flex items-center justify-between gap-2 border-b border-canvas-border p-4">
           <Link href="/" className="flex items-baseline gap-1.5">
-            <span className="font-serif text-lg font-semibold text-slate-100">
+            <span className="font-serif text-lg font-semibold text-slate-900">
               EveryVerse
             </span>
             <span className="text-xs text-slate-500">.online</span>
@@ -152,7 +152,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
             type="button"
             onClick={onClose}
             aria-label="Close sidebar"
-            className="rounded p-1 text-slate-400 hover:bg-canvas-elevated hover:text-slate-200 lg:hidden"
+            className="rounded p-1 text-slate-600 hover:bg-canvas-elevated hover:text-slate-900 lg:hidden"
           >
             <svg
               viewBox="0 0 24 24"
