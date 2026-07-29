@@ -2,8 +2,11 @@
 // This is a small hand-picked set of well-known verses so the /verse route has
 // something real to render. It will be replaced by a full KJV dataset backed
 // by a database once that's wired up.
-
-import type { Sermon, VerseComment } from "./types";
+//
+// This file has no filesystem access, so it's safe to import from both
+// server and client components. Anything that reads chapter content off
+// disk (study notes, sermons, the Bible tree) lives in lib/study-notes.ts
+// instead, which is marked server-only.
 
 export const BOOKS: string[] = [
   "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy",
@@ -204,91 +207,11 @@ export const FEATURED_VERSES = [
 ];
 
 // The first 39 books of BOOKS are the Old Testament, the remaining 27 the New.
-const OLD_TESTAMENT_COUNT = 39;
+export const OLD_TESTAMENT_COUNT = 39;
 
-const CHAPTER_COUNT_BY_SLUG: Record<string, number> = Object.fromEntries(
+export const CHAPTER_COUNT_BY_SLUG: Record<string, number> = Object.fromEntries(
   BOOKS.map((name, i) => [slugifyBook(name), CHAPTER_COUNTS[i]])
 );
 
-export interface ChapterContent {
-  studyNotes: VerseComment[];
-  sermon?: Sermon;
-}
-
-// Chapters that have real study notes and/or a sermon attached. As Vision
-// Baptist Church teaches through more of the Bible, more chapters get added
-// here. Everything else is listed in the sidebar but not yet clickable.
-const CHAPTER_CONTENT: Record<string, Record<number, ChapterContent>> = {
-  genesis: {
-    6: {
-      studyNotes: [
-        {
-          id: "seed-gen6-1",
-          author: "Trent Cornwell",
-          text: "Genesis 6 shows us both how seriously God takes sin and how far His grace reaches — Noah found grace in the eyes of the LORD in the middle of a world that had completely given itself over to evil.",
-          createdAt: "2026-07-14T13:00:00.000Z",
-        },
-      ],
-      sermon: {
-        title: "When Wickedness Filled the Earth",
-        description:
-          "A look at the state of the world before the flood, and why God chose to start over with one faithful family.",
-      },
-    },
-  },
-};
-
-export function hasChapterContent(bookSlug: string, chapter: number): boolean {
-  return Boolean(CHAPTER_CONTENT[bookSlug.toLowerCase()]?.[chapter]);
-}
-
-export function getChapterContent(
-  bookSlug: string,
-  chapter: number
-): ChapterContent | undefined {
-  return CHAPTER_CONTENT[bookSlug.toLowerCase()]?.[chapter];
-}
-
 // The chapter currently being taught/discussed, featured on the homepage.
 export const THIS_WEEKS_STUDY = { book: "Genesis", chapter: 6 };
-
-export interface BibleTreeChapter {
-  number: number;
-  hasContent: boolean;
-}
-
-export interface BibleTreeBook {
-  name: string;
-  slug: string;
-  chapters: BibleTreeChapter[];
-}
-
-export interface BibleTreeTestament {
-  name: string;
-  books: BibleTreeBook[];
-}
-
-// Builds the sidebar's Bible tree: every book, every chapter. A chapter only
-// links anywhere once it has real content (see CHAPTER_CONTENT); until then
-// it's listed but plain, so the tree reflects the whole 20-year plan up
-// front without pretending unwritten chapters are ready to read.
-export function getBibleTree(): BibleTreeTestament[] {
-  const books: BibleTreeBook[] = BOOKS.map((name) => {
-    const slug = slugifyBook(name);
-    const chapterCount = CHAPTER_COUNT_BY_SLUG[slug] ?? 0;
-    const chapters: BibleTreeChapter[] = Array.from(
-      { length: chapterCount },
-      (_, i) => ({
-        number: i + 1,
-        hasContent: hasChapterContent(slug, i + 1),
-      })
-    );
-
-    return { name, slug, chapters };
-  });
-
-  return [
-    { name: "Old Testament", books: books.slice(0, OLD_TESTAMENT_COUNT) },
-    { name: "New Testament", books: books.slice(OLD_TESTAMENT_COUNT) },
-  ];
-}

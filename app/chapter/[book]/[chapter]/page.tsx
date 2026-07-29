@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { bookSlugToDisplayName, getChapterContent } from "@/lib/bible-data";
+import { bookSlugToDisplayName } from "@/lib/bible-data";
+import { getChapterContent } from "@/lib/study-notes";
 import ChapterTabs from "@/components/ChapterTabs";
 
 interface ChapterPageProps {

@@ -62,7 +62,14 @@ export default function CommentSection({
                 {new Date(comment.createdAt).toLocaleString()}
               </time>
             </div>
-            <p className="mt-2 text-sm text-slate-600">{comment.text}</p>
+            {comment.html ? (
+              <div
+                className="prose prose-sm prose-slate mt-2 max-w-none prose-a:text-accent"
+                dangerouslySetInnerHTML={{ __html: comment.html }}
+              />
+            ) : (
+              <p className="mt-2 text-sm text-slate-600">{comment.text}</p>
+            )}
           </li>
         ))}
       </ul>

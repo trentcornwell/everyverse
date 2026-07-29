@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AppShell from "@/components/AppShell";
+import { getBibleTree } from "@/lib/study-notes";
 
 export const metadata: Metadata = {
   title: "EveryVerse.online — Every Verse, Every Nation",
@@ -13,10 +14,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const tree = getBibleTree();
+
   return (
     <html lang="en">
       <body>
-        <AppShell>{children}</AppShell>
+        <AppShell tree={tree}>{children}</AppShell>
       </body>
     </html>
   );

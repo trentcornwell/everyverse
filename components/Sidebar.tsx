@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { getBibleTree } from "@/lib/bible-data";
+import type { BibleTreeBook, BibleTreeTestament } from "@/lib/study-notes";
 import SearchBar from "./SearchBar";
 
 interface SidebarProps {
   open: boolean;
   onClose: () => void;
+  tree: BibleTreeTestament[];
 }
 
 function ChevronIcon({ expanded }: { expanded: boolean }) {
@@ -31,7 +32,7 @@ function BookNode({
   book,
   pathname,
 }: {
-  book: ReturnType<typeof getBibleTree>[number]["books"][number];
+  book: BibleTreeBook;
   pathname: string;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -86,9 +87,8 @@ function BookNode({
   );
 }
 
-export default function Sidebar({ open, onClose }: SidebarProps) {
+export default function Sidebar({ open, onClose, tree }: SidebarProps) {
   const pathname = usePathname();
-  const tree = getBibleTree();
 
   return (
     <>
