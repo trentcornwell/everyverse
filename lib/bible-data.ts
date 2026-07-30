@@ -198,7 +198,8 @@ export function getVerseText(
   };
 }
 
-// A short list of verses to feature as examples (e.g. on the landing page).
+// A short list of verses suggested when a requested verse isn't in the
+// sample dataset yet (see VerseDisplay.tsx).
 export const FEATURED_VERSES = [
   { book: "John", chapter: 3, verse: 16 },
   { book: "Psalms", chapter: 23, verse: 1 },
@@ -212,6 +213,3 @@ export const OLD_TESTAMENT_COUNT = 39;
 export const CHAPTER_COUNT_BY_SLUG: Record<string, number> = Object.fromEntries(
   BOOKS.map((name, i) => [slugifyBook(name), CHAPTER_COUNTS[i]])
 );
-
-// The chapter currently being taught/discussed, featured on the homepage.
-export const THIS_WEEKS_STUDY = { book: "Genesis", chapter: 6 };

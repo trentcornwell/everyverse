@@ -1,9 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
-import { FEATURED_VERSES, THIS_WEEKS_STUDY, slugifyBook } from "@/lib/bible-data";
-import SubmitInfoForm from "@/components/SubmitInfoForm";
+import GraphView from "@/components/GraphView";
+import { getBibleTree } from "@/lib/study-notes";
 
 export default function HomePage() {
+  const tree = getBibleTree();
+
   return (
     <>
       <section className="mx-auto max-w-3xl px-6 py-16 text-center sm:py-24">
@@ -29,120 +30,28 @@ export default function HomePage() {
             Start in Genesis 1:1
           </Link>
           <a
-            href="#how-it-works"
+            href="#graph"
             className="rounded-md border border-canvas-border px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-400"
           >
-            How it works
+            Explore the graph
           </a>
         </div>
       </section>
 
-      <section className="border-t border-canvas-border bg-canvas-panel">
-        <div className="mx-auto max-w-2xl px-6 py-14 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">
-            This Week&rsquo;s Study
-          </p>
-          <h2 className="mt-2 text-3xl font-semibold text-slate-900">
-            {THIS_WEEKS_STUDY.book} {THIS_WEEKS_STUDY.chapter}
-          </h2>
-          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href={`/chapter/${slugifyBook(THIS_WEEKS_STUDY.book)}/${THIS_WEEKS_STUDY.chapter}`}
-              className="rounded-md bg-accent px-6 py-3 text-sm font-medium text-white transition hover:bg-accent-hover"
-            >
-              Read the Study Notes
-            </Link>
-            <Link
-              href={`/chapter/${slugifyBook(THIS_WEEKS_STUDY.book)}/${THIS_WEEKS_STUDY.chapter}?tab=sermons`}
-              className="rounded-md border border-canvas-border px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-400"
-            >
-              Watch the Sermon
-            </Link>
-          </div>
-
-          <div className="mx-auto mt-10 max-w-md">
-            <SubmitInfoForm />
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-canvas-border">
-        <div className="mx-auto max-w-5xl px-6 py-14">
+      <section id="graph" className="border-t border-canvas-border bg-canvas-panel">
+        <div className="mx-auto max-w-4xl px-6 py-16 text-center">
           <h2 className="text-2xl font-semibold text-slate-900">
-            Jump into a passage
+            The whole Bible, one chapter at a time
           </h2>
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {FEATURED_VERSES.map(({ book, chapter, verse }) => (
-              <Link
-                key={`${book}-${chapter}-${verse}`}
-                href={`/verse/${slugifyBook(book)}/${chapter}/${verse}`}
-                className="rounded-lg border border-canvas-border bg-canvas-elevated p-5 transition hover:border-accent/50"
-              >
-                <p className="font-serif text-lg font-semibold text-slate-900">
-                  {book} {chapter}:{verse}
-                </p>
-                <p className="mt-1 text-sm text-slate-500">
-                  Read &amp; discuss &rarr;
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="how-it-works" className="mx-auto max-w-5xl px-6 py-16">
-        <h2 className="text-2xl font-semibold text-slate-900">
-          How it works
-        </h2>
-        <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-3">
-          <div>
-            <div className="text-3xl font-serif text-accent/60">01</div>
-            <h3 className="mt-2 font-semibold text-slate-900">
-              Find a verse
-            </h3>
-            <p className="mt-1 text-sm text-slate-600">
-              Look up any verse using the sidebar or the search bar.
-            </p>
-          </div>
-          <div>
-            <div className="text-3xl font-serif text-accent/60">02</div>
-            <h3 className="mt-2 font-semibold text-slate-900">
-              Read the commentary
-            </h3>
-            <p className="mt-1 text-sm text-slate-600">
-              See what the pastors have taught, and what others have added.
-            </p>
-          </div>
-          <div>
-            <div className="text-3xl font-serif text-accent/60">03</div>
-            <h3 className="mt-2 font-semibold text-slate-900">
-              Add your voice
-            </h3>
-            <p className="mt-1 text-sm text-slate-600">
-              Share your own thoughts under any verse.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-canvas-border py-10">
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-2 px-6 text-center">
-          <Image
-            src="/trent.png"
-            alt=""
-            width={36}
-            height={36}
-            className="rounded-full opacity-70 grayscale"
-          />
-          <p className="text-xs text-slate-500">
-            Questions or thoughts? Reach out at{" "}
-            <a
-              href="mailto:Trent@VisionBaptist.com"
-              className="text-slate-600 underline hover:text-accent"
-            >
-              Trent@VisionBaptist.com
-            </a>
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-600">
+            Every book of the Bible, organized by testament &mdash; Old on
+            the left, New on the right. Most of it is still waiting to be
+            taught. The highlighted chapter has a published study note;
+            click it to read.
           </p>
+          <div className="mt-8">
+            <GraphView tree={tree} />
+          </div>
         </div>
       </section>
     </>
