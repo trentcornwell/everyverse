@@ -86,12 +86,14 @@ function loadChapterContentMap(): ContentMap {
     const chapter = Number(data.chapter);
     const body = content.trim();
 
-    // Stub files include an HTML comment as a visible "write here" cue in
-    // Obsidian's editor; strip it out before deciding whether there's
-    // actually anything written yet. A stub (frontmatter + that comment
-    // only, no sermon) shouldn't make the chapter show up as having
-    // content in the sidebar.
-    const bodyWithoutHints = body.replace(/<!--[\s\S]*?-->/g, "").trim();
+    // Stub files include a plain-text "write here" placeholder line so it's
+    // visible in every Obsidian view mode (an HTML comment would be hidden
+    // in Reading/Live Preview, same as in a browser). Strip it out before
+    // deciding whether there's actually anything written yet — a stub
+    // (frontmatter + that placeholder only, no sermon) shouldn't make the
+    // chapter show up as having content in the sidebar.
+    const STUB_PLACEHOLDER = /\*Write your study notes here\.\*/g;
+    const bodyWithoutHints = body.replace(STUB_PLACEHOLDER, "").trim();
     if (!bodyWithoutHints && !data.sermonTitle) continue;
 
     map[slug] ??= {};
