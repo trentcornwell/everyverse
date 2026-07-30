@@ -86,15 +86,18 @@ function loadChapterContentMap(): ContentMap {
     const chapter = Number(data.chapter);
     const body = content.trim();
 
-    // A stub file (frontmatter only, no body, no sermon) is a placeholder
-    // waiting to be written — it shouldn't make the chapter show up as
-    // having content in the sidebar.
-    if (!body && !data.sermonTitle) continue;
+    // Stub files include an HTML comment as a visible "write here" cue in
+    // Obsidian's editor; strip it out before deciding whether there's
+    // actually anything written yet. A stub (frontmatter + that comment
+    // only, no sermon) shouldn't make the chapter show up as having
+    // content in the sidebar.
+    const bodyWithoutHints = body.replace(/<!--[\s\S]*?-->/g, "").trim();
+    if (!bodyWithoutHints && !data.sermonTitle) continue;
 
     map[slug] ??= {};
     map[slug][chapter] ??= { studyNotes: [] };
 
-    if (body) {
+    if (bodyWithoutHints) {
       const stat = fs.statSync(filePath);
       // Unique per file location, not just filename, since two notes in
       // different book folders could otherwise share a filename.
