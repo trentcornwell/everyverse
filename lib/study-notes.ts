@@ -86,6 +86,11 @@ function loadChapterContentMap(): ContentMap {
     const chapter = Number(data.chapter);
     const body = content.trim();
 
+    // A stub file (frontmatter only, no body, no sermon) is a placeholder
+    // waiting to be written — it shouldn't make the chapter show up as
+    // having content in the sidebar.
+    if (!body && !data.sermonTitle) continue;
+
     map[slug] ??= {};
     map[slug][chapter] ??= { studyNotes: [] };
 
