@@ -19,6 +19,17 @@ export default function SermonPanel({ reference, sermon }: SermonPanelProps) {
       <h3 className="text-lg font-semibold text-slate-900">
         {sermon.title}
       </h3>
+      {sermon.datePreached && (
+        <p className="mt-1 text-xs text-slate-500">
+          Preached at Vision Baptist Church on{" "}
+          {new Date(sermon.datePreached).toLocaleDateString(undefined, {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+            timeZone: "UTC",
+          })}
+        </p>
+      )}
       <p className="mt-2 text-sm text-slate-600">{sermon.description}</p>
       {sermon.url ? (
         <a

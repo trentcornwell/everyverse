@@ -32,6 +32,7 @@ interface NoteFrontmatter {
   sermonTitle?: string;
   sermonDescription?: string;
   sermonUrl?: string;
+  sermonDate?: string;
 }
 
 export interface ChapterContent {
@@ -113,6 +114,9 @@ function loadChapterContentMap(): ContentMap {
         title: data.sermonTitle,
         description: data.sermonDescription ?? "",
         url: data.sermonUrl,
+        datePreached: data.sermonDate
+          ? new Date(data.sermonDate).toISOString()
+          : undefined,
       };
     }
   }

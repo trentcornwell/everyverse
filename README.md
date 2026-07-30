@@ -82,6 +82,7 @@ author: Trent Cornwell
 date: 2026-07-14
 sermonTitle: When Wickedness Filled the Earth
 sermonDescription: A short summary of the sermon.
+sermonDate: 2026-06-07 (the date it was preached at Vision Baptist Church)
 sermonUrl: https://example.com/watch (optional, once you have one)
 ---
 The body of the file is the study note itself, written in normal Markdown

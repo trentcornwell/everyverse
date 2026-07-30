@@ -13,4 +13,6 @@ export interface Sermon {
   title: string;
   description: string;
   url?: string;
+  // ISO date string for when this was preached at Vision Baptist Church.
+  datePreached?: string;
 }
