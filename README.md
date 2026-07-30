@@ -54,7 +54,25 @@ lets you write in Obsidian and publish by pushing to this repo &mdash; no
 backend required yet.
 
 **File format** &mdash; one file per chapter, named however you like (e.g.
-`genesis-6.md`):
+`Chapter 6.md`), anywhere under `content/study-notes/` &mdash; subfolders are
+fine and encouraged. The vault (and this repo) organize notes as:
+
+```
+content/study-notes/
+  Old Testament/
+    Genesis/
+      Chapter 6.md
+    Exodus/
+      .gitkeep        (empty book folders keep a placeholder so git tracks them)
+    ...
+  New Testament/
+    Matthew/
+    ...
+```
+
+Folder location is just for your own organization in Obsidian &mdash; it's
+the frontmatter, not the file path, that actually tells the site which
+chapter a note belongs to:
 
 ```markdown
 ---
@@ -72,7 +90,7 @@ The body of the file is the study note itself, written in normal Markdown
 
 - `book` must match a real Bible book name (e.g. `Genesis`, `1 Corinthians`) or the file is skipped with a warning at build time.
 - The `sermon*` fields are optional; leave them out if there's no sermon yet, or add just the fields you have.
-- A chapter only becomes bold/clickable in the sidebar once a file like this exists for it &mdash; see [`lib/study-notes.ts`](lib/study-notes.ts).
+- A chapter only becomes bold/clickable in the sidebar once a file like this exists for it &mdash; see [`lib/study-notes.ts`](lib/study-notes.ts), which walks `content/study-notes/` recursively.
 
 ### Bridging the EveryVerseOBS vault
 
@@ -178,6 +196,19 @@ gets committed/pushed by Obsidian Git &rarr; the Action mirrors it here
 &rarr; Vercel rebuilds. Once a real database exists, this whole bridge can
 be replaced with something closer to real-time without changing the note
 format itself.
+
+**Troubleshooting the token/secret** &mdash; three separate things all have
+to line up, and it's easy to get exactly one of them wrong:
+
+| Symptom in the Action's failed step | Cause |
+| --- | --- |
+| `Error: Input required and not supplied: token` | The `EVERYVERSE_PUSH_TOKEN` secret doesn't exist (or is misnamed/mistyped) in the **EveryVerseOBS** repo's secrets &mdash; check `github.com/trentcornwell/EveryVerseOBS/settings/secrets/actions`. |
+| `Checkout everyverse site` fails, but `Checkout EveryVerseOBS` succeeded | The secret was added to the wrong repo (`everyverse` instead of `EveryVerseOBS`) &mdash; secrets aren't shared between repos. |
+| `remote: Permission ... denied ... / fatal: ... 403` on `Commit and push if changed` | The token authenticates, but its **repository access** doesn't include `everyverse` (it needs write access to the repo it pushes *into*, not just the vault repo it's stored in) &mdash; check the token's "Repositories" tab at `github.com/settings/personal-access-tokens`. |
+
+The checkout step can succeed even with a token that has no real access to
+`everyverse`, since that repo is public and readable by anyone &mdash; it's
+only the push that actually proves the token's write permission is correct.
 
 ## Getting started
 
