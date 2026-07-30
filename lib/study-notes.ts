@@ -1,11 +1,13 @@
 import "server-only";
 
-// Reads chapter content (study notes + sermon info) from markdown files in
-// content/study-notes/. This is the sync target for the Obsidian Git plugin:
-// push a folder of notes here, one file per chapter, and the site picks
-// them up on the next build. Only imported from Server Components — never
-// import this file from a "use client" component, since it touches the
-// filesystem.
+// Reads chapter content (study notes + sermon info) from markdown files
+// anywhere under content/study-notes/ (subfolders are fine — e.g. organized
+// as Old Testament/Genesis/Chapter 6.md). This is the sync target for the
+// Obsidian Git plugin: push notes here and the site picks them up on the
+// next build. Frontmatter (book/chapter), not file location, is what
+// actually determines where a note appears on the site. Only imported from
+// Server Components — never import this file from a "use client" component,
+// since it touches the filesystem.
 
 import fs from "fs";
 import path from "path";
@@ -39,15 +41,29 @@ export interface ChapterContent {
 
 type ContentMap = Record<string, Record<number, ChapterContent>>;
 
+// Walks a directory tree manually (rather than fs.readdirSync's `recursive`
+// option) so this keeps working on any Node version — `recursive` was only
+// added in Node 20.1, and this needs to run wherever the site deploys.
+function walkMarkdownFiles(dir: string): string[] {
+  if (!fs.existsSync(dir)) return [];
+
+  const files: string[] = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...walkMarkdownFiles(fullPath));
+    } else if (entry.isFile() && entry.name.endsWith(".md")) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
 function loadChapterContentMap(): ContentMap {
   const map: ContentMap = {};
 
-  if (!fs.existsSync(CONTENT_DIR)) return map;
-
-  const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".md"));
-
-  for (const filename of files) {
-    const filePath = path.join(CONTENT_DIR, filename);
+  for (const filePath of walkMarkdownFiles(CONTENT_DIR)) {
+    const filename = path.basename(filePath);
     const raw = fs.readFileSync(filePath, "utf8");
     const { data, content } = matter(raw) as unknown as {
       data: NoteFrontmatter;
@@ -74,8 +90,15 @@ function loadChapterContentMap(): ContentMap {
 
     if (body) {
       const stat = fs.statSync(filePath);
+      // Unique per file location, not just filename, since two notes in
+      // different book folders could otherwise share a filename.
+      const id = path
+        .relative(CONTENT_DIR, filePath)
+        .replace(/\.md$/, "")
+        .replace(/[\\/]/g, "-");
+
       map[slug][chapter].studyNotes.push({
-        id: filename.replace(/\.md$/, ""),
+        id,
         author: data.author ?? "Trent Cornwell",
         text: body,
         html: marked.parse(body, { async: false }),
