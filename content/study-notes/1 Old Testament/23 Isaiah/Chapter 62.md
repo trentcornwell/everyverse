@@ -3,4 +3,4 @@ book: Isaiah
 chapter: 62
 ---
 
-<!-- Write your study notes here -->
+*Write your study notes here.*

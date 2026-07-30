@@ -3,4 +3,4 @@ book: Proverbs
 chapter: 5
 ---
 
-<!-- Write your study notes here -->
+*Write your study notes here.*

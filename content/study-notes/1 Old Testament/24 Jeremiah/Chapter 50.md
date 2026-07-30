@@ -3,4 +3,4 @@ book: Jeremiah
 chapter: 50
 ---
 
-<!-- Write your study notes here -->
+*Write your study notes here.*

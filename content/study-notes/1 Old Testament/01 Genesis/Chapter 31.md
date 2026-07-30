@@ -3,4 +3,4 @@ book: Genesis
 chapter: 31
 ---
 
-<!-- Write your study notes here -->
+*Write your study notes here.*

@@ -3,4 +3,4 @@ book: Psalms
 chapter: 6
 ---
 
-<!-- Write your study notes here -->
+*Write your study notes here.*

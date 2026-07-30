@@ -3,4 +3,4 @@ book: 2 Chronicles
 chapter: 31
 ---
 
-<!-- Write your study notes here -->
+*Write your study notes here.*

@@ -3,4 +3,4 @@ book: Ezra
 chapter: 9
 ---
 
-<!-- Write your study notes here -->
+*Write your study notes here.*

@@ -3,4 +3,4 @@ book: James
 chapter: 3
 ---
 
-<!-- Write your study notes here -->
+*Write your study notes here.*

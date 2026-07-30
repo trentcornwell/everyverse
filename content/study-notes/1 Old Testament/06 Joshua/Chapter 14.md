@@ -3,4 +3,4 @@ book: Joshua
 chapter: 14
 ---
 
-<!-- Write your study notes here -->
+*Write your study notes here.*
