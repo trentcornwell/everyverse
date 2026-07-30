@@ -134,6 +134,19 @@ export default function Sidebar({ open, onClose, tree }: SidebarProps) {
           <SearchBar />
         </div>
 
+        <div className="border-b border-canvas-border p-3">
+          <Link
+            href="/sermons"
+            className={`flex items-center rounded px-2 py-1.5 text-sm font-medium ${
+              pathname === "/sermons" || pathname.startsWith("/sermons/")
+                ? "bg-accent/20 text-accent"
+                : "text-slate-800 hover:bg-canvas-elevated"
+            }`}
+          >
+            Sermons
+          </Link>
+        </div>
+
         <nav className="flex-1 overflow-y-auto p-3">
           {tree.map((testament) => (
             <div key={testament.name} className="mb-4">

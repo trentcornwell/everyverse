@@ -1,9 +1,12 @@
 import Link from "next/link";
 import GraphView from "@/components/GraphView";
 import { getBibleTree } from "@/lib/study-notes";
+import { getAllSermons } from "@/lib/sermons";
+import { formatDuration } from "@/lib/sermon-format";
 
 export default function HomePage() {
   const tree = getBibleTree();
+  const recentSermons = getAllSermons().slice(0, 4);
 
   return (
     <>
@@ -54,6 +57,48 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {recentSermons.length > 0 && (
+        <section className="border-t border-canvas-border">
+          <div className="mx-auto max-w-4xl px-6 py-16">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-semibold text-slate-900">
+                Recent sermons
+              </h2>
+              <Link
+                href="/sermons"
+                className="text-sm font-medium text-accent hover:text-accent-hover"
+              >
+                View all &rarr;
+              </Link>
+            </div>
+            <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {recentSermons.map((sermon) => (
+                <li key={sermon.id}>
+                  <Link
+                    href={`/sermons/${sermon.id}`}
+                    className="block rounded-lg border border-canvas-border bg-canvas-elevated p-5 transition hover:border-accent/50"
+                  >
+                    <p className="truncate font-medium text-slate-900">
+                      {sermon.title}
+                    </p>
+                    <p className="mt-1 text-xs text-slate-500">
+                      {new Date(sermon.publishedAt).toLocaleDateString(undefined, {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                      {sermon.chapter ? ` · ${sermon.book} ${sermon.chapter}` : ""}
+                      {" · "}
+                      {formatDuration(sermon.durationSeconds)}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
     </>
   );
 }

@@ -211,6 +211,41 @@ The checkout step can succeed even with a token that has no real access to
 `everyverse`, since that repo is public and readable by anyone &mdash; it's
 only the push that actually proves the token's write permission is correct.
 
+## Sermons
+
+Sermons are synced the same git-based way as study notes &mdash; no database.
+[`scripts/sync-youtube-sermons.mjs`](scripts/sync-youtube-sermons.mjs) fetches
+every video from the church's YouTube channel, tags each one with a Bible
+book/chapter it can detect in the title or description, and writes the
+result to `content/sermons/youtube.json`. That script runs daily via
+[`.github/workflows/sync-youtube-sermons.yml`](.github/workflows/sync-youtube-sermons.yml)
+(also triggerable manually from the Actions tab), which commits and pushes
+the file if it changed &mdash; same rebuild-on-push flow as everything else.
+
+**One-time setup:**
+
+1. Create a Google Cloud project (or reuse one) and enable the **YouTube
+   Data API v3**: [console.cloud.google.com](https://console.cloud.google.com/) &rarr;
+   APIs & Services &rarr; Library &rarr; search "YouTube Data API v3" &rarr; Enable.
+2. Create an API key: APIs & Services &rarr; Credentials &rarr; Create
+   Credentials &rarr; API Key. (Optional but recommended: restrict the key
+   to just the YouTube Data API v3.)
+3. Add it as a repository secret on **this** repo (`everyverse`, not
+   EveryVerseOBS &mdash; this sync runs directly here): Settings &rarr;
+   Secrets and variables &rarr; Actions &rarr; New repository secret, named
+   `YOUTUBE_API_KEY`.
+4. Either wait for the daily schedule or trigger it manually: Actions tab
+   &rarr; "Sync YouTube sermons" &rarr; Run workflow.
+
+If `content/sermons/youtube.json` doesn't exist yet (before the first sync
+runs), `/sermons` shows a friendly "no sermons synced yet" message and the
+homepage's "Recent sermons" section stays hidden &mdash; nothing breaks.
+
+SermonAudio and Logos aren't wired up yet: SermonAudio needs an API key from
+VBC's own broadcaster dashboard, and Logos needs someone to log into
+sermons.logos.com and copy that account's podcast/RSS link &mdash; both
+need to come from Trent before they can be added the same way.
+
 ## Getting started
 
 Requires Node.js 18.18+ (Node 20+ recommended).
@@ -242,24 +277,33 @@ npm run lint    # lint the project
 ```
 content/
   study-notes/*.md                    Chapter study notes + sermon info (synced from Obsidian)
+  sermons/youtube.json                Synced sermon metadata (see "Sermons" above)
+scripts/
+  sync-youtube-sermons.mjs            Standalone script the GitHub Action runs daily
 app/
   layout.tsx                          Root layout (wraps everything in AppShell)
-  page.tsx                            Landing page
+  page.tsx                            Landing page: hero, graph view, recent sermons
   chapter/[book]/[chapter]/
     page.tsx                          Chapter page: Study Notes + Sermons tabs
   verse/[book]/[chapter]/[verse]/
     page.tsx                          Verse + commentary split-view page
+  sermons/
+    page.tsx                          Sermon archive, grouped by book, with search/filter
+    [id]/page.tsx                     Sermon detail page (embedded video)
 components/
   AppShell.tsx                        Sidebar + top bar shell, owns mobile drawer state
   Sidebar.tsx, TopBar.tsx, SearchBar.tsx   Navigation UI
+  GraphView.tsx                       Homepage's Obsidian-style structural graph
   VerseDisplay.tsx                    Renders the KJV verse text
   ChapterTabs.tsx, SermonPanel.tsx     Chapter page tabs
   CommentSection.tsx, CommentForm.tsx Comments/study notes UI (client-side additions only)
-  SubmitInfoForm.tsx                  Mailto-based "submit info" form
+  SermonArchive.tsx                   Sermon archive search/filter UI
   Footer.tsx
 lib/
   bible-data.ts                       Book list, chapter counts, sample KJV verse text (safe for client)
   study-notes.ts                      Reads content/study-notes/*.md (server-only, uses fs)
+  sermons.ts                          Reads content/sermons/*.json (server-only, uses fs)
+  sermon-format.ts                    Pure formatting helpers safe for client components
   types.ts                            Shared TypeScript types
 ```
 
@@ -278,6 +322,8 @@ re-checking before a production deploy, but not blocking for local dev.
 - [ ] Wire up the search bar to real full-text/topical search
 - [ ] User accounts/authentication for attributed comments
 - [ ] Moderation tools for comments
+- [ ] SermonAudio sync (needs an API key from VBC's broadcaster dashboard)
+- [ ] Logos/Faithlife sermon sync (needs Trent to log in and copy the podcast/RSS link)
 
 ### Deferred design ideas
 
@@ -285,7 +331,9 @@ The Obsidian-inspired design brief this UI is based on included several
 features that are intentionally not built yet, since they need real data or a
 backend to be meaningful:
 
-- [ ] Graph view (global and per-chapter) linking chapters/themes
+- [x] ~~Graph view~~ &mdash; built, but as a structural graph (testament &rarr;
+      book &rarr; published chapter), not a true note-linking graph, since
+      there's no `[[wiki-link]]` data between notes to visualize yet.
 - [ ] Tags and wiki-style `[[links]]` between comments
 - [ ] Reactions (helpful / insightful / question / amen) on comments
 - [ ] Threaded/nested comment replies
