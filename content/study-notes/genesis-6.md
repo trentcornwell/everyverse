@@ -15,3 +15,5 @@ A few things worth noticing as you read:
 - **Verse 8** is the turning point of the whole chapter: "Noah found grace in the eyes of the LORD."
 
 Judgment and grace sit right next to each other in this chapter. That tension runs through the whole Bible.
+
+*(End-to-end sync test #5 — token now scoped to the everyverse repo.)*
