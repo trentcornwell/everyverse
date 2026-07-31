@@ -35,15 +35,26 @@ export default async function SermonPage({ params }: SermonPageProps) {
       </Link>
 
       <div className="mt-4 overflow-hidden rounded-xl border border-canvas-border bg-canvas-elevated">
-        <div className="aspect-video w-full">
-          <iframe
-            className="h-full w-full"
-            src={`https://www.youtube.com/embed/${sermon.id}`}
-            title={sermon.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
+        {sermon.source === "youtube" ? (
+          <div className="aspect-video w-full">
+            <iframe
+              className="h-full w-full"
+              src={`https://www.youtube.com/embed/${sermon.id}`}
+              title={sermon.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        ) : (
+          <div className="flex items-center justify-center bg-canvas-panel p-10">
+            <a
+              href={sermon.url}
+              className="rounded-md bg-accent px-6 py-3 text-sm font-medium text-white transition hover:bg-accent-hover"
+            >
+              Listen on SermonAudio &rarr;
+            </a>
+          </div>
+        )}
 
         <div className="p-6 sm:p-8">
           <h1 className="font-serif text-2xl font-semibold text-slate-900">
@@ -57,7 +68,8 @@ export default async function SermonPage({ params }: SermonPageProps) {
             })}
             {" · "}
             {formatDuration(sermon.durationSeconds)}
-            {" · YouTube"}
+            {" · "}
+            {sermon.source === "youtube" ? "YouTube" : "SermonAudio"}
           </p>
 
           {sermon.book && sermon.chapter && (

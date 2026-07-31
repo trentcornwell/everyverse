@@ -9,9 +9,21 @@ interface SermonArchiveProps {
   grouped: SermonGroup[];
 }
 
+const SOURCE_LABELS: Record<string, string> = {
+  youtube: "YouTube",
+  sermonaudio: "SermonAudio",
+};
+
 export default function SermonArchive({ grouped }: SermonArchiveProps) {
   const [query, setQuery] = useState("");
   const [selectedBook, setSelectedBook] = useState("All books");
+  const [selectedSource, setSelectedSource] = useState("All sources");
+
+  const sources = useMemo(() => {
+    const set = new Set<string>();
+    grouped.forEach((g) => g.sermons.forEach((s) => set.add(s.source)));
+    return Array.from(set);
+  }, [grouped]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -22,13 +34,14 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
         ...g,
         sermons: g.sermons.filter(
           (s) =>
-            !q ||
-            s.title.toLowerCase().includes(q) ||
-            s.description.toLowerCase().includes(q)
+            (selectedSource === "All sources" || s.source === selectedSource) &&
+            (!q ||
+              s.title.toLowerCase().includes(q) ||
+              s.description.toLowerCase().includes(q))
         ),
       }))
       .filter((g) => g.sermons.length > 0);
-  }, [grouped, query, selectedBook]);
+  }, [grouped, query, selectedBook, selectedSource]);
 
   if (grouped.length === 0) {
     return (
@@ -58,6 +71,20 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
             <option key={g.book}>{g.book}</option>
           ))}
         </select>
+        {sources.length > 1 && (
+          <select
+            value={selectedSource}
+            onChange={(e) => setSelectedSource(e.target.value)}
+            className="rounded-md border border-canvas-border bg-canvas px-3 py-2 text-sm text-slate-900 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+          >
+            <option>All sources</option>
+            {sources.map((s) => (
+              <option key={s} value={s}>
+                {SOURCE_LABELS[s] ?? s}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
       {filtered.length === 0 && (
@@ -90,6 +117,8 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
                           year: "numeric",
                         })}
                         {sermon.chapter ? ` · ${sermon.book} ${sermon.chapter}` : ""}
+                        {" · "}
+                        {SOURCE_LABELS[sermon.source] ?? sermon.source}
                       </p>
                     </div>
                     <span className="shrink-0 text-xs font-medium text-slate-500">

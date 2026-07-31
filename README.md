@@ -237,14 +237,31 @@ the file if it changed &mdash; same rebuild-on-push flow as everything else.
 4. Either wait for the daily schedule or trigger it manually: Actions tab
    &rarr; "Sync YouTube sermons" &rarr; Run workflow.
 
-If `content/sermons/youtube.json` doesn't exist yet (before the first sync
+If a given source's JSON file doesn't exist yet (before its first sync
 runs), `/sermons` shows a friendly "no sermons synced yet" message and the
-homepage's "Recent sermons" section stays hidden &mdash; nothing breaks.
+homepage's "Recent sermons" section stays hidden &mdash; nothing breaks. Each
+source is independent: if one is missing or fails to sync, the others still
+show up fine.
 
-SermonAudio and Logos aren't wired up yet: SermonAudio needs an API key from
-VBC's own broadcaster dashboard, and Logos needs someone to log into
-sermons.logos.com and copy that account's podcast/RSS link &mdash; both
-need to come from Trent before they can be added the same way.
+**SermonAudio** works the same way:
+[`scripts/sync-sermonaudio-sermons.mjs`](scripts/sync-sermonaudio-sermons.mjs)
+fetches every sermon for broadcaster ID `20433` (Vision Baptist Church) from
+`api.sermonaudio.com`, using the API's own `bibleText` field to detect the
+book/chapter (more reliable than parsing YouTube titles, since SermonAudio
+already tracks the passage structurally). Writes
+`content/sermons/sermonaudio.json`, synced daily by
+[`.github/workflows/sync-sermonaudio-sermons.yml`](.github/workflows/sync-sermonaudio-sermons.yml).
+Setup: grab the API key from the broadcaster account's Dashboard &rarr;
+Settings, add it as a repo secret named `SERMONAUDIO_API_KEY`, then trigger
+the workflow manually the first time (Actions tab &rarr; "Sync SermonAudio
+sermons" &rarr; Run workflow).
+
+Book/chapter detection for both sources shares one implementation:
+[`scripts/lib/detect-passage.mjs`](scripts/lib/detect-passage.mjs).
+
+Logos isn't wired up yet &mdash; it needs someone to log into
+sermons.logos.com and find that account's podcast/RSS feed link before a
+sync script can be written against it.
 
 ## Getting started
 
@@ -277,9 +294,11 @@ npm run lint    # lint the project
 ```
 content/
   study-notes/*.md                    Chapter study notes + sermon info (synced from Obsidian)
-  sermons/youtube.json                Synced sermon metadata (see "Sermons" above)
+  sermons/*.json                      Synced sermon metadata, one file per source (see "Sermons" above)
 scripts/
-  sync-youtube-sermons.mjs            Standalone script the GitHub Action runs daily
+  sync-youtube-sermons.mjs            Daily sync script for YouTube
+  sync-sermonaudio-sermons.mjs        Daily sync script for SermonAudio
+  lib/detect-passage.mjs              Shared book/chapter detection used by both
 app/
   layout.tsx                          Root layout (wraps everything in AppShell)
   page.tsx                            Landing page: hero, graph view, recent sermons
@@ -322,7 +341,7 @@ re-checking before a production deploy, but not blocking for local dev.
 - [ ] Wire up the search bar to real full-text/topical search
 - [ ] User accounts/authentication for attributed comments
 - [ ] Moderation tools for comments
-- [ ] SermonAudio sync (needs an API key from VBC's broadcaster dashboard)
+- [x] ~~SermonAudio sync~~ &mdash; built, see "Sermons" above
 - [ ] Logos/Faithlife sermon sync (needs Trent to log in and copy the podcast/RSS link)
 
 ### Deferred design ideas

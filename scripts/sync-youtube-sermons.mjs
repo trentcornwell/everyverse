@@ -8,46 +8,11 @@
 
 import fs from "fs";
 import path from "path";
+import { detectPassage } from "./lib/detect-passage.mjs";
 
 const CHANNEL_ID = "UCODWmDl_U6I_XQbSKwOZzyw"; // Vision Baptist Church of South Forsyth
 const API_KEY = process.env.YOUTUBE_API_KEY;
 const OUTPUT_PATH = path.join(process.cwd(), "content", "sermons", "youtube.json");
-
-// Keep this in sync with lib/bible-data.ts's BOOKS list. Duplicated here so
-// this script has no dependency on the TypeScript build.
-const BOOKS = [
-  "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy",
-  "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel",
-  "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra",
-  "Nehemiah", "Esther", "Job", "Psalms", "Proverbs",
-  "Ecclesiastes", "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations",
-  "Ezekiel", "Daniel", "Hosea", "Joel", "Amos",
-  "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk",
-  "Zephaniah", "Haggai", "Zechariah", "Malachi",
-  "Matthew", "Mark", "Luke", "John", "Acts",
-  "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians",
-  "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy",
-  "2 Timothy", "Titus", "Philemon", "Hebrews", "James",
-  "1 Peter", "2 Peter", "1 John", "2 John", "3 John",
-  "Jude", "Revelation",
-].sort((a, b) => b.length - a.length); // longest/most specific first (e.g. "1 John" before "John")
-
-function escapeRegex(s) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function detectPassage(title, description) {
-  for (const text of [title, description]) {
-    for (const book of BOOKS) {
-      const re = new RegExp(`\\b${escapeRegex(book)}\\s+(\\d{1,3})\\b`, "i");
-      const match = text.match(re);
-      if (match) {
-        return { book, chapter: Number(match[1]) };
-      }
-    }
-  }
-  return { book: undefined, chapter: undefined };
-}
 
 function parseIsoDuration(iso) {
   const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);

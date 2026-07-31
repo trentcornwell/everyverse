@@ -1,10 +1,11 @@
 import "server-only";
 
-// Reads synced sermon data from content/sermons/*.json (one file per source,
-// e.g. youtube.json). Each file is regenerated wholesale by a scheduled
-// GitHub Action (see .github/workflows/sync-youtube-sermons.yml and
-// scripts/sync-youtube-sermons.mjs) — there's no database, matching how
-// study notes work elsewhere in this project.
+// Reads synced sermon data from content/sermons/*.json (one file per
+// source: youtube.json, sermonaudio.json). Each file is regenerated
+// wholesale by its own scheduled GitHub Action (see
+// .github/workflows/sync-*-sermons.yml and scripts/sync-*-sermons.mjs) —
+// there's no database, matching how study notes work elsewhere in this
+// project.
 
 import fs from "fs";
 import path from "path";
@@ -12,7 +13,7 @@ import { BOOKS } from "./bible-data";
 
 const SERMONS_DIR = path.join(process.cwd(), "content", "sermons");
 
-export type SermonSource = "youtube";
+export type SermonSource = "youtube" | "sermonaudio";
 
 export interface Sermon {
   id: string;
@@ -39,7 +40,10 @@ function loadSource(filename: string, source: SermonSource): Sermon[] {
 }
 
 export function getAllSermons(): Sermon[] {
-  const sermons = [...loadSource("youtube.json", "youtube")];
+  const sermons = [
+    ...loadSource("youtube.json", "youtube"),
+    ...loadSource("sermonaudio.json", "sermonaudio"),
+  ];
   return sermons.sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
