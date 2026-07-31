@@ -10,7 +10,13 @@ import fs from "fs";
 import path from "path";
 import { detectPassage } from "./lib/detect-passage.mjs";
 
-const BROADCASTER_ID = "20433"; // Vision Baptist Church (visionbaptist)
+// The numeric ID we were given (20433) turned out not to resolve via the
+// API. The broadcaster's public slug does work (sermonaudio.com/broadcasters/
+// visionbaptist/), and SermonAudio's speaker endpoint accepts either a
+// numeric ID or a name/slug ("speaker_id_or_name") -- broadcasters likely
+// work the same way, so resolve the slug to its real numeric ID first
+// rather than guessing a number.
+const BROADCASTER_SLUG = "visionbaptist";
 const API_KEY = process.env.SERMONAUDIO_API_KEY;
 const OUTPUT_PATH = path.join(process.cwd(), "content", "sermons", "sermonaudio.json");
 const PAGE_SIZE = 100;
@@ -26,12 +32,12 @@ async function getJson(url) {
   return res.json();
 }
 
-async function getAllSermons() {
+async function getAllSermons(broadcasterId) {
   const results = [];
   let page = 1;
 
   while (true) {
-    const url = `https://api.sermonaudio.com/v2/node/sermons?broadcasterID=${BROADCASTER_ID}&page=${page}&pageSize=${PAGE_SIZE}`;
+    const url = `https://api.sermonaudio.com/v2/node/sermons?broadcasterID=${broadcasterId}&page=${page}&pageSize=${PAGE_SIZE}`;
     console.log(`Fetching: ${url}`);
     const data = await getJson(url);
 
@@ -52,13 +58,22 @@ async function getAllSermons() {
   return results;
 }
 
-async function checkBroadcaster() {
-  const url = `https://api.sermonaudio.com/v2/node/broadcasters/${BROADCASTER_ID}`;
+// Resolves the broadcaster slug to its real numeric ID. Falls back to using
+// the slug itself against /v2/node/sermons if resolution fails, in case
+// that endpoint also accepts a slug directly.
+async function resolveBroadcasterId() {
+  const url = `https://api.sermonaudio.com/v2/node/broadcasters/${BROADCASTER_SLUG}`;
   try {
     const data = await getJson(url);
-    console.log(`Broadcaster ${BROADCASTER_ID} resolves to:`, JSON.stringify(data, null, 2));
+    console.log(`Broadcaster "${BROADCASTER_SLUG}" resolves to:`, JSON.stringify(data, null, 2));
+    const id = data.broadcasterID ?? data.id ?? data.nodeID;
+    if (id) return String(id);
+    console.log("No obvious numeric ID field found in that response; falling back to the slug itself.");
+    return BROADCASTER_SLUG;
   } catch (err) {
-    console.log(`Could not resolve broadcaster ${BROADCASTER_ID}:`, err.message);
+    console.log(`Could not resolve broadcaster "${BROADCASTER_SLUG}":`, err.message);
+    console.log("Falling back to using the slug itself as broadcasterID.");
+    return BROADCASTER_SLUG;
   }
 }
 
@@ -68,7 +83,13 @@ function main() {
     process.exit(1);
   }
 
-  return checkBroadcaster().then(() => getAllSermons()).then((results) => {
+  let resolvedBroadcasterId;
+  return resolveBroadcasterId()
+    .then((broadcasterId) => {
+      resolvedBroadcasterId = broadcasterId;
+      return getAllSermons(broadcasterId);
+    })
+    .then((results) => {
     const sermons = results.map((s) => {
       const { book, chapter } = detectPassage(s.bibleText, s.displayTitle, s.fullTitle);
       const durationSeconds = s.videoDurationSeconds || s.audioDurationSeconds || 0;
@@ -91,7 +112,7 @@ function main() {
       JSON.stringify(
         {
           source: "sermonaudio",
-          broadcasterID: BROADCASTER_ID,
+          broadcasterID: resolvedBroadcasterId,
           syncedAt: new Date().toISOString(),
           sermons,
         },
