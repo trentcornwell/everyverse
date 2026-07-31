@@ -32,7 +32,16 @@ async function getAllSermons() {
 
   while (true) {
     const url = `https://api.sermonaudio.com/v2/node/sermons?broadcasterID=${BROADCASTER_ID}&page=${page}&pageSize=${PAGE_SIZE}`;
+    console.log(`Fetching: ${url}`);
     const data = await getJson(url);
+
+    if (page === 1) {
+      console.log(`First page response: totalCount=${data.totalCount}, results.length=${(data.results ?? []).length}`);
+      if ((data.results ?? []).length === 0) {
+        console.log("Full first-page response for debugging:", JSON.stringify(data, null, 2));
+      }
+    }
+
     results.push(...(data.results ?? []));
 
     const totalCount = data.totalCount ?? results.length;
@@ -43,13 +52,23 @@ async function getAllSermons() {
   return results;
 }
 
+async function checkBroadcaster() {
+  const url = `https://api.sermonaudio.com/v2/node/broadcasters/${BROADCASTER_ID}`;
+  try {
+    const data = await getJson(url);
+    console.log(`Broadcaster ${BROADCASTER_ID} resolves to:`, JSON.stringify(data, null, 2));
+  } catch (err) {
+    console.log(`Could not resolve broadcaster ${BROADCASTER_ID}:`, err.message);
+  }
+}
+
 function main() {
   if (!API_KEY) {
     console.error("Missing SERMONAUDIO_API_KEY environment variable.");
     process.exit(1);
   }
 
-  return getAllSermons().then((results) => {
+  return checkBroadcaster().then(() => getAllSermons()).then((results) => {
     const sermons = results.map((s) => {
       const { book, chapter } = detectPassage(s.bibleText, s.displayTitle, s.fullTitle);
       const durationSeconds = s.videoDurationSeconds || s.audioDurationSeconds || 0;
