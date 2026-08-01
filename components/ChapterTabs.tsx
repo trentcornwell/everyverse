@@ -5,6 +5,7 @@ import { useState } from "react";
 import CommentSection from "./CommentSection";
 import SermonPanel from "./SermonPanel";
 import type { Sermon, VerseComment } from "@/lib/types";
+import type { Sermon as SyncedSermon } from "@/lib/sermons";
 
 type Tab = "notes" | "sermons";
 
@@ -12,12 +13,14 @@ interface ChapterTabsProps {
   reference: string;
   studyNotes: VerseComment[];
   sermon?: Sermon;
+  syncedSermons: SyncedSermon[];
 }
 
 export default function ChapterTabs({
   reference,
   studyNotes,
   sermon,
+  syncedSermons,
 }: ChapterTabsProps) {
   const searchParams = useSearchParams();
   const initialTab: Tab = searchParams.get("tab") === "sermons" ? "sermons" : "notes";
@@ -59,7 +62,11 @@ export default function ChapterTabs({
             formPlaceholder="Share a thought or question about this chapter..."
           />
         ) : (
-          <SermonPanel reference={reference} sermon={sermon} />
+          <SermonPanel
+            reference={reference}
+            sermon={sermon}
+            syncedSermons={syncedSermons}
+          />
         )}
       </div>
     </div>

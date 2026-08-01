@@ -9,7 +9,7 @@ import "server-only";
 
 import fs from "fs";
 import path from "path";
-import { BOOKS } from "./bible-data";
+import { BOOKS, slugifyBook } from "./bible-data";
 
 const SERMONS_DIR = path.join(process.cwd(), "content", "sermons");
 
@@ -84,4 +84,23 @@ export function getSermonsGroupedByBook(): SermonGroup[] {
 
 export function getSermonById(id: string): Sermon | undefined {
   return getAllSermons().find((s) => s.id === id);
+}
+
+export function getSermonsForChapter(bookSlug: string, chapter: number): Sermon[] {
+  return getAllSermons().filter(
+    (s) => s.book && s.chapter === chapter && slugifyBook(s.book) === bookSlug
+  );
+}
+
+// Used by the sidebar's Bible tree to decide which chapters are
+// bold/clickable — a chapter counts as "having content" if it has a sermon,
+// even without a written study note yet. Keys are "bookSlug:chapter".
+export function getChaptersWithSermons(): Set<string> {
+  const keys = new Set<string>();
+  for (const sermon of getAllSermons()) {
+    if (sermon.book && sermon.chapter) {
+      keys.add(`${slugifyBook(sermon.book)}:${sermon.chapter}`);
+    }
+  }
+  return keys;
 }

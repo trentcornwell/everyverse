@@ -91,7 +91,7 @@ The body of the file is the study note itself, written in normal Markdown
 
 - `book` must match a real Bible book name (e.g. `Genesis`, `1 Corinthians`) or the file is skipped with a warning at build time.
 - The `sermon*` fields are optional; leave them out if there's no sermon yet, or add just the fields you have.
-- A chapter only becomes bold/clickable in the sidebar once a file like this exists for it &mdash; see [`lib/study-notes.ts`](lib/study-notes.ts), which walks `content/study-notes/` recursively.
+- A chapter becomes bold/clickable in the sidebar once *either* a study note file like this exists for it, *or* a synced sermon is tagged to it (see "Sermons" below) &mdash; see `getBibleTree()` in [`lib/study-notes.ts`](lib/study-notes.ts), which checks both [`lib/sermons.ts`](lib/sermons.ts) and `content/study-notes/`.
 
 ### Bridging the EveryVerseOBS vault
 
@@ -258,6 +258,12 @@ sermons" &rarr; Run workflow).
 
 Book/chapter detection for both sources shares one implementation:
 [`scripts/lib/detect-passage.mjs`](scripts/lib/detect-passage.mjs).
+
+Every synced sermon with a detected book/chapter shows up on that chapter's
+page automatically, in the Sermons tab, via `getSermonsForChapter()` in
+[`lib/sermons.ts`](lib/sermons.ts) &mdash; a chapter page renders as soon as
+it has *either* a study note or a sermon, so a chapter with sermons but no
+written note yet still shows up (just without a Study Notes tab entry).
 
 Logos isn't wired up yet &mdash; it needs someone to log into
 sermons.logos.com and find that account's podcast/RSS feed link before a

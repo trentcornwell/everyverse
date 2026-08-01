@@ -21,6 +21,7 @@ import {
   slugifyBook,
 } from "./bible-data";
 import type { Sermon, VerseComment } from "./types";
+import { getChaptersWithSermons } from "./sermons";
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "study-notes");
 
@@ -164,11 +165,13 @@ export interface BibleTreeTestament {
 }
 
 // Builds the sidebar's Bible tree: every book, every chapter. A chapter only
-// links anywhere once it has a matching file in content/study-notes/; until
-// then it's listed but plain, so the tree reflects the whole 20-year plan up
-// front without pretending unwritten chapters are ready to read.
+// links anywhere once it has a matching file in content/study-notes/ or a
+// synced sermon; until then it's listed but plain, so the tree reflects the
+// whole 20-year plan up front without pretending unwritten chapters are
+// ready to read.
 export function getBibleTree(): BibleTreeTestament[] {
   const map = loadChapterContentMap();
+  const sermonChapters = getChaptersWithSermons();
 
   const books: BibleTreeBook[] = BOOKS.map((name) => {
     const slug = slugifyBook(name);
@@ -177,7 +180,8 @@ export function getBibleTree(): BibleTreeTestament[] {
       { length: chapterCount },
       (_, i) => ({
         number: i + 1,
-        hasContent: Boolean(map[slug]?.[i + 1]),
+        hasContent:
+          Boolean(map[slug]?.[i + 1]) || sermonChapters.has(`${slug}:${i + 1}`),
       })
     );
 
