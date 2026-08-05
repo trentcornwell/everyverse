@@ -45,7 +45,7 @@ export default async function SermonPage({ params }: SermonPageProps) {
               allowFullScreen
             />
           </div>
-        ) : (
+        ) : sermon.source === "sermonaudio" ? (
           <div className="flex items-center justify-center bg-canvas-panel p-10">
             <a
               href={sermon.url}
@@ -54,7 +54,7 @@ export default async function SermonPage({ params }: SermonPageProps) {
               Listen on SermonAudio &rarr;
             </a>
           </div>
-        )}
+        ) : null}
 
         <div className="p-6 sm:p-8">
           <h1 className="font-serif text-2xl font-semibold text-slate-900">
@@ -66,10 +66,15 @@ export default async function SermonPage({ params }: SermonPageProps) {
               day: "numeric",
               year: "numeric",
             })}
+            {sermon.source !== "logos" && (
+              <>{" · "}{formatDuration(sermon.durationSeconds)}</>
+            )}
             {" · "}
-            {formatDuration(sermon.durationSeconds)}
-            {" · "}
-            {sermon.source === "youtube" ? "YouTube" : "SermonAudio"}
+            {sermon.source === "youtube"
+              ? "YouTube"
+              : sermon.source === "sermonaudio"
+                ? "SermonAudio"
+                : "Logos"}
           </p>
 
           {sermon.book && sermon.chapter && (
@@ -81,10 +86,26 @@ export default async function SermonPage({ params }: SermonPageProps) {
             </Link>
           )}
 
-          {sermon.description && (
-            <p className="mt-6 whitespace-pre-line text-sm text-slate-600">
-              {sermon.description}
-            </p>
+          {sermon.source === "logos" && sermon.notesHtml ? (
+            <div
+              className="prose prose-sm prose-slate mt-6 max-w-none prose-a:text-accent"
+              dangerouslySetInnerHTML={{ __html: sermon.notesHtml }}
+            />
+          ) : (
+            sermon.description && (
+              <p className="mt-6 whitespace-pre-line text-sm text-slate-600">
+                {sermon.description}
+              </p>
+            )
+          )}
+
+          {sermon.source === "logos" && (
+            <a
+              href={sermon.url}
+              className="mt-6 inline-block text-sm font-medium text-accent hover:text-accent-hover"
+            >
+              View on Logos Sermons &rarr;
+            </a>
           )}
         </div>
       </div>

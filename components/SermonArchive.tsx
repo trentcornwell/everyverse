@@ -12,6 +12,7 @@ interface SermonArchiveProps {
 const SOURCE_LABELS: Record<string, string> = {
   youtube: "YouTube",
   sermonaudio: "SermonAudio",
+  logos: "Logos",
 };
 
 export default function SermonArchive({ grouped }: SermonArchiveProps) {
@@ -122,7 +123,9 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
                       </p>
                     </div>
                     <span className="shrink-0 text-xs font-medium text-slate-500">
-                      {formatDuration(sermon.durationSeconds)}
+                      {sermon.source === "logos"
+                        ? "Notes"
+                        : formatDuration(sermon.durationSeconds)}
                     </span>
                   </Link>
                 </li>

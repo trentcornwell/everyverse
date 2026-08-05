@@ -12,6 +12,7 @@ interface SermonPanelProps {
 const SOURCE_LABELS: Record<string, string> = {
   youtube: "YouTube",
   sermonaudio: "SermonAudio",
+  logos: "Logos",
 };
 
 export default function SermonPanel({
@@ -90,7 +91,7 @@ export default function SermonPanel({
                     </p>
                   </div>
                   <span className="shrink-0 text-xs font-medium text-slate-500">
-                    {formatDuration(s.durationSeconds)}
+                    {s.source === "logos" ? "Notes" : formatDuration(s.durationSeconds)}
                   </span>
                 </Link>
               </li>

@@ -1,8 +1,8 @@
 import "server-only";
 
 // Reads synced sermon data from content/sermons/*.json (one file per
-// source: youtube.json, sermonaudio.json). Each file is regenerated
-// wholesale by its own scheduled GitHub Action (see
+// source: youtube.json, sermonaudio.json, logos.json). Each file is
+// regenerated wholesale by its own scheduled GitHub Action (see
 // .github/workflows/sync-*-sermons.yml and scripts/sync-*-sermons.mjs) —
 // there's no database, matching how study notes work elsewhere in this
 // project.
@@ -13,7 +13,7 @@ import { BOOKS, slugifyBook } from "./bible-data";
 
 const SERMONS_DIR = path.join(process.cwd(), "content", "sermons");
 
-export type SermonSource = "youtube" | "sermonaudio";
+export type SermonSource = "youtube" | "sermonaudio" | "logos";
 
 export interface Sermon {
   id: string;
@@ -25,6 +25,11 @@ export interface Sermon {
   speaker?: string;
   book?: string;
   chapter?: number;
+  // Sermon notes/manuscript, synced from Logos. Rendered as trusted HTML
+  // (Trent's own authored content, piped through a known parser — same
+  // trust model as study notes, never user-submitted).
+  notesHtml?: string;
+  notesText?: string;
   source: SermonSource;
 }
 
@@ -56,6 +61,7 @@ export function getAllSermons(): Sermon[] {
   const sermons = [
     ...loadSource("youtube.json", "youtube"),
     ...loadSource("sermonaudio.json", "sermonaudio"),
+    ...loadSource("logos.json", "logos"),
   ].filter((s) => !mentionsExcludedSpeaker(s));
 
   return sermons.sort(

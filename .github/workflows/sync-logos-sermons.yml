@@ -1,0 +1,33 @@
+name: Sync Logos sermons
+
+on:
+  schedule:
+    - cron: "30 10 * * *" # daily at 10:30 UTC (offset from the other syncs)
+  workflow_dispatch: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch sermon notes from Logos
+        run: node scripts/sync-logos-sermons.mjs
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "sermon sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add content/sermons/logos.json
+          if git diff --cached --quiet; then
+            echo "No changes to sync."
+            exit 0
+          fi
+          git commit -m "Sync Logos sermons"
+          git push
