@@ -45,6 +45,10 @@ async function getAllSermons(broadcasterId) {
       console.log(`First page response: totalCount=${data.totalCount}, results.length=${(data.results ?? []).length}`);
       if ((data.results ?? []).length === 0) {
         console.log("Full first-page response for debugging:", JSON.stringify(data, null, 2));
+      } else {
+        // The API docs didn't reveal the exact "media" object shape, so log
+        // one full real sermon once to see it directly.
+        console.log("Sample sermon (first result) for field discovery:", JSON.stringify(data.results[0], null, 2));
       }
     }
 
