@@ -265,6 +265,15 @@ page automatically, in the Sermons tab, via `getSermonsForChapter()` in
 it has *either* a study note or a sermon, so a chapter with sermons but no
 written note yet still shows up (just without a Study Notes tab entry).
 
+**Excluded speakers** &mdash; sermons by certain guest speakers are filtered
+out of the whole site (archive, homepage, chapter pages, sidebar) via
+`EXCLUDED_SPEAKERS` in [`lib/sermons.ts`](lib/sermons.ts). SermonAudio
+entries are checked against the API's structured `speaker` field; YouTube
+has no such field, so they're checked as a text match against the title and
+description instead (guest speakers are typically named there). To add or
+remove an excluded name, edit that list &mdash; no re-sync needed, since
+filtering happens at read time.
+
 Logos isn't wired up yet &mdash; it needs someone to log into
 sermons.logos.com and find that account's podcast/RSS feed link before a
 sync script can be written against it.

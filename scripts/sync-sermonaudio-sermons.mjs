@@ -101,6 +101,7 @@ function main() {
         publishedAt: s.preachDate || s.publishDate || new Date().toISOString(),
         durationSeconds,
         url: `https://www.sermonaudio.com/sermoninfo.asp?SID=${s.sermonID}`,
+        speaker: s.speaker?.displayName,
         book,
         chapter,
       };

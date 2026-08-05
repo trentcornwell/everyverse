@@ -22,6 +22,7 @@ export interface Sermon {
   publishedAt: string;
   durationSeconds: number;
   url: string;
+  speaker?: string;
   book?: string;
   chapter?: number;
   source: SermonSource;
@@ -39,11 +40,24 @@ function loadSource(filename: string, source: SermonSource): Sermon[] {
   return (data.sermons ?? []).map((s) => ({ ...s, source }));
 }
 
+// Sermons by these speakers are excluded from the whole site. Checked
+// against the structured `speaker` field where a source provides one
+// (SermonAudio), and as a text match in the title/description otherwise
+// (YouTube has no structured speaker field, but guest speakers are
+// typically named in the description).
+const EXCLUDED_SPEAKERS = ["Austin Gardner", "William Gardner"];
+
+function mentionsExcludedSpeaker(sermon: Omit<Sermon, "source">): boolean {
+  const haystack = `${sermon.speaker ?? ""} ${sermon.title} ${sermon.description}`.toLowerCase();
+  return EXCLUDED_SPEAKERS.some((name) => haystack.includes(name.toLowerCase()));
+}
+
 export function getAllSermons(): Sermon[] {
   const sermons = [
     ...loadSource("youtube.json", "youtube"),
     ...loadSource("sermonaudio.json", "sermonaudio"),
-  ];
+  ].filter((s) => !mentionsExcludedSpeaker(s));
+
   return sermons.sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
