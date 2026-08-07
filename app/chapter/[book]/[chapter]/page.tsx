@@ -54,7 +54,6 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
             <ChapterTabs
               reference={reference}
               studyNotes={content?.studyNotes ?? []}
-              sermon={content?.sermon}
               syncedSermons={syncedSermons}
             />
           </Suspense>
