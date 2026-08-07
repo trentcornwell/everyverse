@@ -12,11 +12,18 @@ export default function SermonsPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
-      <h1 className="text-3xl font-semibold text-ink">Sermons</h1>
-      <p className="mt-2 text-slate-600">
+      <p className="font-serif text-sm uppercase tracking-[0.2em] text-accent">
+        Vision Baptist Church
+      </p>
+      <h1 className="mt-2 font-display text-3xl uppercase tracking-wide text-ink sm:text-4xl">
+        Sermons
+      </h1>
+      <p className="mt-3 max-w-2xl text-slate-600">
         Every sermon, organized by book of the Bible.
       </p>
-      <SermonArchive grouped={grouped} />
+      <div className="mt-8">
+        <SermonArchive grouped={grouped} />
+      </div>
     </div>
   );
 }

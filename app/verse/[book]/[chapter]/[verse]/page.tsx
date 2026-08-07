@@ -54,7 +54,7 @@ export default async function VersePage({ params }: VersePageProps) {
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-8">
-      <Link href="/" className="text-sm text-slate-500 hover:text-slate-300">
+      <Link href="/" className="text-sm text-slate-500 hover:text-ink">
         &larr; Back to home
       </Link>
 

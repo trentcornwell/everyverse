@@ -34,16 +34,16 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
   const hasAnything = Boolean(content) || syncedSermons.length > 0;
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-8">
-      <Link href="/" className="text-sm text-slate-500 hover:text-ink">
-        &larr; Back to home
+    <div className="mx-auto max-w-3xl px-6 py-10">
+      <Link href="/bible" className="text-sm text-slate-500 hover:text-ink">
+        &larr; Browse the Bible
       </Link>
 
-      <div className="mt-4 rounded-xl border border-canvas-border bg-canvas-elevated p-6 sm:p-10">
+      <div className="mt-6 border-b border-canvas-border pb-8">
         <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
           Chapter Study
         </p>
-        <h1 className="mt-2 font-serif text-2xl font-semibold text-ink sm:text-3xl">
+        <h1 className="mt-3 font-serif text-3xl font-bold leading-tight text-ink sm:text-4xl">
           {reference}
         </h1>
       </div>

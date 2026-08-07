@@ -57,7 +57,7 @@ export default async function SermonPage({ params }: SermonPageProps) {
         ) : null}
 
         <div className="p-6 sm:p-8">
-          <h1 className="font-serif text-2xl font-semibold text-ink">
+          <h1 className="font-serif text-2xl font-bold leading-tight text-ink sm:text-3xl">
             {sermon.title}
           </h1>
           <p className="mt-2 text-sm text-slate-500">
