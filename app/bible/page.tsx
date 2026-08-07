@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getBibleTree } from "@/lib/study-notes";
+import GraphView from "@/components/GraphView";
+import BibleViewToggle from "@/components/BibleViewToggle";
 
 export const metadata = {
   title: "The Bible — EveryVerse.online",
@@ -10,20 +12,8 @@ export const metadata = {
 export default function BiblePage() {
   const tree = getBibleTree();
 
-  return (
-    <div className="mx-auto max-w-5xl px-6 py-14">
-      <p className="font-serif text-sm uppercase tracking-[0.2em] text-accent">
-        Browse
-      </p>
-      <h1 className="mt-2 font-display text-3xl uppercase tracking-wide text-ink sm:text-4xl">
-        The whole Bible
-      </h1>
-      <p className="mt-4 max-w-2xl text-slate-600">
-        Every book, every chapter &mdash; Old Testament first, then New.
-        Bold chapter numbers have a published study note or sermon; the
-        rest are listed so the whole twenty-year plan is visible up front.
-      </p>
-
+  const listView = (
+    <div>
       {tree.map((testament) => (
         <section key={testament.name} className="mt-10">
           <h2 className="font-display text-xl uppercase tracking-wide text-ink">
@@ -63,6 +53,28 @@ export default function BiblePage() {
           </div>
         </section>
       ))}
+    </div>
+  );
+
+  const graphView = <GraphView tree={tree} />;
+
+  return (
+    <div className="mx-auto max-w-5xl px-6 py-14">
+      <p className="font-serif text-sm uppercase tracking-[0.2em] text-accent">
+        Browse
+      </p>
+      <h1 className="mt-2 font-display text-3xl uppercase tracking-wide text-ink sm:text-4xl">
+        The whole Bible
+      </h1>
+      <p className="mt-4 max-w-2xl text-slate-600">
+        Every book, every chapter &mdash; Old Testament first, then New.
+        Bold chapter numbers have a published study note or sermon; the
+        rest are listed so the whole twenty-year plan is visible up front.
+      </p>
+
+      <div className="mt-8">
+        <BibleViewToggle listView={listView} graphView={graphView} />
+      </div>
     </div>
   );
 }

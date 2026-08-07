@@ -1,6 +1,5 @@
 import Link from "next/link";
-import GraphView from "@/components/GraphView";
-import { getBibleTree, getLatestStudyChapters } from "@/lib/study-notes";
+import { getLatestStudyChapters } from "@/lib/study-notes";
 import { getAllSermons } from "@/lib/sermons";
 import { formatDuration } from "@/lib/sermon-format";
 
@@ -13,7 +12,6 @@ function formatDate(iso: string): string {
 }
 
 export default function HomePage() {
-  const tree = getBibleTree();
   const recentSermons = getAllSermons().slice(0, 3);
   const [featured, ...rest] = getLatestStudyChapters(7);
 
@@ -108,7 +106,7 @@ export default function HomePage() {
       )}
 
       {recentSermons.length > 0 && (
-        <section className="border-b border-canvas-border bg-canvas-panel">
+        <section className="bg-canvas-panel">
           <div className="mx-auto max-w-5xl px-6 py-14">
             <div className="flex items-center justify-between">
               <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
@@ -144,23 +142,6 @@ export default function HomePage() {
           </div>
         </section>
       )}
-
-      <section id="graph">
-        <div className="mx-auto max-w-4xl px-6 py-14 text-center">
-          <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
-            The whole Bible, one chapter at a time
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-600">
-            Every book of the Bible, organized by testament &mdash; Old on
-            the left, New on the right. Most of it is still waiting to be
-            taught. The highlighted chapter has a published study note;
-            click it to read.
-          </p>
-          <div className="mt-8">
-            <GraphView tree={tree} />
-          </div>
-        </div>
-      </section>
     </>
   );
 }
