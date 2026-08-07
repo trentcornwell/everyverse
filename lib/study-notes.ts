@@ -135,6 +135,60 @@ function loadChapterContentMap(): ContentMap {
   return map;
 }
 
+function toExcerpt(raw: string, maxLen = 160): string {
+  const plain = raw
+    .replace(/!\[.*?\]\(.*?\)/g, "")
+    .replace(/\[([^\]]*)\]\(.*?\)/g, "$1")
+    .replace(/[#*_>`]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return plain.length > maxLen ? `${plain.slice(0, maxLen).trim()}…` : plain;
+}
+
+export interface LatestChapterEntry {
+  book: string;
+  slug: string;
+  chapter: number;
+  date: string;
+  title: string;
+  excerpt: string;
+  hasSermon: boolean;
+}
+
+// Powers the homepage's "latest teaching" cards: every chapter with a real
+// study note or sermon, newest first, so the front page always reflects
+// wherever the 20-year plan currently stands rather than a hardcoded verse.
+export function getLatestStudyChapters(limit = 6): LatestChapterEntry[] {
+  const map = loadChapterContentMap();
+  const entries: LatestChapterEntry[] = [];
+
+  for (const slug of Object.keys(map)) {
+    const displayName = bookSlugToDisplayName(slug) ?? slug;
+    for (const [chapterStr, content] of Object.entries(map[slug])) {
+      const chapter = Number(chapterStr);
+      const latestNoteDate = content.studyNotes.reduce(
+        (max, note) => (note.createdAt > max ? note.createdAt : max),
+        content.studyNotes[0]?.createdAt ?? ""
+      );
+      const date = content.sermon?.datePreached || latestNoteDate || new Date(0).toISOString();
+      const excerptSource = content.studyNotes[0]?.text ?? content.sermon?.description ?? "";
+
+      entries.push({
+        book: displayName,
+        slug,
+        chapter,
+        date,
+        title: content.sermon?.title ?? `${displayName} ${chapter}`,
+        excerpt: toExcerpt(excerptSource),
+        hasSermon: Boolean(content.sermon),
+      });
+    }
+  }
+
+  entries.sort((a, b) => (a.date < b.date ? 1 : -1));
+  return entries.slice(0, limit);
+}
+
 export function hasChapterContent(bookSlug: string, chapter: number): boolean {
   const map = loadChapterContentMap();
   return Boolean(map[bookSlug.toLowerCase()]?.[chapter]);

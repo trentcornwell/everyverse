@@ -1,49 +1,153 @@
 import Link from "next/link";
 import GraphView from "@/components/GraphView";
-import { getBibleTree } from "@/lib/study-notes";
+import { getBibleTree, getLatestStudyChapters } from "@/lib/study-notes";
 import { getAllSermons } from "@/lib/sermons";
 import { formatDuration } from "@/lib/sermon-format";
 
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString(undefined, {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 export default function HomePage() {
   const tree = getBibleTree();
-  const recentSermons = getAllSermons().slice(0, 4);
+  const recentSermons = getAllSermons().slice(0, 3);
+  const [featured, ...rest] = getLatestStudyChapters(7);
 
   return (
     <>
-      <section className="mx-auto max-w-3xl px-6 py-16 text-center sm:py-24">
-        <p className="font-serif text-sm uppercase tracking-[0.2em] text-accent">
-          Practical Bible Commentary
-        </p>
-        <h1 className="mt-4 font-display text-5xl uppercase leading-tight tracking-wide text-ink sm:text-6xl">
-          Free for everyone.
-          <br className="hidden sm:block" /> For the next 20 years.
-        </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
-          On June 7, 2026, Vision Baptist Church started teaching through the
-          Bible, book by book, beginning in Genesis. Trent Cornwell and
-          friends are giving their lives to this work over the next twenty
-          years, Lord willing. Everything taught here will be public and
-          free for anyone to read. Join us in the journey.
-        </p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Link
-            href="/verse/genesis/1/1"
-            className="rounded-md bg-accent px-6 py-3 text-sm font-medium text-white transition hover:bg-accent-hover"
-          >
-            Start in Genesis 1:1
-          </Link>
-          <a
-            href="#graph"
-            className="rounded-md border border-canvas-border px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-400"
-          >
-            Explore the graph
-          </a>
+      <section className="border-b border-canvas-border bg-canvas-panel">
+        <div className="mx-auto max-w-3xl px-6 py-14 text-center sm:py-20">
+          <p className="font-serif text-sm uppercase tracking-[0.2em] text-accent">
+            Practical Bible Commentary
+          </p>
+          <h1 className="mt-4 font-display text-4xl uppercase leading-tight tracking-wide text-ink sm:text-5xl">
+            Free for everyone.
+            <br className="hidden sm:block" /> For the next 20 years.
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
+            On June 7, 2026, Vision Baptist Church started teaching through the
+            Bible, book by book, beginning in Genesis. Trent Cornwell and
+            friends are giving their lives to this work over the next twenty
+            years, Lord willing. Everything taught here will be public and
+            free for anyone to read.
+          </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link
+              href="/verse/genesis/1/1"
+              className="rounded-md bg-accent px-6 py-3 text-sm font-medium text-white transition hover:bg-accent-hover"
+            >
+              Start in Genesis 1:1
+            </Link>
+            <a
+              href="#graph"
+              className="rounded-md border border-canvas-border px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-400"
+            >
+              Explore the graph
+            </a>
+          </div>
         </div>
       </section>
 
-      <section id="graph" className="border-t border-canvas-border bg-canvas-panel">
-        <div className="mx-auto max-w-4xl px-6 py-16 text-center">
-          <h2 className="font-display text-3xl uppercase tracking-wide text-ink">
+      {featured && (
+        <section className="border-b border-canvas-border">
+          <div className="mx-auto max-w-5xl px-6 py-14">
+            <p className="font-serif text-xs uppercase tracking-[0.2em] text-accent">
+              Latest teaching
+            </p>
+            <div
+              className={`mt-6 grid grid-cols-1 gap-10 ${
+                rest.length > 0 ? "lg:grid-cols-3" : ""
+              }`}
+            >
+              <Link
+                href={`/chapter/${featured.slug}/${featured.chapter}`}
+                className={`group ${rest.length > 0 ? "lg:col-span-2" : ""}`}
+              >
+                <p className="text-xs font-medium uppercase tracking-wider text-slate-500">
+                  {featured.book} {featured.chapter} &middot; {formatDate(featured.date)}
+                </p>
+                <h2 className="mt-2 font-display text-3xl uppercase tracking-wide text-ink group-hover:text-accent sm:text-4xl">
+                  {featured.title}
+                </h2>
+                {featured.excerpt && (
+                  <p className="mt-4 max-w-2xl font-serif text-base leading-relaxed text-slate-600">
+                    {featured.excerpt}
+                  </p>
+                )}
+                <span className="mt-4 inline-block text-sm font-medium text-accent group-hover:text-accent-hover">
+                  Read the study &rarr;
+                </span>
+              </Link>
+
+              {rest.length > 0 && (
+                <ul className="flex flex-col gap-5 border-t border-canvas-border pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+                  {rest.slice(0, 5).map((entry) => (
+                    <li key={`${entry.slug}-${entry.chapter}`}>
+                      <Link
+                        href={`/chapter/${entry.slug}/${entry.chapter}`}
+                        className="group block"
+                      >
+                        <p className="text-xs font-medium uppercase tracking-wider text-slate-500">
+                          {entry.book} {entry.chapter}
+                        </p>
+                        <p className="mt-1 font-serif text-sm font-semibold leading-snug text-ink group-hover:text-accent">
+                          {entry.title}
+                        </p>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {recentSermons.length > 0 && (
+        <section className="border-b border-canvas-border bg-canvas-panel">
+          <div className="mx-auto max-w-5xl px-6 py-14">
+            <div className="flex items-center justify-between">
+              <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
+                Recent sermons
+              </h2>
+              <Link
+                href="/sermons"
+                className="text-sm font-medium text-accent hover:text-accent-hover"
+              >
+                View all &rarr;
+              </Link>
+            </div>
+            <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {recentSermons.map((sermon) => (
+                <li key={sermon.id}>
+                  <Link
+                    href={`/sermons/${sermon.id}`}
+                    className="block rounded-lg border border-canvas-border bg-canvas-elevated p-5 transition hover:border-accent/50"
+                  >
+                    <p className="line-clamp-2 font-serif font-semibold text-ink">
+                      {sermon.title}
+                    </p>
+                    <p className="mt-2 text-xs text-slate-500">
+                      {formatDate(sermon.publishedAt)}
+                      {sermon.chapter ? ` · ${sermon.book} ${sermon.chapter}` : ""}
+                      {" · "}
+                      {formatDuration(sermon.durationSeconds)}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      <section id="graph">
+        <div className="mx-auto max-w-4xl px-6 py-14 text-center">
+          <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
             The whole Bible, one chapter at a time
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-600">
@@ -57,48 +161,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {recentSermons.length > 0 && (
-        <section className="border-t border-canvas-border">
-          <div className="mx-auto max-w-4xl px-6 py-16">
-            <div className="flex items-center justify-between">
-              <h2 className="font-display text-3xl uppercase tracking-wide text-ink">
-                Recent sermons
-              </h2>
-              <Link
-                href="/sermons"
-                className="text-sm font-medium text-accent hover:text-accent-hover"
-              >
-                View all &rarr;
-              </Link>
-            </div>
-            <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {recentSermons.map((sermon) => (
-                <li key={sermon.id}>
-                  <Link
-                    href={`/sermons/${sermon.id}`}
-                    className="block rounded-lg border border-canvas-border bg-canvas-elevated p-5 transition hover:border-accent/50"
-                  >
-                    <p className="truncate font-medium text-ink">
-                      {sermon.title}
-                    </p>
-                    <p className="mt-1 text-xs text-slate-500">
-                      {new Date(sermon.publishedAt).toLocaleDateString(undefined, {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                      {sermon.chapter ? ` · ${sermon.book} ${sermon.chapter}` : ""}
-                      {" · "}
-                      {formatDuration(sermon.durationSeconds)}
-                    </p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
     </>
   );
 }
