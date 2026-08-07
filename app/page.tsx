@@ -42,12 +42,12 @@ export default function HomePage() {
             >
               Start in Genesis 1:1
             </Link>
-            <a
-              href="#graph"
+            <Link
+              href="/bible"
               className="rounded-md border border-canvas-border px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-400"
             >
-              Explore the graph
-            </a>
+              Browse the whole Bible
+            </Link>
           </div>
         </div>
       </section>

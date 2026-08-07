@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Merriweather, Oswald } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/AppShell";
-import { getBibleTree } from "@/lib/study-notes";
 
 const merriweather = Merriweather({
   subsets: ["latin"],
@@ -29,12 +28,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const tree = getBibleTree();
-
   return (
     <html lang="en" className={`${merriweather.variable} ${oswald.variable}`}>
       <body>
-        <AppShell tree={tree}>{children}</AppShell>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
