@@ -73,7 +73,7 @@ function BookNode({
                   className={`inline-block rounded px-2 py-0.5 text-xs font-bold ${
                     active
                       ? "bg-accent/20 text-accent"
-                      : "text-slate-900 hover:bg-canvas-elevated hover:text-accent"
+                      : "text-ink hover:bg-canvas-elevated hover:text-accent"
                   }`}
                 >
                   {chapter.number}
@@ -106,7 +106,7 @@ export default function Sidebar({ open, onClose, tree }: SidebarProps) {
       >
         <div className="flex items-center justify-between gap-2 border-b border-canvas-border p-4">
           <Link href="/" className="flex items-baseline gap-1.5">
-            <span className="font-serif text-lg font-semibold text-slate-900">
+            <span className="font-serif text-lg font-semibold text-ink">
               EveryVerse
             </span>
             <span className="text-xs text-slate-500">.online</span>
@@ -115,7 +115,7 @@ export default function Sidebar({ open, onClose, tree }: SidebarProps) {
             type="button"
             onClick={onClose}
             aria-label="Close sidebar"
-            className="rounded p-1 text-slate-600 hover:bg-canvas-elevated hover:text-slate-900 lg:hidden"
+            className="rounded p-1 text-slate-600 hover:bg-canvas-elevated hover:text-ink lg:hidden"
           >
             <svg
               viewBox="0 0 24 24"

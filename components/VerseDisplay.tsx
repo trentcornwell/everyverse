@@ -21,7 +21,7 @@ export default function VerseDisplay({
       <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
         King James Version
       </p>
-      <h1 className="mt-2 font-serif text-2xl font-semibold text-slate-900 sm:text-3xl">
+      <h1 className="mt-2 font-serif text-2xl font-semibold text-ink sm:text-3xl">
         {book} {chapter}:{verse}
       </h1>
 
@@ -41,7 +41,7 @@ export default function VerseDisplay({
               <li key={`${v.book}-${v.chapter}-${v.verse}`}>
                 <Link
                   href={`/verse/${slugifyBook(v.book)}/${v.chapter}/${v.verse}`}
-                  className="rounded-full border border-canvas-border bg-canvas px-3 py-1 text-slate-700 hover:border-accent/50 hover:text-slate-900"
+                  className="rounded-full border border-canvas-border bg-canvas px-3 py-1 text-slate-700 hover:border-accent/50 hover:text-ink"
                 >
                   {v.book} {v.chapter}:{v.verse}
                 </Link>

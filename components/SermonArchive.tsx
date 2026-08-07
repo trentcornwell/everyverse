@@ -60,12 +60,12 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by title, passage, or topic..."
-          className="w-full rounded-md border border-canvas-border bg-canvas px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent sm:flex-1"
+          className="w-full rounded-md border border-canvas-border bg-canvas px-3 py-2 text-sm text-ink placeholder:text-slate-400 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent sm:flex-1"
         />
         <select
           value={selectedBook}
           onChange={(e) => setSelectedBook(e.target.value)}
-          className="rounded-md border border-canvas-border bg-canvas px-3 py-2 text-sm text-slate-900 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+          className="rounded-md border border-canvas-border bg-canvas px-3 py-2 text-sm text-ink focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
         >
           <option>All books</option>
           {grouped.map((g) => (
@@ -76,7 +76,7 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
           <select
             value={selectedSource}
             onChange={(e) => setSelectedSource(e.target.value)}
-            className="rounded-md border border-canvas-border bg-canvas px-3 py-2 text-sm text-slate-900 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            className="rounded-md border border-canvas-border bg-canvas px-3 py-2 text-sm text-ink focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
           >
             <option>All sources</option>
             {sources.map((s) => (
@@ -97,7 +97,7 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
       <div className="mt-8 flex flex-col gap-10">
         {filtered.map((group) => (
           <section key={group.book}>
-            <h2 className="text-lg font-semibold text-slate-900">
+            <h2 className="text-lg font-semibold text-ink">
               {group.book}
             </h2>
             <ul className="mt-3 flex flex-col gap-2">
@@ -108,7 +108,7 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
                     className="flex flex-col gap-1 rounded-lg border border-canvas-border bg-canvas-elevated p-4 transition hover:border-accent/50 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
                   >
                     <div className="min-w-0">
-                      <p className="truncate font-medium text-slate-900">
+                      <p className="truncate font-medium text-ink">
                         {sermon.title}
                       </p>
                       <p className="mt-0.5 text-xs text-slate-500">

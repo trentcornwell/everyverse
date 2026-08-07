@@ -39,12 +39,12 @@ export default function SearchBar() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Jump to e.g. &quot;John 3:16&quot;"
-          className="w-full rounded-md border border-canvas-border bg-canvas px-3 py-2 pr-9 text-sm text-slate-900 placeholder:text-slate-400 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+          className="w-full rounded-md border border-canvas-border bg-canvas px-3 py-2 pr-9 text-sm text-ink placeholder:text-slate-400 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
         />
         <button
           type="submit"
           aria-label="Search"
-          className="absolute right-1 top-1/2 -translate-y-1/2 rounded p-1.5 text-slate-500 hover:text-slate-900"
+          className="absolute right-1 top-1/2 -translate-y-1/2 rounded p-1.5 text-slate-500 hover:text-ink"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

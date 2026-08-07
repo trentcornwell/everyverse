@@ -8,20 +8,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        ink: "#3a3c3f", // primary text — warm charcoal, not pure black
         canvas: {
           DEFAULT: "#ffffff", // base app background
-          panel: "#f2f3f5", // sidebar / top bar
+          panel: "#f5f5f5", // header / secondary sections
           elevated: "#ffffff", // cards (distinguished by border, not fill)
-          border: "#e3e4e8",
+          border: "#dcdcdc",
         },
         accent: {
-          DEFAULT: "#7c3aed",
-          hover: "#6d28d9",
-          soft: "rgba(124, 58, 237, 0.12)",
+          DEFAULT: "#c6000e",
+          hover: "#a5000c",
+          soft: "rgba(198, 0, 14, 0.1)",
         },
       },
       fontFamily: {
-        serif: ["Georgia", "Cambria", "Times New Roman", "Times", "serif"],
+        serif: ["var(--font-merriweather)", "Georgia", "Times New Roman", "serif"],
+        display: ["var(--font-oswald)", "Impact", "Arial Narrow", "sans-serif"],
       },
     },
   },

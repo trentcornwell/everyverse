@@ -12,7 +12,7 @@ export default function SermonsPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
-      <h1 className="text-3xl font-semibold text-slate-900">Sermons</h1>
+      <h1 className="text-3xl font-semibold text-ink">Sermons</h1>
       <p className="mt-2 text-slate-600">
         Every sermon, organized by book of the Bible.
       </p>

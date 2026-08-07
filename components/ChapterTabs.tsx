@@ -30,7 +30,7 @@ export default function ChapterTabs({
     return `border-b-2 px-1 pb-3 text-sm font-medium transition ${
       active
         ? "border-accent text-accent"
-        : "border-transparent text-slate-500 hover:text-slate-900"
+        : "border-transparent text-slate-500 hover:text-ink"
     }`;
   }
 

@@ -31,7 +31,7 @@ export default function CommentSection({
 
   return (
     <section>
-      <h2 className="text-xl font-semibold text-slate-900">
+      <h2 className="text-xl font-semibold text-ink">
         {title} on {reference}{" "}
         <span className="text-slate-500">({comments.length})</span>
       </h2>

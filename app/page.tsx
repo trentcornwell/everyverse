@@ -14,7 +14,7 @@ export default function HomePage() {
         <p className="font-serif text-sm uppercase tracking-[0.2em] text-accent">
           Practical Bible Commentary
         </p>
-        <h1 className="mt-4 text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">
+        <h1 className="mt-4 font-display text-5xl uppercase leading-tight tracking-wide text-ink sm:text-6xl">
           Free for everyone.
           <br className="hidden sm:block" /> For the next 20 years.
         </h1>
@@ -43,7 +43,7 @@ export default function HomePage() {
 
       <section id="graph" className="border-t border-canvas-border bg-canvas-panel">
         <div className="mx-auto max-w-4xl px-6 py-16 text-center">
-          <h2 className="text-2xl font-semibold text-slate-900">
+          <h2 className="font-display text-3xl uppercase tracking-wide text-ink">
             The whole Bible, one chapter at a time
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-600">
@@ -62,7 +62,7 @@ export default function HomePage() {
         <section className="border-t border-canvas-border">
           <div className="mx-auto max-w-4xl px-6 py-16">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold text-slate-900">
+              <h2 className="font-display text-3xl uppercase tracking-wide text-ink">
                 Recent sermons
               </h2>
               <Link
@@ -79,7 +79,7 @@ export default function HomePage() {
                     href={`/sermons/${sermon.id}`}
                     className="block rounded-lg border border-canvas-border bg-canvas-elevated p-5 transition hover:border-accent/50"
                   >
-                    <p className="truncate font-medium text-slate-900">
+                    <p className="truncate font-medium text-ink">
                       {sermon.title}
                     </p>
                     <p className="mt-1 text-xs text-slate-500">

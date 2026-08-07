@@ -30,7 +30,7 @@ export default async function SermonPage({ params }: SermonPageProps) {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-8">
-      <Link href="/sermons" className="text-sm text-slate-500 hover:text-slate-900">
+      <Link href="/sermons" className="text-sm text-slate-500 hover:text-ink">
         &larr; Back to sermons
       </Link>
 
@@ -57,7 +57,7 @@ export default async function SermonPage({ params }: SermonPageProps) {
         ) : null}
 
         <div className="p-6 sm:p-8">
-          <h1 className="font-serif text-2xl font-semibold text-slate-900">
+          <h1 className="font-serif text-2xl font-semibold text-ink">
             {sermon.title}
           </h1>
           <p className="mt-2 text-sm text-slate-500">

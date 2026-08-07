@@ -26,7 +26,7 @@ export default function TopBar({ onMenuClick }: TopBarProps) {
         type="button"
         onClick={onMenuClick}
         aria-label="Toggle sidebar"
-        className="rounded p-1.5 text-slate-600 hover:bg-canvas-elevated hover:text-slate-900 lg:hidden"
+        className="rounded p-1.5 text-slate-600 hover:bg-canvas-elevated hover:text-ink lg:hidden"
       >
         <svg
           viewBox="0 0 24 24"

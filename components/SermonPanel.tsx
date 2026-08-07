@@ -32,7 +32,7 @@ export default function SermonPanel({
     <div className="flex flex-col gap-4">
       {sermon && (
         <div className="rounded-lg border border-canvas-border bg-canvas-elevated p-5">
-          <h3 className="text-lg font-semibold text-slate-900">
+          <h3 className="text-lg font-semibold text-ink">
             {sermon.title}
           </h3>
           {sermon.datePreached && (
@@ -77,7 +77,7 @@ export default function SermonPanel({
                   className="flex flex-col gap-1 rounded-lg border border-canvas-border bg-canvas-elevated p-4 transition hover:border-accent/50 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
                 >
                   <div className="min-w-0">
-                    <p className="truncate font-medium text-slate-900">
+                    <p className="truncate font-medium text-ink">
                       {s.title}
                     </p>
                     <p className="mt-0.5 text-xs text-slate-500">
