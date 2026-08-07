@@ -23,15 +23,13 @@ export default function HomePage() {
             Practical Bible Commentary
           </p>
           <h1 className="mt-4 font-display text-4xl uppercase leading-tight tracking-wide text-ink sm:text-5xl">
-            Free for everyone.
-            <br className="hidden sm:block" /> For the next 20 years.
+            Join us on our journey
+            <br className="hidden sm:block" /> through the whole Bible.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
-            On June 7, 2026, Vision Baptist Church started teaching through the
-            Bible, book by book, beginning in Genesis. Trent Cornwell and
-            friends are giving their lives to this work over the next twenty
-            years, Lord willing. Everything taught here will be public and
-            free for anyone to read.
+            On June 7, 2026, Vision Baptist Church started teaching through
+            the Bible, book by book, beginning in Genesis. Our desire is to
+            teach &ldquo;every verse&rdquo; to &ldquo;every nation.&rdquo;
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
