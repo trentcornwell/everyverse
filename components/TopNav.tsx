@@ -44,6 +44,14 @@ export default function TopNav() {
               {link.label}
             </Link>
           ))}
+          <a
+            href="https://baptistfoundations.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium text-green-600 hover:text-green-700"
+          >
+            Foundations
+          </a>
         </nav>
 
         <div className="ml-auto hidden w-64 lg:block">
@@ -99,6 +107,15 @@ export default function TopNav() {
                 {link.label}
               </Link>
             ))}
+            <a
+              href="https://baptistfoundations.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="text-sm font-medium text-green-600 hover:text-green-700"
+            >
+              Foundations
+            </a>
           </nav>
         </div>
       )}

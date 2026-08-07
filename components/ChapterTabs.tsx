@@ -2,17 +2,14 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import CommentSection from "./CommentSection";
-import type { VerseComment } from "@/lib/types";
 import type { Sermon as SyncedSermon } from "@/lib/sermons";
 import { formatDuration } from "@/lib/sermon-format";
 
-type Tab = "notes" | "video" | "audio" | "outline";
-const TAB_VALUES: Tab[] = ["notes", "video", "audio", "outline"];
+type Tab = "video" | "audio" | "outline";
+const TAB_VALUES: Tab[] = ["video", "audio", "outline"];
 
 interface ChapterTabsProps {
   reference: string;
-  studyNotes: VerseComment[];
   syncedSermons: SyncedSermon[];
 }
 
@@ -24,16 +21,12 @@ function formatDate(iso: string): string {
   });
 }
 
-export default function ChapterTabs({
-  reference,
-  studyNotes,
-  syncedSermons,
-}: ChapterTabsProps) {
+export default function ChapterTabs({ reference, syncedSermons }: ChapterTabsProps) {
   const searchParams = useSearchParams();
   const requestedTab = searchParams.get("tab");
   const initialTab: Tab = TAB_VALUES.includes(requestedTab as Tab)
     ? (requestedTab as Tab)
-    : "notes";
+    : "video";
   const [tab, setTab] = useState<Tab>(initialTab);
 
   const videos = syncedSermons.filter((s) => s.source === "youtube");
@@ -51,13 +44,6 @@ export default function ChapterTabs({
   return (
     <div>
       <div className="flex gap-6 border-b border-canvas-border">
-        <button
-          type="button"
-          onClick={() => setTab("notes")}
-          className={tabClass(tab === "notes")}
-        >
-          Study Notes
-        </button>
         <button
           type="button"
           onClick={() => setTab("video")}
@@ -82,15 +68,6 @@ export default function ChapterTabs({
       </div>
 
       <div className="mt-6">
-        {tab === "notes" && (
-          <CommentSection
-            reference={reference}
-            seedComments={studyNotes}
-            title="Study Notes"
-            formPlaceholder="Share a thought or question about this chapter..."
-          />
-        )}
-
         {tab === "video" &&
           (videos.length > 0 ? (
             <div className="flex flex-col gap-8">
