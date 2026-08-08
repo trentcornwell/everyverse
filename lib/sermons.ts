@@ -106,6 +106,17 @@ export function getSermonById(id: string): Sermon | undefined {
   return getAllSermons().find((s) => s.id === id);
 }
 
+// The homepage's "latest sermon" is specifically the most recent Sunday
+// morning message -- the sequential book-by-book teaching, not a Sunday
+// night/Wednesday/topical one-off. There's no explicit service-type field
+// from any source, but every sequential-teaching sermon has a detected
+// book/chapter (it's literally "chapter N of Genesis"), while topical
+// series (marriage, Lord's Supper, seminars, etc.) generally don't -- the
+// same signal already used sitewide to decide what's part of the project.
+export function getLatestSundayMorningSermon(): Sermon | undefined {
+  return getAllSermons().find((s) => s.book && s.chapter);
+}
+
 // The one graphic Faithlife/Logos actually exposes: the church's account
 // avatar, shared across every sermon (Logos doesn't provide per-sermon
 // artwork). Used beside the homepage's latest-sermon callout.

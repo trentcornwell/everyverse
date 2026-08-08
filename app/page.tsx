@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { getAllSermons, getLogosAccountImageUrl, getFeaturedArticles } from "@/lib/sermons";
+import {
+  getLatestSundayMorningSermon,
+  getLogosAccountImageUrl,
+  getFeaturedArticles,
+} from "@/lib/sermons";
 import { formatDuration } from "@/lib/sermon-format";
 
 function formatDate(iso: string): string {
@@ -11,9 +15,9 @@ function formatDate(iso: string): string {
 }
 
 export default function HomePage() {
-  const latestSermon = getAllSermons()[0];
+  const latestSermon = getLatestSundayMorningSermon();
   const accountImageUrl = getLogosAccountImageUrl();
-  const articles = getFeaturedArticles(3);
+  const [article] = getFeaturedArticles(1);
 
   return (
     <>
@@ -84,74 +88,69 @@ export default function HomePage() {
         </section>
       )}
 
-      <section className="border-b border-canvas-border bg-canvas-panel">
-        <div className="mx-auto max-w-3xl px-6 py-14 text-center">
-          <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
-            Read the Bible
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-slate-600">
-            Start reading the King James Version right now, verse by verse.
-          </p>
-          <Link
-            href="/verse/genesis/1/1"
-            className="mt-6 inline-block rounded-md bg-accent px-6 py-3 text-sm font-medium text-white transition hover:bg-accent-hover"
-          >
-            Read the KJV &rarr;
-          </Link>
-        </div>
-      </section>
+      <section className="bg-canvas-panel">
+        <div className="mx-auto max-w-5xl px-6 py-14">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+            <div className="text-center sm:text-left">
+              <h2 className="font-display text-xl uppercase tracking-wide text-ink">
+                Read the Bible
+              </h2>
+              <p className="mt-3 text-sm text-slate-600">
+                Start reading the King James Version right now, verse by
+                verse.
+              </p>
+              <Link
+                href="/verse/genesis/1/1"
+                className="mt-5 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-white transition hover:bg-accent-hover"
+              >
+                Read the KJV &rarr;
+              </Link>
+            </div>
 
-      <section className="border-b border-canvas-border">
-        <div className="mx-auto max-w-3xl px-6 py-14 text-center">
-          <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
-            Baptist Foundations
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-slate-600">
-            Explore the doctrinal foundations of the Baptist faith.
-          </p>
-          <a
-            href="https://baptistfoundations.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-block rounded-md bg-green-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-green-700"
-          >
-            Visit BaptistFoundations.com &rarr;
-          </a>
-        </div>
-      </section>
+            <div className="text-center sm:text-left">
+              <h2 className="font-display text-xl uppercase tracking-wide text-ink">
+                Baptist Foundations
+              </h2>
+              <p className="mt-3 text-sm text-slate-600">
+                Explore the doctrinal foundations of the Baptist faith.
+              </p>
+              <a
+                href="https://baptistfoundations.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-block rounded-md bg-green-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-green-700"
+              >
+                Visit BaptistFoundations.com &rarr;
+              </a>
+            </div>
 
-      {articles.length > 0 && (
-        <section>
-          <div className="mx-auto max-w-5xl px-6 py-14">
-            <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
-              Featured Articles
-            </h2>
-            <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              {articles.map((article) => (
-                <li key={article.id}>
-                  <Link
-                    href={`/sermons/${article.id}`}
-                    className="block h-full rounded-lg border border-canvas-border bg-canvas-elevated p-5 transition hover:border-accent/50"
-                  >
-                    <p className="line-clamp-2 font-serif font-semibold text-ink">
-                      {article.title}
+            {article && (
+              <div>
+                <h2 className="font-display text-xl uppercase tracking-wide text-ink">
+                  Featured Article
+                </h2>
+                <Link
+                  href={`/sermons/${article.id}`}
+                  className="mt-4 block rounded-lg border border-canvas-border bg-canvas-elevated p-4 transition hover:border-accent/50"
+                >
+                  <p className="line-clamp-2 font-serif font-semibold text-ink">
+                    {article.title}
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    {formatDate(article.publishedAt)}
+                    {article.chapter ? ` · ${article.book} ${article.chapter}` : ""}
+                  </p>
+                  {article.notesText && (
+                    <p className="mt-2 line-clamp-3 text-sm text-slate-600">
+                      {article.notesText}
                     </p>
-                    <p className="mt-2 text-xs text-slate-500">
-                      {formatDate(article.publishedAt)}
-                      {article.chapter ? ` · ${article.book} ${article.chapter}` : ""}
-                    </p>
-                    {article.notesText && (
-                      <p className="mt-2 line-clamp-3 text-sm text-slate-600">
-                        {article.notesText}
-                      </p>
-                    )}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                  )}
+                </Link>
+              </div>
+            )}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
     </>
   );
 }
