@@ -97,7 +97,9 @@ export default function HomePage() {
                 Read the Bible
               </h2>
               <p className="mt-3 text-sm text-slate-600">
-                Search for any book, then click any chapter to start reading.
+                No single event has the potential to change your life as
+                reading the Bible does. Start today! Search for any book,
+                then click any chapter to start reading.
               </p>
               <Link
                 href="/bible"
