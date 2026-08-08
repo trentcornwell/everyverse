@@ -109,10 +109,13 @@ export default function HomePage() {
 
             <div className="text-center sm:text-left">
               <h2 className="font-display text-xl uppercase tracking-wide text-ink">
-                Baptist Foundations
+                Be a disciple, make a disciple
               </h2>
               <p className="mt-3 text-sm text-slate-600">
-                Explore the doctrinal foundations of the Baptist faith.
+                Foundations is a bible-centered discipleship curriculum that
+                can be used on your own, with a partner, or a small group.
+                Use the materials, share the materials, go at your own pace,
+                no login required.
               </p>
               <a
                 href="https://baptistfoundations.com"
