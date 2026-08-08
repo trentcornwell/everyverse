@@ -31,17 +31,15 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
 
     return grouped
       .filter((g) => selectedBook === "All books" || g.book === selectedBook)
-      .map((g) => ({
-        ...g,
-        sermons: g.sermons.filter(
-          (s) =>
-            (selectedSource === "All sources" || s.source === selectedSource) &&
-            (!q ||
-              s.title.toLowerCase().includes(q) ||
-              s.description.toLowerCase().includes(q))
-        ),
-      }))
-      .filter((g) => g.sermons.length > 0);
+      .flatMap((g) => g.sermons)
+      .filter(
+        (s) =>
+          (selectedSource === "All sources" || s.source === selectedSource) &&
+          (!q ||
+            s.title.toLowerCase().includes(q) ||
+            s.description.toLowerCase().includes(q))
+      )
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
   }, [grouped, query, selectedBook, selectedSource]);
 
   if (grouped.length === 0) {
@@ -94,46 +92,35 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
         </p>
       )}
 
-      <div className="mt-8 flex flex-col gap-10">
-        {filtered.map((group) => (
-          <section key={group.book}>
-            <h2 className="text-lg font-semibold text-ink">
-              {group.book}
-            </h2>
-            <ul className="mt-3 flex flex-col gap-2">
-              {group.sermons.map((sermon) => (
-                <li key={sermon.id}>
-                  <Link
-                    href={`/sermons/${sermon.id}`}
-                    className="flex flex-col gap-1 rounded-lg border border-canvas-border bg-canvas-elevated p-4 transition hover:border-accent/50 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
-                  >
-                    <div className="min-w-0">
-                      <p className="truncate font-medium text-ink">
-                        {sermon.title}
-                      </p>
-                      <p className="mt-0.5 text-xs text-slate-500">
-                        {new Date(sermon.publishedAt).toLocaleDateString(undefined, {
-                          month: "long",
-                          day: "numeric",
-                          year: "numeric",
-                        })}
-                        {sermon.chapter ? ` · ${sermon.book} ${sermon.chapter}` : ""}
-                        {" · "}
-                        {SOURCE_LABELS[sermon.source] ?? sermon.source}
-                      </p>
-                    </div>
-                    <span className="shrink-0 text-xs font-medium text-slate-500">
-                      {sermon.source === "logos"
-                        ? "Notes"
-                        : formatDuration(sermon.durationSeconds)}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
+      <ul className="mt-8 flex flex-col gap-2">
+        {filtered.map((sermon) => (
+          <li key={sermon.id}>
+            <Link
+              href={`/sermons/${sermon.id}`}
+              className="flex flex-col gap-1 rounded-lg border border-canvas-border bg-canvas-elevated p-4 transition hover:border-accent/50 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+            >
+              <div className="min-w-0">
+                <p className="truncate font-medium text-ink">{sermon.title}</p>
+                <p className="mt-0.5 text-xs text-slate-500">
+                  {new Date(sermon.publishedAt).toLocaleDateString(undefined, {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                  {sermon.chapter ? ` · ${sermon.book} ${sermon.chapter}` : ""}
+                  {" · "}
+                  {SOURCE_LABELS[sermon.source] ?? sermon.source}
+                </p>
+              </div>
+              <span className="shrink-0 text-xs font-medium text-slate-500">
+                {sermon.source === "logos"
+                  ? "Notes"
+                  : formatDuration(sermon.durationSeconds)}
+              </span>
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
