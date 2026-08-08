@@ -140,6 +140,33 @@ export function getSermonImageUrl(sermon: Sermon): string | undefined {
   return sermon.seriesCoverImageUrl ?? getLogosAccountImageUrl();
 }
 
+function truncate(text: string, maxLen = 220): string {
+  const trimmed = text.trim();
+  return trimmed.length > maxLen ? `${trimmed.slice(0, maxLen).trim()}…` : trimmed;
+}
+
+// A short overview for the homepage's latest-sermon callout. Logos notes
+// often lead with a one-line "BIG IDEA:" summary -- use that when present,
+// otherwise fall back to the start of the notes (minus the "Text: ..."
+// passage-reference line), or to the source's own description for sources
+// without notes. Logos' own `description` is just a bare passage reference
+// (e.g. "Genesis 6:1-5"), not a real summary, so it's skipped there.
+export function getSermonOverview(sermon: Sermon): string | undefined {
+  if (sermon.notesText) {
+    const bigIdea = sermon.notesText.match(/BIG IDEA:\s*([\s\S]*?)(?:\n\n|$)/i);
+    if (bigIdea?.[1]) return truncate(bigIdea[1].replace(/\s+/g, " "));
+
+    const withoutReferenceLine = sermon.notesText.replace(/^Text:.*\n+/i, "").trim();
+    if (withoutReferenceLine) return truncate(withoutReferenceLine.replace(/\s+/g, " "));
+  }
+
+  if (sermon.source !== "logos" && sermon.description) {
+    return truncate(sermon.description);
+  }
+
+  return undefined;
+}
+
 // Logos sermon notes doubling as "articles" for the homepage — the closest
 // thing this site has to written, publishable reading material outside of
 // study notes.

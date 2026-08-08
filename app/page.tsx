@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   getLatestSundayMorningSermon,
   getSermonImageUrl,
+  getSermonOverview,
   getFeaturedArticles,
 } from "@/lib/sermons";
 import { formatDuration } from "@/lib/sermon-format";
@@ -17,6 +18,7 @@ function formatDate(iso: string): string {
 export default function HomePage() {
   const latestSermon = getLatestSundayMorningSermon();
   const sermonImageUrl = latestSermon ? getSermonImageUrl(latestSermon) : undefined;
+  const sermonOverview = latestSermon ? getSermonOverview(latestSermon) : undefined;
   const [article] = getFeaturedArticles(1);
 
   return (
@@ -65,6 +67,11 @@ export default function HomePage() {
                 <h2 className="mt-2 font-display text-3xl uppercase tracking-wide text-ink group-hover:text-accent sm:text-4xl">
                   {latestSermon.title}
                 </h2>
+                {sermonOverview && (
+                  <p className="mt-3 max-w-2xl font-serif text-base leading-relaxed text-slate-600">
+                    {sermonOverview}
+                  </p>
+                )}
                 <span className="mt-4 inline-block text-sm font-medium text-accent group-hover:text-accent-hover">
                   Watch or listen &rarr;
                 </span>
