@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   getLatestSundayMorningSermon,
-  getLogosAccountImageUrl,
+  getSermonImageUrl,
   getFeaturedArticles,
 } from "@/lib/sermons";
 import { formatDuration } from "@/lib/sermon-format";
@@ -16,7 +16,7 @@ function formatDate(iso: string): string {
 
 export default function HomePage() {
   const latestSermon = getLatestSundayMorningSermon();
-  const accountImageUrl = getLogosAccountImageUrl();
+  const sermonImageUrl = latestSermon ? getSermonImageUrl(latestSermon) : undefined;
   const [article] = getFeaturedArticles(1);
 
   return (
@@ -76,10 +76,10 @@ export default function HomePage() {
                 </span>
               </Link>
 
-              {accountImageUrl && (
+              {sermonImageUrl && (
                 <img
-                  src={accountImageUrl}
-                  alt="Vision Baptist Church"
+                  src={sermonImageUrl}
+                  alt={latestSermon.book ? `${latestSermon.book} series artwork` : "Vision Baptist Church"}
                   className="w-full rounded-lg border border-canvas-border object-cover sm:col-span-1"
                 />
               )}
@@ -96,14 +96,13 @@ export default function HomePage() {
                 Read the Bible
               </h2>
               <p className="mt-3 text-sm text-slate-600">
-                Start reading the King James Version right now, verse by
-                verse.
+                Start reading the Bible right now, chapter by chapter.
               </p>
               <Link
-                href="/verse/genesis/1/1"
+                href="/chapter/genesis/1"
                 className="mt-5 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-white transition hover:bg-accent-hover"
               >
-                Read the KJV &rarr;
+                Read the Bible &rarr;
               </Link>
             </div>
 

@@ -3,14 +3,16 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import type { Sermon as SyncedSermon } from "@/lib/sermons";
+import type { ChapterVerse } from "@/lib/kjv";
 import { formatDuration } from "@/lib/sermon-format";
 
-type Tab = "video" | "audio" | "outline";
-const TAB_VALUES: Tab[] = ["video", "audio", "outline"];
+type Tab = "scripture" | "video" | "audio" | "outline";
+const TAB_VALUES: Tab[] = ["scripture", "video", "audio", "outline"];
 
 interface ChapterTabsProps {
   reference: string;
   syncedSermons: SyncedSermon[];
+  verses: ChapterVerse[] | null;
 }
 
 function formatDate(iso: string): string {
@@ -21,12 +23,12 @@ function formatDate(iso: string): string {
   });
 }
 
-export default function ChapterTabs({ reference, syncedSermons }: ChapterTabsProps) {
+export default function ChapterTabs({ reference, syncedSermons, verses }: ChapterTabsProps) {
   const searchParams = useSearchParams();
   const requestedTab = searchParams.get("tab");
   const initialTab: Tab = TAB_VALUES.includes(requestedTab as Tab)
     ? (requestedTab as Tab)
-    : "video";
+    : "scripture";
   const [tab, setTab] = useState<Tab>(initialTab);
 
   const videos = syncedSermons.filter((s) => s.source === "youtube");
@@ -44,6 +46,13 @@ export default function ChapterTabs({ reference, syncedSermons }: ChapterTabsPro
   return (
     <div>
       <div className="flex gap-6 border-b border-canvas-border">
+        <button
+          type="button"
+          onClick={() => setTab("scripture")}
+          className={tabClass(tab === "scripture")}
+        >
+          Scripture
+        </button>
         <button
           type="button"
           onClick={() => setTab("video")}
@@ -68,6 +77,29 @@ export default function ChapterTabs({ reference, syncedSermons }: ChapterTabsPro
       </div>
 
       <div className="mt-6">
+        {tab === "scripture" &&
+          (verses && verses.length > 0 ? (
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+                King James Version
+              </p>
+              <div className="mt-4 font-serif text-lg leading-relaxed text-ink">
+                {verses.map((v) => (
+                  <span key={v.verse} className={v.newParagraph ? "mt-4 block" : ""}>
+                    <sup className="mr-1 font-sans text-xs font-semibold text-accent">
+                      {v.verse}
+                    </sup>
+                    <span dangerouslySetInnerHTML={{ __html: `${v.html} ` }} />
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p className="text-sm text-slate-600">
+              Scripture text isn&rsquo;t available for {reference}.
+            </p>
+          ))}
+
         {tab === "video" &&
           (videos.length > 0 ? (
             <div className="flex flex-col gap-8">

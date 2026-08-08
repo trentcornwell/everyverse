@@ -30,6 +30,9 @@ export interface Sermon {
   // trust model as study notes, never user-submitted).
   notesHtml?: string;
   notesText?: string;
+  // Logos series cover art (e.g. the "Book of Genesis" series graphic),
+  // when this sermon belongs to a series that has custom cover art.
+  seriesCoverImageUrl?: string;
   source: SermonSource;
 }
 
@@ -117,9 +120,8 @@ export function getLatestSundayMorningSermon(): Sermon | undefined {
   return getAllSermons().find((s) => s.book && s.chapter);
 }
 
-// The one graphic Faithlife/Logos actually exposes: the church's account
-// avatar, shared across every sermon (Logos doesn't provide per-sermon
-// artwork). Used beside the homepage's latest-sermon callout.
+// Fallback graphic when a sermon's series has no custom cover art: the
+// church's account avatar on Faithlife/Logos.
 export function getLogosAccountImageUrl(): string | undefined {
   const filePath = path.join(SERMONS_DIR, "logos.json");
   if (!fs.existsSync(filePath)) return undefined;
@@ -129,6 +131,13 @@ export function getLogosAccountImageUrl(): string | undefined {
   } catch {
     return undefined;
   }
+}
+
+// The graphic to show beside a sermon: its series' own cover art when
+// available (e.g. the "Book of Genesis" series graphic), falling back to
+// the church's general account avatar otherwise.
+export function getSermonImageUrl(sermon: Sermon): string | undefined {
+  return sermon.seriesCoverImageUrl ?? getLogosAccountImageUrl();
 }
 
 // Logos sermon notes doubling as "articles" for the homepage — the closest

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { bookSlugToDisplayName } from "@/lib/bible-data";
 import { getSermonsForChapter } from "@/lib/sermons";
+import { getChapterVerses } from "@/lib/kjv";
 import ChapterTabs from "@/components/ChapterTabs";
 
 interface ChapterPageProps {
@@ -29,7 +30,8 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
   const book = bookSlugToDisplayName(bookParam) ?? bookParam;
   const reference = `${book} ${chapterNum}`;
   const syncedSermons = getSermonsForChapter(bookParam, chapterNum);
-  const hasAnything = syncedSermons.length > 0;
+  const verses = getChapterVerses(bookParam, chapterNum);
+  const hasAnything = Boolean(verses) || syncedSermons.length > 0;
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-10">
@@ -49,7 +51,11 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
       {hasAnything ? (
         <div className="mt-8">
           <Suspense fallback={null}>
-            <ChapterTabs reference={reference} syncedSermons={syncedSermons} />
+            <ChapterTabs
+              reference={reference}
+              syncedSermons={syncedSermons}
+              verses={verses}
+            />
           </Suspense>
         </div>
       ) : (

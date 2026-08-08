@@ -87,16 +87,18 @@ function getSeriesIds(profileState) {
   return seriesIds;
 }
 
-async function getSermonsForSeries(seriesId) {
+async function getSeriesData(seriesId) {
   const state = await fetchState(`https://sermons.logos.com/series/${seriesId}`);
   const sermons = Object.values(state.sermons ?? {})
     .map((entry) => entry.sermon)
     .filter(Boolean);
+  const cover = state.series?.[seriesId]?.series?.cover;
+  const coverImageUrl = cover?.small?.url ?? cover?.url;
   console.log(`Series ${seriesId}: ${sermons.length} sermons.`);
-  return sermons;
+  return { sermons, coverImageUrl };
 }
 
-function mapSermon(raw) {
+function mapSermon(raw, seriesCoverImageUrl) {
   const passageText = raw.passages?.[0]?.text ?? "";
   const { book, chapter } = detectPassage(passageText, raw.title);
   const blocks = raw.sermonText?.sermonEditor?.blocks ?? [];
@@ -113,6 +115,7 @@ function mapSermon(raw) {
     speaker: raw.speaker?.speakerName,
     notesHtml: notesHtml || undefined,
     notesText: notesText || undefined,
+    seriesCoverImageUrl,
     book,
     chapter,
   };
@@ -126,9 +129,9 @@ async function main() {
 
   for (const seriesId of seriesIds) {
     try {
-      const sermons = await getSermonsForSeries(seriesId);
+      const { sermons, coverImageUrl } = await getSeriesData(seriesId);
       for (const raw of sermons) {
-        bySermonId.set(String(raw.sermonId), mapSermon(raw));
+        bySermonId.set(String(raw.sermonId), mapSermon(raw, coverImageUrl));
       }
     } catch (err) {
       console.warn(`Skipping series ${seriesId}:`, err.message);
