@@ -106,6 +106,29 @@ export function getSermonById(id: string): Sermon | undefined {
   return getAllSermons().find((s) => s.id === id);
 }
 
+// The one graphic Faithlife/Logos actually exposes: the church's account
+// avatar, shared across every sermon (Logos doesn't provide per-sermon
+// artwork). Used beside the homepage's latest-sermon callout.
+export function getLogosAccountImageUrl(): string | undefined {
+  const filePath = path.join(SERMONS_DIR, "logos.json");
+  if (!fs.existsSync(filePath)) return undefined;
+  try {
+    const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    return data.accountImageUrl;
+  } catch {
+    return undefined;
+  }
+}
+
+// Logos sermon notes doubling as "articles" for the homepage — the closest
+// thing this site has to written, publishable reading material outside of
+// study notes.
+export function getFeaturedArticles(limit = 3): Sermon[] {
+  return getAllSermons()
+    .filter((s) => s.source === "logos" && (s.notesHtml || s.notesText))
+    .slice(0, limit);
+}
+
 export function getSermonsForChapter(bookSlug: string, chapter: number): Sermon[] {
   return getAllSermons().filter(
     (s) => s.book && s.chapter === chapter && slugifyBook(s.book) === bookSlug

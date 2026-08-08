@@ -70,9 +70,19 @@ async function fetchState(url) {
   return JSON.parse(html.slice(jsonStart, endIdx));
 }
 
-async function getSeriesIds() {
-  const state = await fetchState(`https://sermons.logos.com/profile/${ACCOUNT_SLUG}`);
-  const seriesIds = state.accountSeries?.[ACCOUNT_SLUG]?.seriesIds ?? [];
+async function getProfileState() {
+  return fetchState(`https://sermons.logos.com/profile/${ACCOUNT_SLUG}`);
+}
+
+function getAccountImageUrl(profileState) {
+  const avatarUrl = profileState.accounts?.[ACCOUNT_SLUG]?.account?.avatarUrl;
+  if (!avatarUrl) return undefined;
+  // The profile embeds this as a protocol-relative URL (starts with "//").
+  return avatarUrl.startsWith("//") ? `https:${avatarUrl}` : avatarUrl;
+}
+
+function getSeriesIds(profileState) {
+  const seriesIds = profileState.accountSeries?.[ACCOUNT_SLUG]?.seriesIds ?? [];
   console.log(`Found ${seriesIds.length} series (first page) for ${ACCOUNT_SLUG}.`);
   return seriesIds;
 }
@@ -109,7 +119,9 @@ function mapSermon(raw) {
 }
 
 async function main() {
-  const seriesIds = await getSeriesIds();
+  const profileState = await getProfileState();
+  const accountImageUrl = getAccountImageUrl(profileState);
+  const seriesIds = getSeriesIds(profileState);
   const bySermonId = new Map();
 
   for (const seriesId of seriesIds) {
@@ -132,6 +144,7 @@ async function main() {
       {
         source: "logos",
         account: ACCOUNT_SLUG,
+        accountImageUrl,
         syncedAt: new Date().toISOString(),
         sermons,
       },

@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { getLatestStudyChapters } from "@/lib/study-notes";
-import { getAllSermons } from "@/lib/sermons";
+import { getAllSermons, getLogosAccountImageUrl, getFeaturedArticles } from "@/lib/sermons";
 import { formatDuration } from "@/lib/sermon-format";
 
 function formatDate(iso: string): string {
@@ -12,8 +11,9 @@ function formatDate(iso: string): string {
 }
 
 export default function HomePage() {
-  const recentSermons = getAllSermons().slice(0, 3);
-  const [featured, ...rest] = getLatestStudyChapters(7);
+  const latestSermon = getAllSermons()[0];
+  const accountImageUrl = getLogosAccountImageUrl();
+  const articles = getFeaturedArticles(3);
 
   return (
     <>
@@ -48,91 +48,103 @@ export default function HomePage() {
         </div>
       </section>
 
-      {featured && (
+      {latestSermon && (
         <section className="border-b border-canvas-border">
           <div className="mx-auto max-w-5xl px-6 py-14">
             <p className="font-serif text-xs uppercase tracking-[0.2em] text-accent">
-              Latest teaching
+              Latest Sermon
             </p>
-            <div
-              className={`mt-6 grid grid-cols-1 gap-10 ${
-                rest.length > 0 ? "lg:grid-cols-3" : ""
-              }`}
-            >
-              <Link
-                href={`/chapter/${featured.slug}/${featured.chapter}`}
-                className={`group ${rest.length > 0 ? "lg:col-span-2" : ""}`}
-              >
+            <div className="mt-6 grid grid-cols-1 items-center gap-8 sm:grid-cols-3">
+              <Link href={`/sermons/${latestSermon.id}`} className="group sm:col-span-2">
                 <p className="text-xs font-medium uppercase tracking-wider text-slate-500">
-                  {featured.book} {featured.chapter} &middot; {formatDate(featured.date)}
+                  {formatDate(latestSermon.publishedAt)}
+                  {latestSermon.chapter
+                    ? ` · ${latestSermon.book} ${latestSermon.chapter}`
+                    : ""}
+                  {latestSermon.durationSeconds > 0 &&
+                    ` · ${formatDuration(latestSermon.durationSeconds)}`}
                 </p>
                 <h2 className="mt-2 font-display text-3xl uppercase tracking-wide text-ink group-hover:text-accent sm:text-4xl">
-                  {featured.title}
+                  {latestSermon.title}
                 </h2>
-                {featured.excerpt && (
-                  <p className="mt-4 max-w-2xl font-serif text-base leading-relaxed text-slate-600">
-                    {featured.excerpt}
-                  </p>
-                )}
                 <span className="mt-4 inline-block text-sm font-medium text-accent group-hover:text-accent-hover">
-                  Read the study &rarr;
+                  Watch or listen &rarr;
                 </span>
               </Link>
 
-              {rest.length > 0 && (
-                <ul className="flex flex-col gap-5 border-t border-canvas-border pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
-                  {rest.slice(0, 5).map((entry) => (
-                    <li key={`${entry.slug}-${entry.chapter}`}>
-                      <Link
-                        href={`/chapter/${entry.slug}/${entry.chapter}`}
-                        className="group block"
-                      >
-                        <p className="text-xs font-medium uppercase tracking-wider text-slate-500">
-                          {entry.book} {entry.chapter}
-                        </p>
-                        <p className="mt-1 font-serif text-sm font-semibold leading-snug text-ink group-hover:text-accent">
-                          {entry.title}
-                        </p>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+              {accountImageUrl && (
+                <img
+                  src={accountImageUrl}
+                  alt="Vision Baptist Church"
+                  className="w-full rounded-lg border border-canvas-border object-cover sm:col-span-1"
+                />
               )}
             </div>
           </div>
         </section>
       )}
 
-      {recentSermons.length > 0 && (
-        <section className="bg-canvas-panel">
+      <section className="border-b border-canvas-border bg-canvas-panel">
+        <div className="mx-auto max-w-3xl px-6 py-14 text-center">
+          <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
+            Read the Bible
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-slate-600">
+            Start reading the King James Version right now, verse by verse.
+          </p>
+          <Link
+            href="/verse/genesis/1/1"
+            className="mt-6 inline-block rounded-md bg-accent px-6 py-3 text-sm font-medium text-white transition hover:bg-accent-hover"
+          >
+            Read the KJV &rarr;
+          </Link>
+        </div>
+      </section>
+
+      <section className="border-b border-canvas-border">
+        <div className="mx-auto max-w-3xl px-6 py-14 text-center">
+          <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
+            Baptist Foundations
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-slate-600">
+            Explore the doctrinal foundations of the Baptist faith.
+          </p>
+          <a
+            href="https://baptistfoundations.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-block rounded-md bg-green-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-green-700"
+          >
+            Visit BaptistFoundations.com &rarr;
+          </a>
+        </div>
+      </section>
+
+      {articles.length > 0 && (
+        <section>
           <div className="mx-auto max-w-5xl px-6 py-14">
-            <div className="flex items-center justify-between">
-              <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
-                Recent sermons
-              </h2>
-              <Link
-                href="/sermons"
-                className="text-sm font-medium text-accent hover:text-accent-hover"
-              >
-                View all &rarr;
-              </Link>
-            </div>
+            <h2 className="font-display text-2xl uppercase tracking-wide text-ink">
+              Featured Articles
+            </h2>
             <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              {recentSermons.map((sermon) => (
-                <li key={sermon.id}>
+              {articles.map((article) => (
+                <li key={article.id}>
                   <Link
-                    href={`/sermons/${sermon.id}`}
-                    className="block rounded-lg border border-canvas-border bg-canvas-elevated p-5 transition hover:border-accent/50"
+                    href={`/sermons/${article.id}`}
+                    className="block h-full rounded-lg border border-canvas-border bg-canvas-elevated p-5 transition hover:border-accent/50"
                   >
                     <p className="line-clamp-2 font-serif font-semibold text-ink">
-                      {sermon.title}
+                      {article.title}
                     </p>
                     <p className="mt-2 text-xs text-slate-500">
-                      {formatDate(sermon.publishedAt)}
-                      {sermon.chapter ? ` · ${sermon.book} ${sermon.chapter}` : ""}
-                      {" · "}
-                      {formatDuration(sermon.durationSeconds)}
+                      {formatDate(article.publishedAt)}
+                      {article.chapter ? ` · ${article.book} ${article.chapter}` : ""}
                     </p>
+                    {article.notesText && (
+                      <p className="mt-2 line-clamp-3 text-sm text-slate-600">
+                        {article.notesText}
+                      </p>
+                    )}
                   </Link>
                 </li>
               ))}
