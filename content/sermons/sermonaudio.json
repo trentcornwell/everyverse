@@ -1,8 +1,19 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-08-07T11:08:11.269Z",
+  "syncedAt": "2026-08-08T10:52:16.752Z",
   "sermons": [
+    {
+      "id": "87261545482649",
+      "title": "Approved Workman are not Ash..",
+      "description": "2 Timothy 2:15",
+      "publishedAt": "2026-08-05",
+      "durationSeconds": 1431,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=87261545482649",
+      "speaker": "Trent Cornwell",
+      "book": "2 Timothy",
+      "chapter": 2
+    },
     {
       "id": "85261517445013",
       "title": "Building What Others Aren't..",
