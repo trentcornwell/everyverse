@@ -90,10 +90,10 @@ export default function HomePage() {
                 Read the Bible
               </h2>
               <p className="mt-3 text-sm text-slate-600">
-                Start reading the Bible right now, chapter by chapter.
+                Search for any book, then click any chapter to start reading.
               </p>
               <Link
-                href="/chapter/genesis/1"
+                href="/bible"
                 className="mt-5 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-white transition hover:bg-accent-hover"
               >
                 Read the Bible &rarr;
