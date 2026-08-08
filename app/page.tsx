@@ -37,14 +37,8 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
-              href="/verse/genesis/1/1"
-              className="rounded-md bg-accent px-6 py-3 text-sm font-medium text-white transition hover:bg-accent-hover"
-            >
-              Start in Genesis 1:1
-            </Link>
-            <Link
               href="/bible"
-              className="rounded-md border border-canvas-border px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-400"
+              className="rounded-md bg-accent px-6 py-3 text-sm font-medium text-white transition hover:bg-accent-hover"
             >
               Browse the whole Bible
             </Link>
