@@ -33,6 +33,10 @@ export interface Sermon {
   // Logos series cover art (e.g. the "Book of Genesis" series graphic),
   // when this sermon belongs to a series that has custom cover art.
   seriesCoverImageUrl?: string;
+  // True for manually-preserved sermons whose original source page has
+  // since been deleted upstream -- `url` is only kept for reference, it
+  // 404s, so it shouldn't be rendered as a clickable link.
+  sourceRemoved?: boolean;
   source: SermonSource;
 }
 

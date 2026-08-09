@@ -105,7 +105,7 @@ export default async function SermonPage({ params }: SermonPageProps) {
             )
           )}
 
-          {sermon.source === "logos" && (
+          {sermon.source === "logos" && !sermon.sourceRemoved && (
             <a
               href={sermon.url}
               className="mt-6 inline-block text-sm font-medium text-accent hover:text-accent-hover"

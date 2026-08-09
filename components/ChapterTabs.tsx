@@ -169,12 +169,14 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
                       </p>
                     )
                   )}
-                  <a
-                    href={s.url}
-                    className="mt-3 inline-block text-sm font-medium text-accent hover:text-accent-hover"
-                  >
-                    View on Logos Sermons &rarr;
-                  </a>
+                  {!s.sourceRemoved && (
+                    <a
+                      href={s.url}
+                      className="mt-3 inline-block text-sm font-medium text-accent hover:text-accent-hover"
+                    >
+                      View on Logos Sermons &rarr;
+                    </a>
+                  )}
                 </div>
               ))}
             </div>
