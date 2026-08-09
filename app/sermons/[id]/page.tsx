@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getSermonById } from "@/lib/sermons";
 import { formatDuration } from "@/lib/sermon-format";
 import { slugifyBook } from "@/lib/bible-data";
+import TranslateWidget from "@/components/TranslateWidget";
 
 interface SermonPageProps {
   params: Promise<{ id: string }>;
@@ -87,10 +88,15 @@ export default async function SermonPage({ params }: SermonPageProps) {
           )}
 
           {sermon.source === "logos" && sermon.notesHtml ? (
-            <div
-              className="prose prose-sm prose-slate mt-6 max-w-none prose-a:text-accent"
-              dangerouslySetInnerHTML={{ __html: sermon.notesHtml }}
-            />
+            <>
+              <div className="mt-6">
+                <TranslateWidget />
+              </div>
+              <div
+                className="prose prose-sm prose-slate mt-4 max-w-none prose-a:text-accent"
+                dangerouslySetInnerHTML={{ __html: sermon.notesHtml }}
+              />
+            </>
           ) : (
             sermon.description && (
               <p className="mt-6 whitespace-pre-line text-sm text-slate-600">

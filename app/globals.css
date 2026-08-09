@@ -14,3 +14,15 @@ body {
 ::selection {
   @apply bg-accent/30;
 }
+
+/* Google's website-translator widget adds a full-width top banner iframe
+   once a language is picked, plus an inline top offset on <body> to make
+   room for it -- both clash with our own sticky nav, so this keeps the
+   language-picker dropdown itself (the actual control) while dropping the
+   redundant banner. */
+.goog-te-banner-frame {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
