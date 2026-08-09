@@ -8,11 +8,7 @@ declare global {
     google?: {
       translate: {
         TranslateElement: {
-          new (
-            options: { pageLanguage: string; autoDisplay: boolean; layout: unknown },
-            containerId: string
-          ): unknown;
-          InlineLayout: { SIMPLE: unknown };
+          new (options: { pageLanguage: string; autoDisplay: boolean }, containerId: string): unknown;
         };
       };
     };
@@ -26,6 +22,13 @@ let scriptRequested = false;
 // works entirely client-side. It translates the whole rendered page when a
 // language is picked (there's no supported way to scope it to one section),
 // which is fine here since it's only mounted on pages that have an Outline.
+//
+// Deliberately not passing a `layout` option: that opts into Google's fancy
+// "SIMPLE"/"HORIZONTAL" custom dropdown, which renders as a cross-origin
+// popup we can't resize or fix when it overflows the viewport. Omitting it
+// falls back to the classic widget, a plain native <select> -- browsers
+// handle native dropdowns' sizing and scrolling correctly on every device
+// on their own.
 export default function TranslateWidget() {
   const initialized = useRef(false);
 
@@ -39,7 +42,6 @@ export default function TranslateWidget() {
         {
           pageLanguage: "en",
           autoDisplay: false,
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
         },
         CONTAINER_ID
       );
