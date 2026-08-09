@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { Sermon as SyncedSermon } from "@/lib/sermons";
 import type { ChapterVerse } from "@/lib/kjv";
 import { formatDuration } from "@/lib/sermon-format";
+import TranslateWidget from "./TranslateWidget";
 
 type Tab = "scripture" | "video" | "audio" | "outline";
 const TAB_VALUES: Tab[] = ["scripture", "video", "audio", "outline"];
@@ -151,6 +152,7 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
         {tab === "outline" &&
           (outlines.length > 0 ? (
             <div className="flex flex-col gap-8">
+              <TranslateWidget />
               {outlines.map((s) => (
                 <div key={s.id}>
                   <p className="font-serif font-semibold text-ink">{s.title}</p>

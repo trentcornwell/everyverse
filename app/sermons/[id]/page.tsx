@@ -87,18 +87,19 @@ export default async function SermonPage({ params }: SermonPageProps) {
             </Link>
           )}
 
-          <div className="mt-6">
-            <TranslateWidget />
-          </div>
-
           {sermon.source === "logos" && sermon.notesHtml ? (
-            <div
-              className="prose prose-sm prose-slate mt-4 max-w-none prose-a:text-accent"
-              dangerouslySetInnerHTML={{ __html: sermon.notesHtml }}
-            />
+            <>
+              <div className="mt-6">
+                <TranslateWidget />
+              </div>
+              <div
+                className="prose prose-sm prose-slate mt-4 max-w-none prose-a:text-accent"
+                dangerouslySetInnerHTML={{ __html: sermon.notesHtml }}
+              />
+            </>
           ) : (
             sermon.description && (
-              <p className="mt-4 whitespace-pre-line text-sm text-slate-600">
+              <p className="mt-6 whitespace-pre-line text-sm text-slate-600">
                 {sermon.description}
               </p>
             )

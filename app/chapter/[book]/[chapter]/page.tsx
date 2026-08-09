@@ -5,7 +5,6 @@ import { bookSlugToDisplayName } from "@/lib/bible-data";
 import { getSermonsForChapter } from "@/lib/sermons";
 import { getChapterVerses } from "@/lib/kjv";
 import ChapterTabs from "@/components/ChapterTabs";
-import TranslateWidget from "@/components/TranslateWidget";
 
 interface ChapterPageProps {
   params: Promise<{
@@ -47,9 +46,6 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
         <h1 className="mt-3 font-serif text-3xl font-bold leading-tight text-ink sm:text-4xl">
           {reference}
         </h1>
-        <div className="mt-4">
-          <TranslateWidget />
-        </div>
       </div>
 
       {hasAnything ? (
