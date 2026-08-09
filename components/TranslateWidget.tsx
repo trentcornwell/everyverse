@@ -58,10 +58,17 @@ export default function TranslateWidget() {
   }, []);
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
-        Translate
-      </span>
+    <div className="inline-flex items-center gap-1.5 rounded-md border border-canvas-border bg-canvas-elevated px-3 py-1.5">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.75}
+        className="h-4 w-4 shrink-0 text-accent"
+      >
+        <circle cx="12" cy="12" r="9" />
+        <path d="M3 12h18M12 3c2.5 2.5 3.75 5.5 3.75 9s-1.25 6.5-3.75 9c-2.5-2.5-3.75-5.5-3.75-9S9.5 5.5 12 3z" />
+      </svg>
       <div id={CONTAINER_ID} />
     </div>
   );

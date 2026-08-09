@@ -26,3 +26,38 @@ body {
 body {
   top: 0 !important;
 }
+
+/* Restyle the translate trigger to match the site (font, color, no default
+   Google chrome) -- this is the one part of the widget that's same-origin
+   and actually stylable. The language-list popup it opens on click is a
+   cross-origin iframe from Google's own domain and can't be restyled at
+   all; that part will always look like stock Google UI. */
+#google_translate_element .goog-te-gadget {
+  font-family: inherit !important;
+  font-size: 0 !important;
+  color: transparent !important;
+}
+#google_translate_element .goog-te-gadget-simple {
+  background-color: transparent !important;
+  border: none !important;
+  white-space: nowrap;
+}
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value {
+  display: inline-flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+}
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span {
+  font-family: inherit !important;
+  font-size: 0.875rem !important;
+  color: #334155 !important;
+}
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value:hover span {
+  color: #c6000e !important;
+}
+/* The little checkered-flag icon Google adds before the arrow -- doesn't
+   match the site's own icon, dropped in favor of the globe icon we render
+   ourselves next to the widget. */
+#google_translate_element .goog-te-gadget-icon {
+  display: none !important;
+}
