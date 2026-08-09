@@ -24,6 +24,12 @@ import { blocksToHtml, blocksToPlainText } from "./lib/parse-logos-blocks.mjs";
 
 const ACCOUNT_SLUG = "vbcsermons";
 const OUTPUT_PATH = path.join(process.cwd(), "content", "sermons", "logos.json");
+// Sermons that were removed from Faithlife itself (so this sync can no
+// longer find them) but should stay on the site anyway. This file is
+// hand-edited, not touched by this script or its GitHub Action -- entries
+// here only apply as a fallback when Faithlife doesn't already have that
+// sermon ID.
+const MANUAL_PATH = path.join(process.cwd(), "content", "sermons", "logos-manual.json");
 
 async function fetchState(url) {
   const res = await fetch(url);
@@ -136,6 +142,16 @@ async function main() {
     } catch (err) {
       console.warn(`Skipping series ${seriesId}:`, err.message);
     }
+  }
+
+  if (fs.existsSync(MANUAL_PATH)) {
+    const manual = JSON.parse(fs.readFileSync(MANUAL_PATH, "utf8"));
+    for (const raw of manual.sermons ?? []) {
+      if (!bySermonId.has(String(raw.id))) {
+        bySermonId.set(String(raw.id), raw);
+      }
+    }
+    console.log(`Merged ${manual.sermons?.length ?? 0} manually-preserved sermon(s).`);
   }
 
   const sermons = Array.from(bySermonId.values());
