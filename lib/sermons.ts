@@ -109,15 +109,71 @@ export function getSermonById(id: string): Sermon | undefined {
   return getAllSermons().find((s) => s.id === id);
 }
 
-// The homepage's "latest sermon" is specifically the most recent Sunday
-// morning message -- the sequential book-by-book teaching, not a Sunday
-// night/Wednesday/topical one-off. There's no explicit service-type field
-// from any source, but every sequential-teaching sermon has a detected
-// book/chapter (it's literally "chapter N of Genesis"), while topical
-// series (marriage, Lord's Supper, seminars, etc.) generally don't -- the
-// same signal already used sitewide to decide what's part of the project.
+// How close together (in time) two synced entries need to be to count as
+// the same real sermon -- e.g. a YouTube upload and its SermonAudio upload
+// of the same Sunday message often land a day or two apart.
+const SAME_SERMON_WINDOW_MS = 3 * 24 * 60 * 60 * 1000;
+// How far back "sustained recent activity" is measured from, and how many
+// distinct occurrences within that window count as "sustained."
+const CURRENT_BOOK_LOOKBACK_MS = 60 * 24 * 60 * 60 * 1000;
+const CURRENT_BOOK_MIN_OCCURRENCES = 2;
+
+// The homepage's "latest sermon" is specifically the most recent message in
+// whichever book is the *current* sequential book-by-book teaching -- not
+// simply whatever sermon (from any service, on any topic) happens to have
+// the newest detected passage. A single guest/topical sermon can reference
+// a specific verse just as easily as the ongoing series does, so recency of
+// a detected book/chapter alone isn't a reliable signal on its own.
+//
+// Instead: collapse same-book-and-chapter entries published within a few
+// days of each other into one "occurrence" (multi-platform syncs of the
+// same real sermon), then walk books newest-first and pick the first one
+// with at least two distinct occurrences in the last ~60 days -- a real
+// sequential series accumulates weekly, while a one-off only ever has one.
 export function getLatestSundayMorningSermon(): Sermon | undefined {
-  return getAllSermons().find((s) => s.book && s.chapter);
+  const withPassage = getAllSermons().filter((s) => s.book && s.chapter);
+  if (withPassage.length === 0) return undefined;
+
+  const byBookChapter = new Map<string, Sermon[]>();
+  for (const s of withPassage) {
+    const key = `${s.book}|${s.chapter}`;
+    const list = byBookChapter.get(key) ?? [];
+    list.push(s);
+    byBookChapter.set(key, list);
+  }
+
+  const occurrences: Sermon[] = [];
+  for (const list of byBookChapter.values()) {
+    const ascending = [...list].sort(
+      (a, b) => new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime()
+    );
+    let clusterStart = -Infinity;
+    for (const s of ascending) {
+      const t = new Date(s.publishedAt).getTime();
+      if (t - clusterStart > SAME_SERMON_WINDOW_MS) {
+        occurrences.push(s);
+        clusterStart = t;
+      }
+    }
+  }
+
+  const now = Date.now();
+  const seenBooks = new Set<string>();
+  for (const candidate of withPassage) {
+    if (seenBooks.has(candidate.book!)) continue;
+    seenBooks.add(candidate.book!);
+
+    const recentOccurrences = occurrences.filter(
+      (o) => o.book === candidate.book && now - new Date(o.publishedAt).getTime() <= CURRENT_BOOK_LOOKBACK_MS
+    );
+    if (recentOccurrences.length >= CURRENT_BOOK_MIN_OCCURRENCES) {
+      return candidate;
+    }
+  }
+
+  // Nothing looks like a sustained series recently -- fall back to the
+  // single most recent passage-tagged sermon rather than showing nothing.
+  return withPassage[0];
 }
 
 // Fallback graphic when a sermon's series has no custom cover art: the
