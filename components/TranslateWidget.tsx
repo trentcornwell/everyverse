@@ -58,7 +58,7 @@ export default function TranslateWidget() {
   }, []);
 
   return (
-    <div className="inline-flex items-center gap-1.5 rounded-md border border-canvas-border bg-canvas-elevated px-3 py-1.5">
+    <div className="inline-flex w-fit shrink-0 flex-col items-center gap-1 self-start rounded-md border border-canvas-border bg-canvas-elevated px-3 py-2">
       <svg
         viewBox="0 0 24 24"
         fill="none"
