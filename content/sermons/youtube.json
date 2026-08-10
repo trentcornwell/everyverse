@@ -1,8 +1,16 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-08-09T10:31:18.036Z",
+  "syncedAt": "2026-08-10T11:05:27.078Z",
   "sermons": [
+    {
+      "id": "DyVMvZAJam0",
+      "title": "Sunday AM - August 9, 2026",
+      "description": "",
+      "publishedAt": "2026-08-10T03:58:03Z",
+      "durationSeconds": 4616,
+      "url": "https://www.youtube.com/watch?v=DyVMvZAJam0"
+    },
     {
       "id": "haVEioo66nY",
       "title": "Approved Workman are not Ashamed - 2 Timothy 2:15",
