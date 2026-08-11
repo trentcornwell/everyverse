@@ -104,8 +104,13 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
         {tab === "video" &&
           (videos.length > 0 ? (
             <div className="flex flex-col gap-8">
-              {videos.map((s) => (
+              {videos.map((s, i) => (
                 <div key={s.id}>
+                  {videos.length > 1 && (
+                    <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-accent">
+                      Video {i + 1}
+                    </p>
+                  )}
                   <div className="aspect-video w-full overflow-hidden rounded-lg border border-canvas-border">
                     <iframe
                       className="h-full w-full"
@@ -127,11 +132,16 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
         {tab === "audio" &&
           (audios.length > 0 ? (
             <div className="flex flex-col gap-4">
-              {audios.map((s) => (
+              {audios.map((s, i) => (
                 <div
                   key={s.id}
                   className="rounded-lg border border-canvas-border bg-canvas-elevated p-5"
                 >
+                  {audios.length > 1 && (
+                    <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-accent">
+                      Audio {i + 1}
+                    </p>
+                  )}
                   <p className="font-serif font-semibold text-ink">{s.title}</p>
                   <p className="mt-1 text-xs text-slate-500">
                     {formatDate(s.publishedAt)} &middot; {formatDuration(s.durationSeconds)}
@@ -153,8 +163,13 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
           (outlines.length > 0 ? (
             <div className="flex flex-col gap-8">
               <TranslateWidget />
-              {outlines.map((s) => (
+              {outlines.map((s, i) => (
                 <div key={s.id}>
+                  {outlines.length > 1 && (
+                    <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-accent">
+                      Outline {i + 1}
+                    </p>
+                  )}
                   <p className="font-serif font-semibold text-ink">{s.title}</p>
                   <p className="text-xs text-slate-500">{formatDate(s.publishedAt)}</p>
                   {s.notesHtml ? (
