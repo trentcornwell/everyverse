@@ -5,7 +5,7 @@ import {
   getSermonOverview,
   getFeaturedArticles,
 } from "@/lib/sermons";
-import { formatDuration } from "@/lib/sermon-format";
+import { formatDuration, getSermonHref } from "@/lib/sermon-format";
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -55,7 +55,7 @@ export default function HomePage() {
               Latest Sermon
             </p>
             <div className="mt-6 grid grid-cols-1 items-center gap-8 sm:grid-cols-3">
-              <Link href={`/sermons/${latestSermon.id}`} className="group sm:col-span-2">
+              <Link href={getSermonHref(latestSermon)} className="group sm:col-span-2">
                 <p className="text-xs font-medium uppercase tracking-wider text-slate-500">
                   {formatDate(latestSermon.publishedAt)}
                   {latestSermon.chapter
@@ -135,7 +135,7 @@ export default function HomePage() {
                   Featured Article
                 </h2>
                 <Link
-                  href={`/sermons/${article.id}`}
+                  href={getSermonHref(article)}
                   className="mt-4 block rounded-lg border border-canvas-border bg-canvas-elevated p-4 transition hover:border-accent/50"
                 >
                   <p className="line-clamp-2 font-serif font-semibold text-ink">

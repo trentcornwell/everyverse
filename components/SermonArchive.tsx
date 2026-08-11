@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { SermonGroup } from "@/lib/sermons";
-import { formatDuration } from "@/lib/sermon-format";
+import { formatDuration, getSermonHref } from "@/lib/sermon-format";
 
 interface SermonArchiveProps {
   grouped: SermonGroup[];
@@ -96,7 +96,7 @@ export default function SermonArchive({ grouped }: SermonArchiveProps) {
         {filtered.map((sermon) => (
           <li key={sermon.id}>
             <Link
-              href={`/sermons/${sermon.id}`}
+              href={getSermonHref(sermon)}
               className="flex flex-col gap-1 rounded-lg border border-canvas-border bg-canvas-elevated p-4 transition hover:border-accent/50 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
             >
               <div className="min-w-0">
