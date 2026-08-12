@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import type { Sermon as SyncedSermon } from "@/lib/sermons";
 import type { ChapterVerse } from "@/lib/kjv";
@@ -34,6 +34,8 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
   const outlineTabValues = outlines.length > 1 ? outlines.map((_, i) => `outline-${i}`) : ["outline"];
   const tabValues = ["scripture", "video", "audio", ...outlineTabValues];
 
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const requestedTab = searchParams.get("tab");
   const resolvedRequestedTab =
@@ -42,6 +44,16 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
     ? (resolvedRequestedTab as string)
     : "scripture";
   const [tab, setTab] = useState(initialTab);
+
+  // Keeps the URL in sync with the active tab -- lets a specific tab (e.g.
+  // "Outline 2" of a given chapter) be bookmarked, shared, or reloaded
+  // directly instead of always landing back on Scripture. `replace` (not
+  // `push`) so switching tabs doesn't fill up the back-button history one
+  // entry per click.
+  function selectTab(value: string) {
+    setTab(value);
+    router.replace(`${pathname}?tab=${value}`, { scroll: false });
+  }
 
   function tabClass(active: boolean) {
     return `border-b-2 px-1 pb-3 text-sm font-medium transition ${
@@ -83,21 +95,21 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
       <div className="flex flex-wrap gap-6 border-b border-canvas-border">
         <button
           type="button"
-          onClick={() => setTab("scripture")}
+          onClick={() => selectTab("scripture")}
           className={tabClass(tab === "scripture")}
         >
           Scripture
         </button>
         <button
           type="button"
-          onClick={() => setTab("video")}
+          onClick={() => selectTab("video")}
           className={tabClass(tab === "video")}
         >
           Video
         </button>
         <button
           type="button"
-          onClick={() => setTab("audio")}
+          onClick={() => selectTab("audio")}
           className={tabClass(tab === "audio")}
         >
           Audio
@@ -106,7 +118,7 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
           <button
             key={tabValue}
             type="button"
-            onClick={() => setTab(tabValue)}
+            onClick={() => selectTab(tabValue)}
             className={tabClass(tab === tabValue)}
           >
             {outlines.length > 1 ? `Outline ${i + 1}` : "Outline"}
