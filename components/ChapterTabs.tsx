@@ -202,15 +202,16 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
           </p>
         )}
 
+        {outlines.length > 0 && (
+          <div hidden={!tab.startsWith("outline")} className="mb-4">
+            <TranslateWidget />
+          </div>
+        )}
+
         {outlines.map((s, i) => {
           const tabValue = outlines.length > 1 ? `outline-${i}` : "outline";
           if (tab !== tabValue) return null;
-          return (
-            <div key={s.id} className="flex flex-col gap-4">
-              <TranslateWidget />
-              {outline(s)}
-            </div>
-          );
+          return <div key={s.id}>{outline(s)}</div>;
         })}
       </div>
     </div>
