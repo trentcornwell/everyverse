@@ -32,17 +32,21 @@ export default function HomePage() {
             Join us on our journey
             <br className="hidden sm:block" /> through the whole Bible.
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
-            On June 7, 2026, Vision Baptist Church started teaching through
-            the Bible, book by book, beginning in Genesis. Our desire is to
-            teach &ldquo;every verse&rdquo; to &ldquo;every nation.&rdquo;
+          <h2 className="mt-6 font-display text-xl uppercase tracking-wide text-ink">
+            Read the Bible
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-lg text-slate-600">
+            No single event has the potential to change your life as reading
+            the Bible does. Start today! Search for any book, then click any
+            chapter to start reading. We will provide resources as we are
+            able.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/bible"
               className="rounded-md bg-accent px-6 py-3 text-sm font-medium text-white transition hover:bg-accent-hover"
             >
-              Browse the whole Bible
+              Read the Bible &rarr;
             </Link>
           </div>
         </div>
@@ -94,19 +98,20 @@ export default function HomePage() {
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
             <div className="text-center sm:text-left">
               <h2 className="font-display text-xl uppercase tracking-wide text-ink">
-                Read the Bible
+                Pray for the Country of the Week
               </h2>
               <p className="mt-3 text-sm text-slate-600">
-                No single event has the potential to change your life as
-                reading the Bible does. Start today! Search for any book,
-                then click any chapter to start reading.
+                Join us as we join churches around the world who are praying
+                for a new country each week.
               </p>
-              <Link
-                href="/bible"
+              <a
+                href="https://thecountryoftheweek.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-5 inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-white transition hover:bg-accent-hover"
               >
-                Read the Bible &rarr;
-              </Link>
+                Visit TheCountryOfTheWeek.com &rarr;
+              </a>
             </div>
 
             <div className="text-center sm:text-left">
