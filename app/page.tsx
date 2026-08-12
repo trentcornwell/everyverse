@@ -102,7 +102,8 @@ export default function HomePage() {
               </h2>
               <p className="mt-3 text-sm text-slate-600">
                 Join us as we join churches around the world who are praying
-                for a new country each week.
+                for a new country each week. Let us be obedient to the
+                prayer request from Jesus to pray for the world.
               </p>
               <a
                 href="https://thecountryoftheweek.com"
