@@ -104,12 +104,25 @@ async function getSeriesData(seriesId) {
   return { sermons, coverImageUrl };
 }
 
+// detectPassage() picks whichever book name is longest among any match
+// found in a given string, not the first one in reading order -- fine for a
+// short title or passage field, but wrong for a whole multi-thousand-word
+// outline that naturally cites other books in cross-references and
+// illustrations (grabbed "Leviticus 1:3", quoted mid-sermon, over the real
+// "Genesis 6:5-9" opening line). So pull out just the "Text: ..." line
+// outlines conventionally open with, and only fall back to that short
+// snippet -- never the full notes.
+function extractTextLine(notesText) {
+  const match = (notesText ?? "").match(/^Text:\s*(.+)$/m);
+  return match ? match[1] : "";
+}
+
 function mapSermon(raw, seriesCoverImageUrl) {
   const passageText = raw.passages?.[0]?.text ?? "";
-  const { book, chapter } = detectPassage(passageText, raw.title);
   const blocks = raw.sermonText?.sermonEditor?.blocks ?? [];
   const notesHtml = blocksToHtml(blocks);
   const notesText = blocksToPlainText(blocks);
+  const { book, chapter } = detectPassage(passageText, raw.title, extractTextLine(notesText));
 
   return {
     id: String(raw.sermonId),
