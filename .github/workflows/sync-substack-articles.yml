@@ -1,0 +1,33 @@
+name: Sync Substack articles
+
+on:
+  schedule:
+    - cron: "45 10 * * *" # daily at 10:45 UTC (offset from the other syncs)
+  workflow_dispatch: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch articles from Substack
+        run: node scripts/sync-substack-articles.mjs
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "article sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add content/articles/substack.json
+          if git diff --cached --quiet; then
+            echo "No changes to sync."
+            exit 0
+          fi
+          git commit -m "Sync Substack articles"
+          git push

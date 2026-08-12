@@ -3,8 +3,8 @@ import {
   getLatestSundayMorningSermon,
   getSermonImageUrl,
   getSermonOverview,
-  getFeaturedArticles,
 } from "@/lib/sermons";
+import { getFeaturedArticles } from "@/lib/articles";
 import { formatDuration, getSermonHref } from "@/lib/sermon-format";
 
 function formatDate(iso: string): string {
@@ -134,8 +134,10 @@ export default function HomePage() {
                 <h2 className="font-display text-xl uppercase tracking-wide text-ink">
                   Featured Article
                 </h2>
-                <Link
-                  href={getSermonHref(article)}
+                <a
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-4 block rounded-lg border border-canvas-border bg-canvas-elevated p-4 transition hover:border-accent/50"
                 >
                   <p className="line-clamp-2 font-serif font-semibold text-ink">
@@ -143,14 +145,13 @@ export default function HomePage() {
                   </p>
                   <p className="mt-1 text-xs text-slate-500">
                     {formatDate(article.publishedAt)}
-                    {article.chapter ? ` · ${article.book} ${article.chapter}` : ""}
                   </p>
-                  {article.notesText && (
+                  {article.excerpt && (
                     <p className="mt-2 line-clamp-3 text-sm text-slate-600">
-                      {article.notesText}
+                      {article.excerpt}
                     </p>
                   )}
-                </Link>
+                </a>
               </div>
             )}
           </div>

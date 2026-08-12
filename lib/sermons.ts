@@ -240,15 +240,6 @@ export function getSermonOverview(sermon: Sermon): string | undefined {
   return undefined;
 }
 
-// Logos sermon notes doubling as "articles" for the homepage — the closest
-// thing this site has to written, publishable reading material outside of
-// study notes.
-export function getFeaturedArticles(limit = 3): Sermon[] {
-  return getAllSermons()
-    .filter((s) => s.source === "logos" && (s.notesHtml || s.notesText))
-    .slice(0, limit);
-}
-
 export function getSermonsForChapter(bookSlug: string, chapter: number): Sermon[] {
   return getAllSermons().filter(
     (s) => s.book && s.chapter === chapter && slugifyBook(s.book) === bookSlug
