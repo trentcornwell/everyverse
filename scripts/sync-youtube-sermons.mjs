@@ -13,6 +13,11 @@ import { detectPassage } from "./lib/detect-passage.mjs";
 const CHANNEL_ID = "UCODWmDl_U6I_XQbSKwOZzyw"; // Vision Baptist Church of South Forsyth
 const API_KEY = process.env.YOUTUBE_API_KEY;
 const OUTPUT_PATH = path.join(process.cwd(), "content", "sermons", "youtube.json");
+// Hand-maintained book/chapter overrides for videos whose title/description
+// has nothing for detectPassage() to find (generic titles like "Sunday AM -
+// August 9, 2026" with an empty description). Not touched by this script or
+// its GitHub Action -- applied after normal detection, keyed by video ID.
+const OVERRIDES_PATH = path.join(process.cwd(), "content", "sermons", "youtube-overrides.json");
 
 function parseIsoDuration(iso) {
   const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
@@ -82,8 +87,13 @@ async function main() {
 
   const durations = await getDurations(videos.map((v) => v.id));
 
+  const overrides = fs.existsSync(OVERRIDES_PATH)
+    ? JSON.parse(fs.readFileSync(OVERRIDES_PATH, "utf8"))
+    : {};
+
   const sermons = videos.map((v) => {
-    const { book, chapter } = detectPassage(v.title, v.description);
+    const detected = detectPassage(v.title, v.description);
+    const { book, chapter } = overrides[v.id] ?? detected;
     return {
       id: v.id,
       title: v.title,
