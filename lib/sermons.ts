@@ -171,7 +171,20 @@ export function getLatestSundayMorningSermon(): Sermon | undefined {
       (o) => o.book === candidate.book && now - new Date(o.publishedAt).getTime() <= CURRENT_BOOK_LOOKBACK_MS
     );
     if (recentOccurrences.length >= CURRENT_BOOK_MIN_OCCURRENCES) {
-      return candidate;
+      // Prefer the Logos version of this same real-world sermon (same
+      // book/chapter, published within the same few-day window as
+      // `candidate`) when one exists -- a full outline makes for a far
+      // better homepage write-up than a YouTube/SermonAudio entry's raw
+      // description, and `candidate` could be either depending on which
+      // platform happened to publish most recently.
+      const sameOccurrence = withPassage.filter(
+        (s) =>
+          s.book === candidate.book &&
+          s.chapter === candidate.chapter &&
+          Math.abs(new Date(s.publishedAt).getTime() - new Date(candidate.publishedAt).getTime()) <=
+            SAME_SERMON_WINDOW_MS
+      );
+      return sameOccurrence.find((s) => s.source === "logos") ?? candidate;
     }
   }
 
