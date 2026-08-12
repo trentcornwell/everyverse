@@ -32,10 +32,7 @@ export default function HomePage() {
             Join us on our journey
             <br className="hidden sm:block" /> through the whole Bible.
           </h1>
-          <h2 className="mt-6 font-display text-xl uppercase tracking-wide text-ink">
-            Read the Bible
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-lg text-slate-600">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
             No single event has the potential to change your life as reading
             the Bible does. Start today! Search for any book, then click any
             chapter to start reading. We will provide resources as we are
