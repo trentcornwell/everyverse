@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import type { Sermon as SyncedSermon } from "@/lib/sermons";
 import type { ChapterVerse } from "@/lib/kjv";
@@ -34,7 +34,6 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
   const outlineTabValues = outlines.length > 1 ? outlines.map((_, i) => `outline-${i}`) : ["outline"];
   const tabValues = ["scripture", "video", "audio", ...outlineTabValues];
 
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const requestedTab = searchParams.get("tab");
@@ -47,12 +46,14 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
 
   // Keeps the URL in sync with the active tab -- lets a specific tab (e.g.
   // "Outline 2" of a given chapter) be bookmarked, shared, or reloaded
-  // directly instead of always landing back on Scripture. `replace` (not
-  // `push`) so switching tabs doesn't fill up the back-button history one
-  // entry per click.
+  // directly instead of always landing back on Scripture. Uses the History
+  // API directly (not next/navigation's router) so it's a pure client-side
+  // address-bar update: no server round-trip per tab click, and no
+  // dependency on how Next's router treats a searchParams-only change on a
+  // page that doesn't itself read searchParams.
   function selectTab(value: string) {
     setTab(value);
-    router.replace(`${pathname}?tab=${value}`, { scroll: false });
+    window.history.replaceState(null, "", `${pathname}?tab=${value}`);
   }
 
   function tabClass(active: boolean) {
