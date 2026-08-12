@@ -1,82 +1,64 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState } from "react";
 
-declare global {
-  interface Window {
-    googleTranslateElementInit?: () => void;
-    google?: {
-      translate: {
-        TranslateElement: {
-          new (
-            options: { pageLanguage: string; autoDisplay: boolean; layout: unknown },
-            containerId: string
-          ): unknown;
-          InlineLayout: { SIMPLE: unknown };
-        };
-      };
-    };
-  }
-}
+// A small set of languages relevant to the site's "every nation" audience.
+// Each opens Google's own translation proxy for the current page in a new
+// tab -- no embedded script, nothing that can silently break. The previous
+// embedded Google Translate widget kept failing in ways that couldn't be
+// diagnosed without browser access, so this trades a fully in-page
+// experience for something that just reliably works.
+const LANGUAGES = [
+  { code: "es", label: "Español" },
+  { code: "fr", label: "Français" },
+  { code: "pt", label: "Português" },
+  { code: "zh-CN", label: "中文" },
+  { code: "ko", label: "한국어" },
+  { code: "vi", label: "Tiếng Việt" },
+];
 
-const CONTAINER_ID = "google_translate_element";
-let scriptRequested = false;
-
-// Google's free website-translator widget -- no API key, no billing account,
-// works entirely client-side. It translates the whole rendered page when a
-// language is picked (there's no supported way to scope it to one section),
-// which is fine here since it's only mounted on pages that have an Outline.
-//
-// Uses the SIMPLE layout -- omitting the `layout` option entirely to get
-// Google's older "classic" native <select> was tried to fix the popup
-// overflowing small screens, but broke the widget outright. Back to SIMPLE;
-// the overflow is fixed with CSS on .goog-te-menu-frame in globals.css
-// instead -- that's the popup's iframe *element*, which lives in our own
-// DOM and is stylable, even though its contents (a different origin) aren't.
 export default function TranslateWidget() {
-  const initialized = useRef(false);
+  const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
-
-    window.googleTranslateElementInit = () => {
-      if (!window.google) return;
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: "en",
-          autoDisplay: false,
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        },
-        CONTAINER_ID
-      );
-    };
-
-    if (window.google?.translate) {
-      window.googleTranslateElementInit();
-    } else if (!scriptRequested) {
-      scriptRequested = true;
-      const script = document.createElement("script");
-      script.src =
-        "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
+  function openTranslated(langCode: string) {
+    const url = `https://translate.google.com/translate?sl=auto&tl=${langCode}&u=${encodeURIComponent(window.location.href)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
 
   return (
-    <div className="inline-flex w-fit shrink-0 flex-col items-center gap-1 self-start rounded-md border border-canvas-border bg-canvas-elevated px-3 py-2">
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={1.75}
-        className="h-4 w-4 shrink-0 text-accent"
+    <div className="inline-flex w-fit flex-col items-start gap-2 self-start rounded-md border border-canvas-border bg-canvas-elevated px-3 py-2">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-1.5 text-sm font-medium text-ink hover:text-accent"
       >
-        <circle cx="12" cy="12" r="9" />
-        <path d="M3 12h18M12 3c2.5 2.5 3.75 5.5 3.75 9s-1.25 6.5-3.75 9c-2.5-2.5-3.75-5.5-3.75-9S9.5 5.5 12 3z" />
-      </svg>
-      <div id={CONTAINER_ID} />
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.75}
+          className="h-4 w-4 shrink-0 text-accent"
+        >
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18M12 3c2.5 2.5 3.75 5.5 3.75 9s-1.25 6.5-3.75 9c-2.5-2.5-3.75-5.5-3.75-9S9.5 5.5 12 3z" />
+        </svg>
+        Translate
+      </button>
+      {open && (
+        <ul className="flex flex-col gap-1.5 border-t border-canvas-border pt-2">
+          {LANGUAGES.map((lang) => (
+            <li key={lang.code}>
+              <button
+                type="button"
+                onClick={() => openTranslated(lang.code)}
+                className="text-sm text-slate-600 hover:text-accent"
+              >
+                {lang.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
