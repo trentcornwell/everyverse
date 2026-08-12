@@ -7,9 +7,6 @@ import type { ChapterVerse } from "@/lib/kjv";
 import { formatDuration } from "@/lib/sermon-format";
 import TranslateWidget from "./TranslateWidget";
 
-type Tab = "scripture" | "video" | "audio" | "outline";
-const TAB_VALUES: Tab[] = ["scripture", "video", "audio", "outline"];
-
 interface ChapterTabsProps {
   reference: string;
   syncedSermons: SyncedSermon[];
@@ -25,16 +22,26 @@ function formatDate(iso: string): string {
 }
 
 export default function ChapterTabs({ reference, syncedSermons, verses }: ChapterTabsProps) {
-  const searchParams = useSearchParams();
-  const requestedTab = searchParams.get("tab");
-  const initialTab: Tab = TAB_VALUES.includes(requestedTab as Tab)
-    ? (requestedTab as Tab)
-    : "scripture";
-  const [tab, setTab] = useState<Tab>(initialTab);
-
   const videos = syncedSermons.filter((s) => s.source === "youtube");
   const audios = syncedSermons.filter((s) => s.source === "sermonaudio");
   const outlines = syncedSermons.filter((s) => s.source === "logos");
+
+  // A chapter with more than one outline (e.g. two different weeks both
+  // touching the same chapter) gets its own tab per outline -- "Outline 1",
+  // "Outline 2" -- rather than stacking them under one tab like Video/Audio
+  // do, since an outline is long-form reading material best viewed one at a
+  // time.
+  const outlineTabValues = outlines.length > 1 ? outlines.map((_, i) => `outline-${i}`) : ["outline"];
+  const tabValues = ["scripture", "video", "audio", ...outlineTabValues];
+
+  const searchParams = useSearchParams();
+  const requestedTab = searchParams.get("tab");
+  const resolvedRequestedTab =
+    requestedTab === "outline" && outlines.length > 1 ? "outline-0" : requestedTab;
+  const initialTab = tabValues.includes(resolvedRequestedTab ?? "")
+    ? (resolvedRequestedTab as string)
+    : "scripture";
+  const [tab, setTab] = useState(initialTab);
 
   function tabClass(active: boolean) {
     return `border-b-2 px-1 pb-3 text-sm font-medium transition ${
@@ -44,9 +51,36 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
     }`;
   }
 
+  function outline(s: SyncedSermon) {
+    return (
+      <div>
+        <p className="font-serif font-semibold text-ink">{s.title}</p>
+        <p className="text-xs text-slate-500">{formatDate(s.publishedAt)}</p>
+        {s.notesHtml ? (
+          <div
+            className="prose prose-sm prose-slate mt-3 max-w-none prose-a:text-accent"
+            dangerouslySetInnerHTML={{ __html: s.notesHtml }}
+          />
+        ) : (
+          s.description && (
+            <p className="mt-3 whitespace-pre-line text-sm text-slate-600">{s.description}</p>
+          )
+        )}
+        {!s.sourceRemoved && (
+          <a
+            href={s.url}
+            className="mt-3 inline-block text-sm font-medium text-accent hover:text-accent-hover"
+          >
+            View on Logos Sermons &rarr;
+          </a>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div>
-      <div className="flex gap-6 border-b border-canvas-border">
+      <div className="flex flex-wrap gap-6 border-b border-canvas-border">
         <button
           type="button"
           onClick={() => setTab("scripture")}
@@ -68,13 +102,16 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
         >
           Audio
         </button>
-        <button
-          type="button"
-          onClick={() => setTab("outline")}
-          className={tabClass(tab === "outline")}
-        >
-          Outline
-        </button>
+        {outlineTabValues.map((tabValue, i) => (
+          <button
+            key={tabValue}
+            type="button"
+            onClick={() => setTab(tabValue)}
+            className={tabClass(tab === tabValue)}
+          >
+            {outlines.length > 1 ? `Outline ${i + 1}` : "Outline"}
+          </button>
+        ))}
       </div>
 
       <div className="mt-6">
@@ -159,47 +196,22 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
             <p className="text-sm text-slate-600">No audio for {reference} yet.</p>
           ))}
 
-        {tab === "outline" &&
-          (outlines.length > 0 ? (
-            <div className="flex flex-col gap-8">
+        {outlines.length === 0 && tab === "outline" && (
+          <p className="text-sm text-slate-600">
+            No outline from Faithlife for {reference} yet.
+          </p>
+        )}
+
+        {outlines.map((s, i) => {
+          const tabValue = outlines.length > 1 ? `outline-${i}` : "outline";
+          if (tab !== tabValue) return null;
+          return (
+            <div key={s.id} className="flex flex-col gap-4">
               <TranslateWidget />
-              {outlines.map((s, i) => (
-                <div key={s.id}>
-                  {outlines.length > 1 && (
-                    <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-accent">
-                      Outline {i + 1}
-                    </p>
-                  )}
-                  <p className="font-serif font-semibold text-ink">{s.title}</p>
-                  <p className="text-xs text-slate-500">{formatDate(s.publishedAt)}</p>
-                  {s.notesHtml ? (
-                    <div
-                      className="prose prose-sm prose-slate mt-3 max-w-none prose-a:text-accent"
-                      dangerouslySetInnerHTML={{ __html: s.notesHtml }}
-                    />
-                  ) : (
-                    s.description && (
-                      <p className="mt-3 whitespace-pre-line text-sm text-slate-600">
-                        {s.description}
-                      </p>
-                    )
-                  )}
-                  {!s.sourceRemoved && (
-                    <a
-                      href={s.url}
-                      className="mt-3 inline-block text-sm font-medium text-accent hover:text-accent-hover"
-                    >
-                      View on Logos Sermons &rarr;
-                    </a>
-                  )}
-                </div>
-              ))}
+              {outline(s)}
             </div>
-          ) : (
-            <p className="text-sm text-slate-600">
-              No outline from Faithlife for {reference} yet.
-            </p>
-          ))}
+          );
+        })}
       </div>
     </div>
   );
