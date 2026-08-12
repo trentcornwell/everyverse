@@ -18,9 +18,13 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.everyverse.online"),
   title: "EveryVerse.online — Every Verse, Every Nation",
   description:
     "A collaborative Bible commentary platform where readers around the world study and discuss scripture, one verse at a time.",
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
