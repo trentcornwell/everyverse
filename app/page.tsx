@@ -25,7 +25,7 @@ export default function HomePage() {
     <>
       <section className="border-b border-canvas-border bg-canvas-panel">
         <div className="mx-auto max-w-3xl px-6 py-14 text-center sm:py-20">
-          <p className="font-serif text-sm uppercase tracking-[0.2em] text-accent">
+          <p className="font-serif text-sm uppercase tracking-[0.2em] text-gold">
             Practical Bible Commentary
           </p>
           <h1 className="mt-4 font-display text-4xl uppercase leading-tight tracking-wide text-ink sm:text-5xl">
@@ -52,7 +52,7 @@ export default function HomePage() {
       {latestSermon && (
         <section className="border-b border-canvas-border">
           <div className="mx-auto max-w-5xl px-6 py-14">
-            <p className="font-serif text-xs uppercase tracking-[0.2em] text-accent">
+            <p className="font-serif text-xs uppercase tracking-[0.2em] text-gold">
               Latest Sermon
             </p>
             <div className="mt-6 grid grid-cols-1 items-center gap-8 sm:grid-cols-3">

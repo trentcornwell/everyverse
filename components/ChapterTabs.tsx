@@ -131,13 +131,13 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
         {tab === "scripture" &&
           (verses && verses.length > 0 ? (
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-gold">
                 King James Version
               </p>
               <div className="mt-4 font-serif text-lg leading-relaxed text-ink">
                 {verses.map((v) => (
                   <span key={v.verse} className={v.newParagraph ? "mt-4 block" : ""}>
-                    <sup className="mr-1 font-sans text-xs font-semibold text-accent">
+                    <sup className="mr-1 font-sans text-xs font-semibold text-gold">
                       {v.verse}
                     </sup>
                     <span dangerouslySetInnerHTML={{ __html: `${v.html} ` }} />
@@ -157,7 +157,7 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
               {videos.map((s, i) => (
                 <div key={s.id}>
                   {videos.length > 1 && (
-                    <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-accent">
+                    <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-gold">
                       Video {i + 1}
                     </p>
                   )}
@@ -188,7 +188,7 @@ export default function ChapterTabs({ reference, syncedSermons, verses }: Chapte
                   className="rounded-lg border border-canvas-border bg-canvas-elevated p-5"
                 >
                   {audios.length > 1 && (
-                    <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-accent">
+                    <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-gold">
                       Audio {i + 1}
                     </p>
                   )}

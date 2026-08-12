@@ -17,7 +17,7 @@ export default function BiblePage() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-14">
-      <p className="font-serif text-sm uppercase tracking-[0.2em] text-accent">
+      <p className="font-serif text-sm uppercase tracking-[0.2em] text-gold">
         Browse
       </p>
       <h1 className="mt-2 font-display text-3xl uppercase tracking-wide text-ink sm:text-4xl">

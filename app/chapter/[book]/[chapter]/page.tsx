@@ -40,7 +40,7 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
       </Link>
 
       <div className="mt-6 border-b border-canvas-border pb-8">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-gold">
           Chapter Study
         </p>
         <h1 className="mt-3 font-serif text-3xl font-bold leading-tight text-ink sm:text-4xl">

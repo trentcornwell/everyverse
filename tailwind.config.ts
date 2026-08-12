@@ -16,9 +16,14 @@ const config: Config = {
           border: "#dcdcdc",
         },
         accent: {
-          DEFAULT: "#c6000e",
-          hover: "#a5000c",
-          soft: "rgba(198, 0, 14, 0.1)",
+          DEFAULT: "#7a1116",
+          hover: "#5c0d10",
+          soft: "rgba(122, 17, 22, 0.1)",
+        },
+        gold: {
+          DEFAULT: "#caa63d",
+          hover: "#b3902f",
+          soft: "rgba(202, 166, 61, 0.12)",
         },
       },
       fontFamily: {

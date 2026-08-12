@@ -18,7 +18,7 @@ export default function VerseDisplay({
 }: VerseDisplayProps) {
   return (
     <div className="rounded-xl border border-canvas-border bg-canvas-elevated p-6 sm:p-10">
-      <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+      <p className="text-xs font-medium uppercase tracking-[0.2em] text-gold">
         King James Version
       </p>
       <h1 className="mt-2 font-serif text-2xl font-semibold text-ink sm:text-3xl">
