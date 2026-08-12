@@ -30,6 +30,11 @@ const OUTPUT_PATH = path.join(process.cwd(), "content", "sermons", "logos.json")
 // here only apply as a fallback when Faithlife doesn't already have that
 // sermon ID.
 const MANUAL_PATH = path.join(process.cwd(), "content", "sermons", "logos-manual.json");
+// Small hand-edits to specific sermons' synced content -- e.g. dropping a
+// leading "occasion" heading (e.g. "Back-to-School Sunday") that Trent
+// doesn't want shown, without needing a whole manual-preservation entry.
+// Not touched by this script or its GitHub Action; keyed by sermon ID.
+const TRIMS_PATH = path.join(process.cwd(), "content", "sermons", "logos-trim-overrides.json");
 
 async function fetchState(url) {
   const res = await fetch(url);
@@ -117,9 +122,14 @@ function extractTextLine(notesText) {
   return match ? match[1] : "";
 }
 
-function mapSermon(raw, seriesCoverImageUrl) {
+const HEADING_KINDS = new Set(["heading1", "heading2", "heading3", "heading4", "heading5"]);
+
+function mapSermon(raw, seriesCoverImageUrl, trims) {
   const passageText = raw.passages?.[0]?.text ?? "";
-  const blocks = raw.sermonText?.sermonEditor?.blocks ?? [];
+  let blocks = raw.sermonText?.sermonEditor?.blocks ?? [];
+  if (trims[String(raw.sermonId)]?.dropLeadingHeading && HEADING_KINDS.has(blocks[0]?.kind)) {
+    blocks = blocks.slice(1);
+  }
   const notesHtml = blocksToHtml(blocks);
   const notesText = blocksToPlainText(blocks);
   const { book, chapter } = detectPassage(passageText, raw.title, extractTextLine(notesText));
@@ -145,12 +155,13 @@ async function main() {
   const accountImageUrl = getAccountImageUrl(profileState);
   const seriesIds = getSeriesIds(profileState);
   const bySermonId = new Map();
+  const trims = fs.existsSync(TRIMS_PATH) ? JSON.parse(fs.readFileSync(TRIMS_PATH, "utf8")) : {};
 
   for (const seriesId of seriesIds) {
     try {
       const { sermons, coverImageUrl } = await getSeriesData(seriesId);
       for (const raw of sermons) {
-        bySermonId.set(String(raw.sermonId), mapSermon(raw, coverImageUrl));
+        bySermonId.set(String(raw.sermonId), mapSermon(raw, coverImageUrl, trims));
       }
     } catch (err) {
       console.warn(`Skipping series ${seriesId}:`, err.message);
