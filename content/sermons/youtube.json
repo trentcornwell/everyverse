@@ -1,8 +1,24 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-08-12T10:58:18.663Z",
+  "syncedAt": "2026-08-13T10:59:02.803Z",
   "sermons": [
+    {
+      "id": "cag88xWnM2c",
+      "title": "Midweek - August 12, 2026",
+      "description": "",
+      "publishedAt": "2026-08-13T00:11:51Z",
+      "durationSeconds": 3669,
+      "url": "https://www.youtube.com/watch?v=cag88xWnM2c"
+    },
+    {
+      "id": "8p_iowBU8qU",
+      "title": "Midweek - August 12, 2026",
+      "description": "",
+      "publishedAt": "2026-08-12T23:11:26Z",
+      "durationSeconds": 402,
+      "url": "https://www.youtube.com/watch?v=8p_iowBU8qU"
+    },
     {
       "id": "DyVMvZAJam0",
       "title": "The Sons of God - Genesis 6:1-4",
