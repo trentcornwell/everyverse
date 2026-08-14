@@ -1,8 +1,19 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-08-13T11:11:59.747Z",
+  "syncedAt": "2026-08-14T11:09:14.872Z",
   "sermons": [
+    {
+      "id": "813261425257151",
+      "title": "Consider Your Ways (Part 1 o..",
+      "description": "Haggai 1:1-11",
+      "publishedAt": "2026-08-12",
+      "durationSeconds": 1840,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=813261425257151",
+      "speaker": "Trent Cornwell",
+      "book": "Haggai",
+      "chapter": 1
+    },
     {
       "id": "811261631136504",
       "title": "The Sons of God",
