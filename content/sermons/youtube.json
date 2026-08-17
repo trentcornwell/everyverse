@@ -1,8 +1,16 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-08-16T10:19:14.321Z",
+  "syncedAt": "2026-08-17T10:28:39.816Z",
   "sermons": [
+    {
+      "id": "46WQVtBgVfk",
+      "title": "Sunday AM - August 16, 2026",
+      "description": "",
+      "publishedAt": "2026-08-17T03:55:33Z",
+      "durationSeconds": 4525,
+      "url": "https://www.youtube.com/watch?v=46WQVtBgVfk"
+    },
     {
       "id": "cag88xWnM2c",
       "title": "Consider Your Ways (Part 1 of 4) - Haggai 1:1-11",
