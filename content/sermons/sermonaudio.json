@@ -1,8 +1,19 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-08-18T10:48:01.564Z",
+  "syncedAt": "2026-08-19T10:47:13.808Z",
   "sermons": [
+    {
+      "id": "818261641534134",
+      "title": "What the New Testament Won't..",
+      "description": "Genesis 6-7",
+      "publishedAt": "2026-08-16",
+      "durationSeconds": 1919,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=818261641534134",
+      "speaker": "Trent Cornwell",
+      "book": "Genesis",
+      "chapter": 6
+    },
     {
       "id": "813261425257151",
       "title": "Consider Your Ways (Part 1 o..",
