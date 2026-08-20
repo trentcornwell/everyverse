@@ -1,8 +1,16 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-08-19T10:24:51.570Z",
+  "syncedAt": "2026-08-20T10:26:08.860Z",
   "sermons": [
+    {
+      "id": "kK7RlBPOWUU",
+      "title": "The Book of Haggai",
+      "description": "",
+      "publishedAt": "2026-08-19T23:55:54Z",
+      "durationSeconds": 3456,
+      "url": "https://www.youtube.com/watch?v=kK7RlBPOWUU"
+    },
     {
       "id": "46WQVtBgVfk",
       "title": "What the New Testament Won't Let Us Miss About Noah's Ark - Genesis 6-7",
