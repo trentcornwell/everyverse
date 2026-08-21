@@ -1,8 +1,19 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-08-20T10:48:06.662Z",
+  "syncedAt": "2026-08-21T10:48:56.739Z",
   "sermons": [
+    {
+      "id": "820261425183519",
+      "title": "Be Strong and Work (Part 2 o..",
+      "description": "Haggai 1:12-15",
+      "publishedAt": "2026-08-19",
+      "durationSeconds": 2079,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=820261425183519",
+      "speaker": "Trent Cornwell",
+      "book": "Haggai",
+      "chapter": 1
+    },
     {
       "id": "818261641534134",
       "title": "What the New Testament Won't..",
