@@ -1,8 +1,24 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-08-23T10:20:35.594Z",
+  "syncedAt": "2026-08-24T10:34:08.531Z",
   "sermons": [
+    {
+      "id": "Ma819JIQY9E",
+      "title": "Family Night Service Tim Vermaas | Sunday PM - August 23, 2026",
+      "description": "",
+      "publishedAt": "2026-08-24T10:05:36Z",
+      "durationSeconds": 3322,
+      "url": "https://www.youtube.com/watch?v=Ma819JIQY9E"
+    },
+    {
+      "id": "iy9umUbsLBU",
+      "title": "Sunday AM - August 23, 2026",
+      "description": "",
+      "publishedAt": "2026-08-24T03:52:16Z",
+      "durationSeconds": 4569,
+      "url": "https://www.youtube.com/watch?v=iy9umUbsLBU"
+    },
     {
       "id": "kK7RlBPOWUU",
       "title": "Be Strong and Work (Part 2 of 4) - Haggai 1:12-15",
