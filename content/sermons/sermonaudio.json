@@ -1,8 +1,30 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-08-25T10:50:42.862Z",
+  "syncedAt": "2026-08-26T10:52:21.975Z",
   "sermons": [
+    {
+      "id": "825261557511755",
+      "title": "Family Night Service",
+      "description": "2 Timothy 3:16",
+      "publishedAt": "2026-08-23",
+      "durationSeconds": 1700,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=825261557511755",
+      "speaker": "Tim Vermaas",
+      "book": "2 Timothy",
+      "chapter": 3
+    },
+    {
+      "id": "825261554103015",
+      "title": "What We Learn About God as W..",
+      "description": "Genesis 8",
+      "publishedAt": "2026-08-23",
+      "durationSeconds": 1826,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=825261554103015",
+      "speaker": "Trent Cornwell",
+      "book": "Genesis",
+      "chapter": 8
+    },
     {
       "id": "820261425183519",
       "title": "Be Strong and Work (Part 2 o..",
