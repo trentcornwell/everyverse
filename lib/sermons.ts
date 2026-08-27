@@ -25,6 +25,10 @@ export interface Sermon {
   speaker?: string;
   book?: string;
   chapter?: number;
+  // Which service this was preached at ("Sunday AM", "Sunday PM",
+  // "Wednesday", "Sunday School"), detected at sync time. Undefined when no
+  // source text gave a confident signal.
+  serviceType?: string;
   // Sermon notes/manuscript, synced from Logos. Rendered as trusted HTML
   // (Trent's own authored content, piped through a known parser — same
   // trust model as study notes, never user-submitted).
@@ -117,80 +121,39 @@ export function getSermonById(id: string): Sermon | undefined {
 // the same real sermon -- e.g. a YouTube upload and its SermonAudio upload
 // of the same Sunday message often land a day or two apart.
 const SAME_SERMON_WINDOW_MS = 3 * 24 * 60 * 60 * 1000;
-// How far back "sustained recent activity" is measured from, and how many
-// distinct occurrences within that window count as "sustained."
-const CURRENT_BOOK_LOOKBACK_MS = 60 * 24 * 60 * 60 * 1000;
-const CURRENT_BOOK_MIN_OCCURRENCES = 2;
 
-// The homepage's "latest sermon" is specifically the most recent message in
-// whichever book is the *current* sequential book-by-book teaching -- not
-// simply whatever sermon (from any service, on any topic) happens to have
-// the newest detected passage. A single guest/topical sermon can reference
-// a specific verse just as easily as the ongoing series does, so recency of
-// a detected book/chapter alone isn't a reliable signal on its own.
-//
-// Instead: collapse same-book-and-chapter entries published within a few
-// days of each other into one "occurrence" (multi-platform syncs of the
-// same real sermon), then walk books newest-first and pick the first one
-// with at least two distinct occurrences in the last ~60 days -- a real
-// sequential series accumulates weekly, while a one-off only ever has one.
+// The homepage's "latest sermon" is specifically the most recent Sunday
+// morning message -- not simply whichever sermon (Sunday PM, Wednesday,
+// Family Night, a guest speaker's midweek message) happens to have synced
+// most recently. `serviceType` (detected at sync time from each source's
+// own text -- see scripts/lib/detect-service-type.mjs) is what tells "Sunday
+// AM" apart from everything else.
 export function getLatestSundayMorningSermon(): Sermon | undefined {
-  const withPassage = getAllSermons().filter((s) => s.book && s.chapter);
-  if (withPassage.length === 0) return undefined;
+  const sundayMorning = getAllSermons()
+    .filter((s) => s.serviceType === "Sunday AM")
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  if (sundayMorning.length === 0) return undefined;
 
-  const byBookChapter = new Map<string, Sermon[]>();
-  for (const s of withPassage) {
-    const key = `${s.book}|${s.chapter}`;
-    const list = byBookChapter.get(key) ?? [];
-    list.push(s);
-    byBookChapter.set(key, list);
-  }
+  const mostRecent = sundayMorning[0];
 
-  const occurrences: Sermon[] = [];
-  for (const list of byBookChapter.values()) {
-    const ascending = [...list].sort(
-      (a, b) => new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime()
+  // Prefer the Logos version of this same real-world sermon (same
+  // book/chapter, published within a few days of `mostRecent`) when one
+  // exists -- a full outline makes for a far better homepage write-up than
+  // a YouTube/SermonAudio entry's raw description, and Logos itself has no
+  // serviceType of its own to filter on.
+  if (mostRecent.book && mostRecent.chapter) {
+    const sameOccurrence = getAllSermons().filter(
+      (s) =>
+        s.book === mostRecent.book &&
+        s.chapter === mostRecent.chapter &&
+        Math.abs(new Date(s.publishedAt).getTime() - new Date(mostRecent.publishedAt).getTime()) <=
+          SAME_SERMON_WINDOW_MS
     );
-    let clusterStart = -Infinity;
-    for (const s of ascending) {
-      const t = new Date(s.publishedAt).getTime();
-      if (t - clusterStart > SAME_SERMON_WINDOW_MS) {
-        occurrences.push(s);
-        clusterStart = t;
-      }
-    }
+    const logosVersion = sameOccurrence.find((s) => s.source === "logos");
+    if (logosVersion) return logosVersion;
   }
 
-  const now = Date.now();
-  const seenBooks = new Set<string>();
-  for (const candidate of withPassage) {
-    if (seenBooks.has(candidate.book!)) continue;
-    seenBooks.add(candidate.book!);
-
-    const recentOccurrences = occurrences.filter(
-      (o) => o.book === candidate.book && now - new Date(o.publishedAt).getTime() <= CURRENT_BOOK_LOOKBACK_MS
-    );
-    if (recentOccurrences.length >= CURRENT_BOOK_MIN_OCCURRENCES) {
-      // Prefer the Logos version of this same real-world sermon (same
-      // book/chapter, published within the same few-day window as
-      // `candidate`) when one exists -- a full outline makes for a far
-      // better homepage write-up than a YouTube/SermonAudio entry's raw
-      // description, and `candidate` could be either depending on which
-      // platform happened to publish most recently.
-      const sameOccurrence = withPassage.filter(
-        (s) =>
-          s.book === candidate.book &&
-          s.chapter === candidate.chapter &&
-          Math.abs(new Date(s.publishedAt).getTime() - new Date(candidate.publishedAt).getTime()) <=
-            SAME_SERMON_WINDOW_MS
-      );
-      return sameOccurrence.find((s) => s.source === "logos") ?? candidate;
-    }
-  }
-
-  // Nothing looks like a sustained series recently -- fall back to the
-  // single most recent passage-tagged sermon rather than showing nothing.
-  return withPassage[0];
+  return mostRecent;
 }
 
 // Fallback graphic when a sermon's series has no custom cover art: the
@@ -218,13 +181,34 @@ function truncate(text: string, maxLen = 220): string {
   return trimmed.length > maxLen ? `${trimmed.slice(0, maxLen).trim()}…` : trimmed;
 }
 
-// A short overview for the homepage's latest-sermon callout. Logos notes
-// often lead with a one-line "BIG IDEA:" summary -- use that when present,
-// otherwise fall back to the start of the notes (minus the "Text: ..."
-// passage-reference line), or to the source's own description for sources
-// without notes. Logos' own `description` is just a bare passage reference
-// (e.g. "Genesis 6:1-5"), not a real summary, so it's skipped there.
+// Hand-written homepage overviews, keyed by sermon ID. Most Logos outlines
+// don't lead with a "BIG IDEA:" line (see below), and an outline's opening
+// paragraph is usually a scene-setting illustration rather than a summary,
+// so a good short description generally has to come from actually reading
+// the outline. Not touched by any sync script -- this is where that
+// written-by-hand description goes, one entry per featured sermon.
+const DESCRIPTION_OVERRIDES_PATH = path.join(SERMONS_DIR, "description-overrides.json");
+
+function loadDescriptionOverrides(): Record<string, string> {
+  if (!fs.existsSync(DESCRIPTION_OVERRIDES_PATH)) return {};
+  try {
+    return JSON.parse(fs.readFileSync(DESCRIPTION_OVERRIDES_PATH, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+// A short overview for the homepage's latest-sermon callout. Checks for a
+// hand-written override first (see above), then falls back to Logos notes
+// -- which often lead with a one-line "BIG IDEA:" summary, otherwise the
+// start of the notes (minus the "Text: ..." passage-reference line) -- or
+// to the source's own description for sources without notes. Logos' own
+// `description` is just a bare passage reference (e.g. "Genesis 6:1-5"),
+// not a real summary, so it's skipped there.
 export function getSermonOverview(sermon: Sermon): string | undefined {
+  const override = loadDescriptionOverrides()[sermon.id];
+  if (override) return override;
+
   if (sermon.notesText) {
     const bigIdea = sermon.notesText.match(/BIG IDEA:\s*([\s\S]*?)(?:\n\n|$)/i);
     if (bigIdea?.[1]) return truncate(bigIdea[1].replace(/\s+/g, " "));

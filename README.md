@@ -278,6 +278,31 @@ Logos isn't wired up yet &mdash; it needs someone to log into
 sermons.logos.com and find that account's podcast/RSS feed link before a
 sync script can be written against it.
 
+**Homepage "Latest Sermon"** &mdash; always the most recent *Sunday morning*
+message, via `getLatestSundayMorningSermon()` in
+[`lib/sermons.ts`](lib/sermons.ts). Each sync tags every sermon with a
+`serviceType` ("Sunday AM", "Sunday PM", "Wednesday", "Sunday School"),
+detected from the church's own text: YouTube descriptions consistently open
+with a tag like "Sunday AM 8-9-26 ..." (see
+[`scripts/lib/detect-service-type.mjs`](scripts/lib/detect-service-type.mjs)),
+and SermonAudio's API has a structured `eventType` field for the same thing.
+Once the newest Sunday AM entry is found, it's swapped for its Logos version
+(same book/chapter, synced within a few days) when one exists, since a full
+outline makes a far better homepage write-up than a bare YouTube/SermonAudio
+description.
+
+That write-up itself is a hand-written description, not an auto-generated
+one &mdash; see `content/sermons/description-overrides.json`, keyed by
+sermon ID. Most outlines don't lead with a one-line summary (`getSermonOverview()`
+falls back to `BIG IDEA:` when a note has one, then the notes' opening
+paragraph, but both are a weak substitute for someone having actually read
+the outline). **Each week, after Sunday morning's sermon has synced
+(usually by Monday), write that sermon's entry here** by reading its Logos
+outline and summarizing the message in 2&ndash;4 sentences, then commit and
+push &mdash; the homepage picks it up on Vercel's next rebuild. Skipping a
+week isn't harmful: without an override, the page falls back to the BIG
+IDEA/first-paragraph heuristic above rather than showing nothing.
+
 ## Getting started
 
 Requires Node.js 18.18+ (Node 20+ recommended).

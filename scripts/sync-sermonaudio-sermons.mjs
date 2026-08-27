@@ -9,6 +9,7 @@
 import fs from "fs";
 import path from "path";
 import { detectPassage } from "./lib/detect-passage.mjs";
+import { normalizeSermonAudioEventType } from "./lib/detect-service-type.mjs";
 
 // The numeric ID we were given (20433) turned out not to resolve via the
 // API. The broadcaster's public slug does work (sermonaudio.com/broadcasters/
@@ -108,6 +109,7 @@ function main() {
         speaker: s.speaker?.displayName,
         book,
         chapter,
+        serviceType: normalizeSermonAudioEventType(s.eventType, s.displayEventType),
       };
     });
 

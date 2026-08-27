@@ -9,6 +9,7 @@
 import fs from "fs";
 import path from "path";
 import { detectPassage } from "./lib/detect-passage.mjs";
+import { detectServiceType } from "./lib/detect-service-type.mjs";
 
 const CHANNEL_ID = "UCODWmDl_U6I_XQbSKwOZzyw"; // Vision Baptist Church of South Forsyth
 const API_KEY = process.env.YOUTUBE_API_KEY;
@@ -103,6 +104,7 @@ async function main() {
       url: `https://www.youtube.com/watch?v=${v.id}`,
       book,
       chapter,
+      serviceType: detectServiceType(v.title, v.description),
     };
   });
 
