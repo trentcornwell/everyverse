@@ -1,8 +1,17 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-08-29T14:55:23.722Z",
+  "syncedAt": "2026-08-30T14:39:46.929Z",
   "sermons": [
+    {
+      "id": "XC2dr8GJxG0",
+      "title": "The Samaritan I Feared Sunday AM",
+      "description": "",
+      "publishedAt": "2026-08-30T14:29:17Z",
+      "durationSeconds": 0,
+      "url": "https://www.youtube.com/watch?v=XC2dr8GJxG0",
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "Q7guW0wEvFY",
       "title": "The Latter Glory (Part 3 of 4) - Haggai 2:1-9",
