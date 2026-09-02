@@ -1,8 +1,32 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-09-01T14:55:02.131Z",
+  "syncedAt": "2026-09-02T14:31:00.060Z",
   "sermons": [
+    {
+      "id": "91261710241593",
+      "title": "Look and Pray",
+      "description": "John 4:35",
+      "publishedAt": "2026-08-30",
+      "durationSeconds": 939,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=91261710241593",
+      "speaker": "Trent Cornwell",
+      "book": "John",
+      "chapter": 4,
+      "serviceType": "Sunday PM"
+    },
+    {
+      "id": "9126176404051",
+      "title": "The Neighbor of Our Generation",
+      "description": "Luke 10:25-37",
+      "publishedAt": "2026-08-30",
+      "durationSeconds": 2187,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=9126176404051",
+      "speaker": "Trent Cornwell",
+      "book": "Luke",
+      "chapter": 10,
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "827261439307467",
       "title": "The Latter Glory (Part 3 of 4)",
