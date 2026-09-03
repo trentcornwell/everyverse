@@ -1,8 +1,16 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-09-02T14:03:40.539Z",
+  "syncedAt": "2026-09-03T14:06:49.078Z",
   "sermons": [
+    {
+      "id": "P0S1w7hzKeA",
+      "title": "Missions Conference 2026 - The State of the World in Our Generation",
+      "description": "",
+      "publishedAt": "2026-09-03T12:16:28Z",
+      "durationSeconds": 4629,
+      "url": "https://www.youtube.com/watch?v=P0S1w7hzKeA"
+    },
     {
       "id": "XC2dr8GJxG0",
       "title": "The Neighbor of Our Generation - Luke 10:25-37",
