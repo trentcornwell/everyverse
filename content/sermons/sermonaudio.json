@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-09-03T14:35:51.340Z",
+  "syncedAt": "2026-09-04T14:23:03.788Z",
   "sermons": [
+    {
+      "id": "93261836313319",
+      "title": "The State of the World in Ou..",
+      "description": "Nehemiah 1:1-4",
+      "publishedAt": "2026-09-02",
+      "durationSeconds": 1606,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=93261836313319",
+      "speaker": "Travis Snode",
+      "book": "Nehemiah",
+      "chapter": 1,
+      "serviceType": "Wednesday"
+    },
     {
       "id": "91261710241593",
       "title": "Look and Pray",
