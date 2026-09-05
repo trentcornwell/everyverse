@@ -1,8 +1,16 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-09-04T13:58:54.912Z",
+  "syncedAt": "2026-09-05T13:14:03.506Z",
   "sermons": [
+    {
+      "id": "NLO2wJydr1s",
+      "title": "Missions Conference 2026 - September 4",
+      "description": "",
+      "publishedAt": "2026-09-05T12:12:44Z",
+      "durationSeconds": 4992,
+      "url": "https://www.youtube.com/watch?v=NLO2wJydr1s"
+    },
     {
       "id": "P0S1w7hzKeA",
       "title": "The State of the World in Our Generation - Nehemiah 1:1-4",
