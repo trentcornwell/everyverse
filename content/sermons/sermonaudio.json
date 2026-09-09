@@ -1,8 +1,31 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-09-08T14:33:37.385Z",
+  "syncedAt": "2026-09-09T14:37:32.287Z",
   "sermons": [
+    {
+      "id": "98261528172938",
+      "title": "Why Jesus Didn't Pray for th..",
+      "description": "John 17",
+      "publishedAt": "2026-09-06",
+      "durationSeconds": 1456,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=98261528172938",
+      "speaker": "Travis Snode",
+      "book": "John",
+      "chapter": 17,
+      "serviceType": "Sunday AM"
+    },
+    {
+      "id": "98261524437434",
+      "title": "God's Glorious Strategy for..",
+      "description": "Ephesians 3",
+      "publishedAt": "2026-09-04",
+      "durationSeconds": 1732,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=98261524437434",
+      "speaker": "Travis Snode",
+      "book": "Ephesians",
+      "chapter": 3
+    },
     {
       "id": "93261836313319",
       "title": "The State of the World in Ou..",
