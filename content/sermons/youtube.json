@@ -1,8 +1,18 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-09-09T14:08:23.564Z",
+  "syncedAt": "2026-09-10T14:02:42.563Z",
   "sermons": [
+    {
+      "id": "OozHquvUNeo",
+      "title": "The Signet and the Story - Haggai 2",
+      "description": "",
+      "publishedAt": "2026-09-10T12:14:17Z",
+      "durationSeconds": 3543,
+      "url": "https://www.youtube.com/watch?v=OozHquvUNeo",
+      "book": "Haggai",
+      "chapter": 2
+    },
     {
       "id": "xGjdhZ5uJyU",
       "title": "Why Jesus Didn't Pray for the World in John 17 - John 17",
