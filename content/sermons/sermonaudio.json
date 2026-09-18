@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-09-17T15:01:33.824Z",
+  "syncedAt": "2026-09-18T14:32:15.838Z",
   "sermons": [
+    {
+      "id": "91726170411764",
+      "title": "Visit the Fatherless in thei..",
+      "description": "James 1:27",
+      "publishedAt": "2026-09-16",
+      "durationSeconds": 2099,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=91726170411764",
+      "speaker": "Trent Cornwell",
+      "book": "James",
+      "chapter": 1,
+      "serviceType": "Wednesday"
+    },
     {
       "id": "915261748242204",
       "title": "The Altar First",
