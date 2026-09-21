@@ -1,8 +1,16 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-09-20T13:55:53.424Z",
+  "syncedAt": "2026-09-21T16:11:18.384Z",
   "sermons": [
+    {
+      "id": "TrBDtBvMoUs",
+      "title": "Orange Sunday - Wayne Naugle | September 20, 2026",
+      "description": "",
+      "publishedAt": "2026-09-21T05:21:08Z",
+      "durationSeconds": 5213,
+      "url": "https://www.youtube.com/watch?v=TrBDtBvMoUs"
+    },
     {
       "id": "-gYokA4oDO0",
       "title": "Visit the Fatherless in their Affliction - James 1:27",
