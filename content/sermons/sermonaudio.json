@@ -1,8 +1,18 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-09-22T14:55:58.171Z",
+  "syncedAt": "2026-09-23T15:02:22.203Z",
   "sermons": [
+    {
+      "id": "922261952443520",
+      "title": "Orange Sunday",
+      "description": "",
+      "publishedAt": "2026-09-20",
+      "durationSeconds": 2250,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=922261952443520",
+      "speaker": "Wayne Naugle",
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "91726170411764",
       "title": "Visit the Fatherless in thei..",
