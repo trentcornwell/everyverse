@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-09-30T16:25:30.028Z",
+  "syncedAt": "2026-10-01T17:02:29.588Z",
   "sermons": [
+    {
+      "id": "10126153485622",
+      "title": "Living Out God's Will",
+      "description": "Ephesians 5:15-20",
+      "publishedAt": "2026-09-30",
+      "durationSeconds": 1657,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=10126153485622",
+      "speaker": "Bill Schneider",
+      "book": "Ephesians",
+      "chapter": 5,
+      "serviceType": "Wednesday"
+    },
     {
       "id": "929261540383135",
       "title": "The Story We Don't Want to T..",
