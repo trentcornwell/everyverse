@@ -1,8 +1,17 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-10-03T14:33:38.266Z",
+  "syncedAt": "2026-10-04T15:07:33.471Z",
   "sermons": [
+    {
+      "id": "hcpJaXS5Qcw",
+      "title": "Sunday AM - October 4, 2026",
+      "description": "",
+      "publishedAt": "2026-10-04T14:30:12Z",
+      "durationSeconds": 0,
+      "url": "https://www.youtube.com/watch?v=hcpJaXS5Qcw",
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "c-CMWeqDJ2o",
       "title": "Living Out God's Will - Ephesians 5:15-20",
