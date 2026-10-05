@@ -1,16 +1,34 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-10-04T15:07:33.471Z",
+  "syncedAt": "2026-10-05T19:04:33.106Z",
   "sermons": [
     {
-      "id": "hcpJaXS5Qcw",
-      "title": "Sunday AM - October 4, 2026",
+      "id": "kGmtr-XDP1g",
+      "title": "In Our Own Tongue",
       "description": "",
-      "publishedAt": "2026-10-04T14:30:12Z",
-      "durationSeconds": 0,
+      "publishedAt": "2026-10-05T10:12:24Z",
+      "durationSeconds": 1978,
+      "url": "https://www.youtube.com/watch?v=kGmtr-XDP1g"
+    },
+    {
+      "id": "hcpJaXS5Qcw",
+      "title": "Let Us Make Us a Name (Part 1 of 2) - Genesis 10:1-11:9",
+      "description": "Sunday AM 10-4-26\nPastor Trent Cornwell\n\nLIKE & SUBSCRIBE for new videos: https://visionbaptist.com\n\nVISION BAPTIST CHURCH info:\nWebsite - https://visionbaptist.com\nTwitter - https://twitter.com/visionbaptist\nInstagram - https://www.instagram.com/visionbaptist/\nFacebook - https://www.facebook.com/visionbaptist \n\nMore CHURCH RELATED RESOURCES:\nPast Sermon - https://www.sermonaudio.com/source_detail.asp?sourceid=visionbaptist\nFoundations - https://baptistfoundations.com\n\nFollow or Connect with PASTOR TRENT ON SOCIAL MEDIA:\nTwitter - https://twitter.com/trentcornwell\nInstagram - https://www.instagram.com/trentcornwell/\nFacebook - https://www.facebook.com/trent.cornwell\n\n\nShort Bio: \nHelping People Find and Follow Jesus\nAt Vision Baptist Church, we want you to know exactly what God says in the Bible.  The Bible can seem like a hard book, but we want you to know for yourself what it actually says.  During our time together, we will invite you to look at the Bible with us and see for yourself what God says in His Word.",
+      "publishedAt": "2026-10-05T04:08:17Z",
+      "durationSeconds": 4523,
       "url": "https://www.youtube.com/watch?v=hcpJaXS5Qcw",
+      "book": "Genesis",
+      "chapter": 10,
       "serviceType": "Sunday AM"
+    },
+    {
+      "id": "XXFpk5q2_10",
+      "title": "In Our Own Tongue",
+      "description": "",
+      "publishedAt": "2026-10-04T21:14:38Z",
+      "durationSeconds": 575,
+      "url": "https://www.youtube.com/watch?v=XXFpk5q2_10"
     },
     {
       "id": "c-CMWeqDJ2o",
