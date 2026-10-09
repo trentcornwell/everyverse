@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-10-07T17:26:25.854Z",
+  "syncedAt": "2026-10-09T17:00:34.164Z",
   "sermons": [
+    {
+      "id": "108261438125526",
+      "title": "Who Shall Bring Me Down? (Pa..",
+      "description": "Obadiah 1-14",
+      "publishedAt": "2026-10-07",
+      "durationSeconds": 1876,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=108261438125526",
+      "speaker": "Trent Cornwell",
+      "book": "Obadiah",
+      "chapter": 1,
+      "serviceType": "Wednesday"
+    },
     {
       "id": "1062616019128",
       "title": "In Our Own Tongue",
