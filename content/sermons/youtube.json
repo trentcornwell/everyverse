@@ -1,8 +1,17 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-10-10T15:40:48.906Z",
+  "syncedAt": "2026-10-11T16:07:53.767Z",
   "sermons": [
+    {
+      "id": "6DhRyzcCyOs",
+      "title": "Sent After the Scattered | Sunday AM - October 11, 2026",
+      "description": "",
+      "publishedAt": "2026-10-11T15:51:21Z",
+      "durationSeconds": 4885,
+      "url": "https://www.youtube.com/watch?v=6DhRyzcCyOs",
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "3pcVih-VGQA",
       "title": "Who Shall Bring Me Down? (Part 1 of 2) - Obadiah 1:1-14",
