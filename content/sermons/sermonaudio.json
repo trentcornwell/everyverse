@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-10-13T17:36:36.597Z",
+  "syncedAt": "2026-10-14T15:10:33.283Z",
   "sermons": [
+    {
+      "id": "1013261737232606",
+      "title": "Sent After the Scattered (Pa..",
+      "description": "Genesis 11:10-12:5",
+      "publishedAt": "2026-10-11",
+      "durationSeconds": 1977,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=1013261737232606",
+      "speaker": "Trent Cornwell",
+      "book": "Genesis",
+      "chapter": 11,
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "108261438125526",
       "title": "Who Shall Bring Me Down? (Pa..",
