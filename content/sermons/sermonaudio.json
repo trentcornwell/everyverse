@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-10-14T15:10:33.283Z",
+  "syncedAt": "2026-10-15T15:02:55.908Z",
   "sermons": [
+    {
+      "id": "101526142456828",
+      "title": "The Promises of a Faithful ...",
+      "description": "Obadiah 15-21",
+      "publishedAt": "2026-10-14",
+      "durationSeconds": 2141,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=101526142456828",
+      "speaker": "Beau Carpenter",
+      "book": "Obadiah",
+      "chapter": 15,
+      "serviceType": "Wednesday"
+    },
     {
       "id": "1013261737232606",
       "title": "Sent After the Scattered (Pa..",
