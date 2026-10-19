@@ -1,8 +1,26 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-10-18T13:45:04.122Z",
+  "syncedAt": "2026-10-19T16:46:38.145Z",
   "sermons": [
+    {
+      "id": "Af2AiojWEOQ",
+      "title": "Use The Keys - Matthew 16:13-20",
+      "description": "",
+      "publishedAt": "2026-10-19T10:25:19Z",
+      "durationSeconds": 4048,
+      "url": "https://www.youtube.com/watch?v=Af2AiojWEOQ",
+      "book": "Matthew",
+      "chapter": 16
+    },
+    {
+      "id": "fXIkYXsveQc",
+      "title": "The Promise That Holds When We Don't | 10/18/2026",
+      "description": "",
+      "publishedAt": "2026-10-19T03:57:34Z",
+      "durationSeconds": 4796,
+      "url": "https://www.youtube.com/watch?v=fXIkYXsveQc"
+    },
     {
       "id": "Mcf2UU0PdSc",
       "title": "The Promises of a Faithful God (Part 2 of 2) - Obadiah 1:15-21",
