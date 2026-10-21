@@ -1,25 +1,29 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-10-20T14:38:55.248Z",
+  "syncedAt": "2026-10-21T14:50:31.025Z",
   "sermons": [
     {
       "id": "Af2AiojWEOQ",
       "title": "Use The Keys - Matthew 16:13-20",
-      "description": "",
+      "description": "Sunday PM 10-18-26\nPastor Trent Cornwell\n\nLIKE & SUBSCRIBE for new videos: https://visionbaptist.com\n\nVISION BAPTIST CHURCH info:\nWebsite - https://visionbaptist.com\nTwitter - https://twitter.com/visionbaptist\nInstagram - https://www.instagram.com/visionbaptist/\nFacebook - https://www.facebook.com/visionbaptist \n\nMore CHURCH RELATED RESOURCES:\nPast Sermon - https://www.sermonaudio.com/source_detail.asp?sourceid=visionbaptist\nFoundations - https://baptistfoundations.com\n\nFollow or Connect with PASTOR TRENT ON SOCIAL MEDIA:\nTwitter - https://twitter.com/trentcornwell\nInstagram - https://www.instagram.com/trentcornwell/\nFacebook - https://www.facebook.com/trent.cornwell\n\n\nShort Bio: \nHelping People Find and Follow Jesus\nAt Vision Baptist Church, we want you to know exactly what God says in the Bible.  The Bible can seem like a hard book, but we want you to know for yourself what it actually says.  During our time together, we will invite you to look at the Bible with us and see for yourself what God says in His Word.",
       "publishedAt": "2026-10-19T10:25:19Z",
       "durationSeconds": 4048,
       "url": "https://www.youtube.com/watch?v=Af2AiojWEOQ",
       "book": "Matthew",
-      "chapter": 16
+      "chapter": 16,
+      "serviceType": "Sunday PM"
     },
     {
       "id": "fXIkYXsveQc",
-      "title": "The Promise That Holds When We Don't | 10/18/2026",
-      "description": "",
+      "title": "The Promise that Holds When We Don't - Genesis 12:6-20",
+      "description": "Sunday AM 10-18-26\nPastor Trent Cornwell\n\nLIKE & SUBSCRIBE for new videos: https://visionbaptist.com\n\nVISION BAPTIST CHURCH info:\nWebsite - https://visionbaptist.com\nTwitter - https://twitter.com/visionbaptist\nInstagram - https://www.instagram.com/visionbaptist/\nFacebook - https://www.facebook.com/visionbaptist \n\nMore CHURCH RELATED RESOURCES:\nPast Sermon - https://www.sermonaudio.com/source_detail.asp?sourceid=visionbaptist\nFoundations - https://baptistfoundations.com\n\nFollow or Connect with PASTOR TRENT ON SOCIAL MEDIA:\nTwitter - https://twitter.com/trentcornwell\nInstagram - https://www.instagram.com/trentcornwell/\nFacebook - https://www.facebook.com/trent.cornwell\n\n\nShort Bio: \nHelping People Find and Follow Jesus\nAt Vision Baptist Church, we want you to know exactly what God says in the Bible.  The Bible can seem like a hard book, but we want you to know for yourself what it actually says.  During our time together, we will invite you to look at the Bible with us and see for yourself what God says in His Word.",
       "publishedAt": "2026-10-19T03:57:34Z",
       "durationSeconds": 4796,
-      "url": "https://www.youtube.com/watch?v=fXIkYXsveQc"
+      "url": "https://www.youtube.com/watch?v=fXIkYXsveQc",
+      "book": "Genesis",
+      "chapter": 12,
+      "serviceType": "Sunday AM"
     },
     {
       "id": "Mcf2UU0PdSc",
