@@ -1,8 +1,32 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-10-20T15:07:04.644Z",
+  "syncedAt": "2026-10-21T15:16:45.781Z",
   "sermons": [
+    {
+      "id": "102026155928424",
+      "title": "Use the Keys",
+      "description": "Matthew 16:13-20",
+      "publishedAt": "2026-10-18",
+      "durationSeconds": 1046,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=102026155928424",
+      "speaker": "Trent Cornwell",
+      "book": "Matthew",
+      "chapter": 16,
+      "serviceType": "Sunday PM"
+    },
+    {
+      "id": "1020261556411934",
+      "title": "The Promise that Holds When..",
+      "description": "Genesis 12:6-20",
+      "publishedAt": "2026-10-18",
+      "durationSeconds": 1775,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=1020261556411934",
+      "speaker": "Trent Cornwell",
+      "book": "Genesis",
+      "chapter": 12,
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "101526142456828",
       "title": "The Promises of a Faithful ...",
