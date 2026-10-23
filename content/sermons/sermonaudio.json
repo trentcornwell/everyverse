@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-10-22T15:18:16.835Z",
+  "syncedAt": "2026-10-23T15:05:57.129Z",
   "sermons": [
+    {
+      "id": "1022261623451119",
+      "title": "Missionary Nate Wilkerson",
+      "description": "Luke 17",
+      "publishedAt": "2026-10-21",
+      "durationSeconds": 1697,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=1022261623451119",
+      "speaker": "Nate Wilkerson",
+      "book": "Luke",
+      "chapter": 17,
+      "serviceType": "Wednesday"
+    },
     {
       "id": "102026155928424",
       "title": "Use the Keys",
