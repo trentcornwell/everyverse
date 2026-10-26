@@ -1,8 +1,17 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-10-25T14:05:06.758Z",
+  "syncedAt": "2026-10-26T16:27:29.750Z",
   "sermons": [
+    {
+      "id": "r94CrQj_V5w",
+      "title": "Which way is your life facing? Sunday AM VBC",
+      "description": "",
+      "publishedAt": "2026-10-26T03:56:19Z",
+      "durationSeconds": 4660,
+      "url": "https://www.youtube.com/watch?v=r94CrQj_V5w",
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "_8T6qsA19Ug",
       "title": "Missionary Nate Wilkerson - Luke 17",
