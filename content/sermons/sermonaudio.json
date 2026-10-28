@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-10-27T15:53:30.781Z",
+  "syncedAt": "2026-10-28T16:38:48.379Z",
   "sermons": [
+    {
+      "id": "1027261655381489",
+      "title": "Which Way is Your Life Facing?",
+      "description": "Genesis 13:5-18",
+      "publishedAt": "2026-10-25",
+      "durationSeconds": 1785,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=1027261655381489",
+      "speaker": "Trent Cornwell",
+      "book": "Genesis",
+      "chapter": 13,
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "1022261623451119",
       "title": "Missionary Nate Wilkerson",
