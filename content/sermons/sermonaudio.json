@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-10-28T16:38:48.379Z",
+  "syncedAt": "2026-10-29T16:56:29.601Z",
   "sermons": [
+    {
+      "id": "1029261418261532",
+      "title": "Fellow Helpers Meeting",
+      "description": "James 4",
+      "publishedAt": "2026-10-28",
+      "durationSeconds": 2334,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=1029261418261532",
+      "speaker": "Benjamin Broyles",
+      "book": "James",
+      "chapter": 4,
+      "serviceType": "Wednesday"
+    },
     {
       "id": "1027261655381489",
       "title": "Which Way is Your Life Facing?",
