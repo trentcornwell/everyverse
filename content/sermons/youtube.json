@@ -1,8 +1,18 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-10-31T15:35:54.743Z",
+  "syncedAt": "2026-11-01T16:34:11.906Z",
   "sermons": [
+    {
+      "id": "W37nqwZXfWc",
+      "title": "Who Made You Rich? - Genesis 14",
+      "description": "",
+      "publishedAt": "2026-11-01T16:17:04Z",
+      "durationSeconds": 2854,
+      "url": "https://www.youtube.com/watch?v=W37nqwZXfWc",
+      "book": "Genesis",
+      "chapter": 14
+    },
     {
       "id": "DGR9AXHViHw",
       "title": "Fellow Helpers Meeting - Missionary Benjamin Broyles - James 4",
