@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-11-04T17:59:31.269Z",
+  "syncedAt": "2026-11-05T18:02:12.903Z",
   "sermons": [
+    {
+      "id": "115261448366987",
+      "title": "Melchizedek: The Priest-King..",
+      "description": "Genesis 14:17-24",
+      "publishedAt": "2026-11-04",
+      "durationSeconds": 2175,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=115261448366987",
+      "speaker": "Trent Cornwell",
+      "book": "Genesis",
+      "chapter": 14,
+      "serviceType": "Wednesday"
+    },
     {
       "id": "1029261418261532",
       "title": "Fellow Helpers Meeting",
