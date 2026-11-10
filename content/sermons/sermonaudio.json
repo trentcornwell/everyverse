@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-11-09T20:45:53.937Z",
+  "syncedAt": "2026-11-10T17:51:58.242Z",
   "sermons": [
+    {
+      "id": "1110261738551831",
+      "title": "Count the Stars",
+      "description": "Genesis 15",
+      "publishedAt": "2026-11-08",
+      "durationSeconds": 2090,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=1110261738551831",
+      "speaker": "Trent Cornwell",
+      "book": "Genesis",
+      "chapter": 15,
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "115261448366987",
       "title": "Melchizedek: The Priest-King..",
