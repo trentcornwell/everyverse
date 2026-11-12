@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-11-11T17:54:58.114Z",
+  "syncedAt": "2026-11-12T18:20:13.624Z",
   "sermons": [
+    {
+      "id": "111226152832861",
+      "title": "Teaching Them to Observe",
+      "description": "Matthew 28:16-20",
+      "publishedAt": "2026-11-11",
+      "durationSeconds": 2068,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=111226152832861",
+      "speaker": "Trent Cornwell",
+      "book": "Matthew",
+      "chapter": 28,
+      "serviceType": "Wednesday"
+    },
     {
       "id": "1110261738551831",
       "title": "Count the Stars",
