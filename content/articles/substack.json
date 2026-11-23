@@ -1,8 +1,24 @@
 {
   "source": "substack",
   "feedUrl": "https://trentoncornwell.substack.com/feed",
-  "syncedAt": "2026-11-15T17:23:29.148Z",
+  "syncedAt": "2026-11-23T22:13:12.711Z",
   "articles": [
+    {
+      "title": "The Fellowship of the Gray",
+      "excerpt": "Why the hard months after you walk away from an addiction are not wasted, and why you are not alone in them.",
+      "url": "https://trentoncornwell.substack.com/p/the-fellowship-of-the-grey",
+      "publishedAt": "2026-11-22T20:09:26.000Z",
+      "author": "Trenton Cornwell",
+      "imageUrl": "https://substackcdn.com/image/fetch/$s_!G4DG!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F172cf3b9-a072-4849-acc2-28722a47a8ec_1536x1024.png"
+    },
+    {
+      "title": "The Counterfeit Homecoming",
+      "excerpt": "The Worship Beneath the Addiction",
+      "url": "https://trentoncornwell.substack.com/p/the-counterfeit-homecoming",
+      "publishedAt": "2026-11-20T20:18:10.000Z",
+      "author": "Trenton Cornwell",
+      "imageUrl": "https://substackcdn.com/image/fetch/$s_!LtT9!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F72ff8150-2eab-47f3-80e0-5f4065090ac0_1672x941.png"
+    },
     {
       "title": "The Purpose of the Church",
       "excerpt": "A position paper written for PT 510 at Veritas Baptist College",
@@ -109,7 +125,7 @@
     },
     {
       "title": "A Mother's Story",
-      "excerpt": "What the gospel actually to those who are willing to pout out their lives in worship to Him.",
+      "excerpt": "What the gospel actually to those who are willing to pour out their lives in worship to Him.",
       "url": "https://trentoncornwell.substack.com/p/a-mothers-story",
       "publishedAt": "2026-05-09T16:13:55.000Z",
       "author": "Trenton Cornwell",
@@ -145,22 +161,6 @@
       "url": "https://trentoncornwell.substack.com/p/healthy-church-conference-2026-a",
       "publishedAt": "2026-04-26T20:16:28.000Z",
       "imageUrl": "https://substackcdn.com/image/fetch/$s_!25TJ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5c1df156-eb84-4460-83dc-aec88c03376e_1638x2048.jpeg"
-    },
-    {
-      "title": "The Man Above the Fireplace",
-      "excerpt": "He looked at me like he was always saying &#8212; don&#8217;t trifle. Don&#8217;t trifle.",
-      "url": "https://trentoncornwell.substack.com/p/the-man-above-the-fireplace",
-      "publishedAt": "2026-04-18T19:36:32.000Z",
-      "author": "Trenton Cornwell",
-      "imageUrl": "https://substackcdn.com/image/fetch/$s_!ZB-B!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F31b4f531-0dcb-496f-8bd2-a494e7c5c8f1_1536x1024.png"
-    },
-    {
-      "title": "She Called It Dangerous America — She’s Not Wrong",
-      "excerpt": "The most dangerous place for our missionaries isn&#8217;t the jungle. It&#8217;s here.",
-      "url": "https://trentoncornwell.substack.com/p/she-called-it-dangerous-america-shes",
-      "publishedAt": "2026-04-16T17:53:28.000Z",
-      "author": "Trenton Cornwell",
-      "imageUrl": "https://substackcdn.com/image/fetch/$s_!y7K7!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc34b6161-29c8-4a9b-9fbe-629642ac8628_1470x980.avif"
     }
   ]
 }
