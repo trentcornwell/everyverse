@@ -1,14 +1,22 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-11-22T17:35:57.503Z",
+  "syncedAt": "2026-11-23T21:52:58.896Z",
   "sermons": [
+    {
+      "id": "a_MLI8zS6BQ",
+      "title": "Pie & Praise Night",
+      "description": "",
+      "publishedAt": "2026-11-23T10:52:56Z",
+      "durationSeconds": 3084,
+      "url": "https://www.youtube.com/watch?v=a_MLI8zS6BQ"
+    },
     {
       "id": "N_H58Dwp0SI",
       "title": "Grateful to Whom? - Genesis17:1-4",
       "description": "",
-      "publishedAt": "2026-11-22T16:43:32Z",
-      "durationSeconds": 4476,
+      "publishedAt": "2026-11-23T05:12:16Z",
+      "durationSeconds": 4479,
       "url": "https://www.youtube.com/watch?v=N_H58Dwp0SI"
     },
     {
