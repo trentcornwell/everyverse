@@ -1,23 +1,27 @@
 {
   "source": "youtube",
   "channelId": "UCODWmDl_U6I_XQbSKwOZzyw",
-  "syncedAt": "2026-11-24T20:29:11.742Z",
+  "syncedAt": "2026-11-25T19:44:03.971Z",
   "sermons": [
     {
       "id": "a_MLI8zS6BQ",
       "title": "Pie & Praise Night",
-      "description": "",
+      "description": "Sunday PM 11-22-26\n\nLIKE & SUBSCRIBE for new videos: https://visionbaptist.com\n\nVISION BAPTIST CHURCH info:\nWebsite - https://visionbaptist.com\nTwitter - https://twitter.com/visionbaptist\nInstagram - https://www.instagram.com/visionbaptist/\nFacebook - https://www.facebook.com/visionbaptist \n\nMore CHURCH RELATED RESOURCES:\nPast Sermon - https://www.sermonaudio.com/source_detail.asp?sourceid=visionbaptist\nFoundations - https://baptistfoundations.com\n\nFollow or Connect with PASTOR TRENT ON SOCIAL MEDIA:\nTwitter - https://twitter.com/trentcornwell\nInstagram - https://www.instagram.com/trentcornwell/\nFacebook - https://www.facebook.com/trent.cornwell\n\n\nShort Bio: \nHelping People Find and Follow Jesus\nAt Vision Baptist Church, we want you to know exactly what God says in the Bible.  The Bible can seem like a hard book, but we want you to know for yourself what it actually says.  During our time together, we will invite you to look at the Bible with us and see for yourself what God says in His Word.",
       "publishedAt": "2026-11-23T10:52:56Z",
       "durationSeconds": 3084,
-      "url": "https://www.youtube.com/watch?v=a_MLI8zS6BQ"
+      "url": "https://www.youtube.com/watch?v=a_MLI8zS6BQ",
+      "serviceType": "Sunday PM"
     },
     {
       "id": "N_H58Dwp0SI",
-      "title": "Grateful to Whom? - Genesis17:1-4",
-      "description": "",
+      "title": "Grateful to Whom? - Genesis 17:1-3",
+      "description": "Sunday AM 11-22-26\nPastor Trent Cornwell\n\nLIKE & SUBSCRIBE for new videos: https://visionbaptist.com\n\nVISION BAPTIST CHURCH info:\nWebsite - https://visionbaptist.com\nTwitter - https://twitter.com/visionbaptist\nInstagram - https://www.instagram.com/visionbaptist/\nFacebook - https://www.facebook.com/visionbaptist \n\nMore CHURCH RELATED RESOURCES:\nPast Sermon - https://www.sermonaudio.com/source_detail.asp?sourceid=visionbaptist\nFoundations - https://baptistfoundations.com\n\nFollow or Connect with PASTOR TRENT ON SOCIAL MEDIA:\nTwitter - https://twitter.com/trentcornwell\nInstagram - https://www.instagram.com/trentcornwell/\nFacebook - https://www.facebook.com/trent.cornwell\n\n\nShort Bio: \nHelping People Find and Follow Jesus\nAt Vision Baptist Church, we want you to know exactly what God says in the Bible.  The Bible can seem like a hard book, but we want you to know for yourself what it actually says.  During our time together, we will invite you to look at the Bible with us and see for yourself what God says in His Word.",
       "publishedAt": "2026-11-23T05:12:16Z",
       "durationSeconds": 4479,
-      "url": "https://www.youtube.com/watch?v=N_H58Dwp0SI"
+      "url": "https://www.youtube.com/watch?v=N_H58Dwp0SI",
+      "book": "Genesis",
+      "chapter": 17,
+      "serviceType": "Sunday AM"
     },
     {
       "id": "28XCl99NB20",
