@@ -1,8 +1,20 @@
 {
   "source": "sermonaudio",
   "broadcasterID": "visionbaptist",
-  "syncedAt": "2026-11-25T19:57:25.182Z",
+  "syncedAt": "2026-11-26T19:38:02.298Z",
   "sermons": [
+    {
+      "id": "1125261949574291",
+      "title": "Grateful to Whom?",
+      "description": "Genesis 17:1-3",
+      "publishedAt": "2026-11-22",
+      "durationSeconds": 2264,
+      "url": "https://www.sermonaudio.com/sermoninfo.asp?SID=1125261949574291",
+      "speaker": "Trent Cornwell",
+      "book": "Genesis",
+      "chapter": 17,
+      "serviceType": "Sunday AM"
+    },
     {
       "id": "1119261437504910",
       "title": "What do we do when life gets..",
